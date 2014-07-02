@@ -1,6 +1,9 @@
-Evennia MUD/MU\* Creation System
-================================
+MUDtrix, a Harry Potter themed MUD game based on Evennia platform
+=================================================================
+If you are new here, take a look at the [MUDtrix Wiki](https://bitbucket.org/mudtrix/mudtrix/wiki/).
 
+Evennia Documentation
+---------------------
 *Evennia* is a Python-based MUD/MU\* server/codebase using modern technologies. It is made available as open source under the very friendly [BSD license](https://github.com/evennia/evennia/wiki/Licensing). Evennia allows creators to design and flesh out text-based massively-multiplayer online games with great freedom.
 
 http://www.evennia.com is the main hub tracking all things Evennia. The documentation wiki is found [here](https://github.com/evennia/evennia/wiki).
@@ -26,4 +29,4 @@ The codebase is currently in **Beta**. While development continues, Evennia is a
 More Information
 ----------------
 
-To learn how to get your hands on the code base, the [Getting started](https://github.com/evennia/evennia/wiki/Getting-Started) page is the way to go. Otherwise you could browse the [Documentation wiki](https://github.com/evennia/evennia/wiki) or why not come join the [Evennia Community](http://www.evennia.com). Welcome! 
+To learn how to get your hands on the code base, the [Getting started](https://github.com/evennia/evennia/wiki/Getting-Started) page is the way to go. Otherwise you could browse the [Documentation wiki](https://github.com/evennia/evennia/wiki) or why not come join the [Evennia Community](http://www.evennia.com). Welcome!
