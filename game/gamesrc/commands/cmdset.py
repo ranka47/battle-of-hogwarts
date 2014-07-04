@@ -27,6 +27,7 @@ To add a wholly new command set:
 from ev import CmdSet, Command
 from ev import default_cmds
 from game.gamesrc.commands import command
+from game.gamesrc.commands.barter import CmdTrade
 
 #from contrib import menusystem, lineeditor
 #from contrib import misc_commands
@@ -77,6 +78,7 @@ class CharacterCmdSet(default_cmds.CharacterCmdSet):
         #self.add(lineeditor.CmdEditor())
         #self.add(misc_commands.CmdQuell())
         self.add(command.CmdScore)
+        self.add(CmdTrade)
 
 class UnloggedinCmdSet(default_cmds.UnloggedinCmdSet):
     """
