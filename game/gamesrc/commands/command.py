@@ -175,7 +175,7 @@ class CmdScore(Command):
         # If player is not found, it automatically returns an error message
         if not player:
             return
-
+            
         # If no value we just display the score of the player
         if not self.propaddval and not self.propsetval:
             caller.msg("The current score of %s is %s" %
