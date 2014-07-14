@@ -4,7 +4,10 @@ MUDtrix - basic objects
 Objects:
 Readable
 Climbable
+Wand
 
+Commands:
+List of spells
 """
 from ev import Object as DefaultObject
 from ev import Exit, Command, CmdSet, Script
@@ -223,6 +226,7 @@ class CmdSetSpell(CmdSet):
     def at_cmdset_creation(self):
         "called at first object creation."
         self.add(CmdAvis())
+        self.add(CmdArania())
 
 class Wand(Object):
     """
@@ -255,6 +259,8 @@ class Wand(Object):
 #---------------------------------------------------------------------------------
 # List of spells
 #---------------------------------------------------------------------------------
+# Avis - conjures a flock of birds from the tip of wand.
+#---------------------------------------------------------------------------------
 
 class CmdAvis(Command):
     """
@@ -276,7 +282,38 @@ class CmdAvis(Command):
         if random.random() <= hit:
            self.caller.msg("A flock of birds emerge from your wand. They fly away noisily into nowhere...")
            self.caller.location.msg_contents("A heavy cluttering noise distracts you. You see a flock of birds "+
-                                       "emerging from %s's wand. They fly away into nowhere..." % 
+                                       "emerging from {c%s{n's wand. They fly away into nowhere..." % 
                                                            (self.caller), exclude=[self.caller])
         else:
            self.caller.msg("You said your spell but nothing happens! Don't worry, say it again with all your heart.")
+
+#---------------------------------------------------------------------------------
+# Arania Exumai - Kills or attacks Spiders
+#---------------------------------------------------------------------------------
+
+class CmdArania(Command):
+    """
+    attack spiders
+
+    Usage:
+    Arania Exumai (aliases: arania)
+
+    Used to attack and kill huge clusters of spiders
+    """
+    key = "arania"
+    aliases = ["Arania Exumai"]
+    locks = "cmd:holds()"
+    help_category = "Spells"
+
+    def func(self):
+        "Actual function"
+        hit = float(self.obj.db.hit)*1.2    # medium difficulty
+
+        if random.random() <= hit:
+            self.caller.msg("A {yblast of light{n apears from the tip of the wand.")
+            self.caller.location.msg_contents("A {yblast of light{n appears from {c%s{n's wand" %
+                                                        (self.caller), exclude=[self.caller])
+        else:
+            self.caller.msg("You said your spell but nothing happens! Don't worry, say it with all your heart.")
+
+#---------------------------------------------------------------------------------
