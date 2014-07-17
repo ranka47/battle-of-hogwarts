@@ -18,8 +18,10 @@ this change, you have to convert them manually e.g. with the
 """
 
 from ev import Room as DefaultRoom
+from ev import utils
 from game.gamesrc.scripts.script import IrregularEvent
 import random
+from game.gamesrc.objects.object import Object
 
 class Room(DefaultRoom):
     """
@@ -151,6 +153,6 @@ class OutroRoom(Room):
             del character.db.puzzle_clue
             del character.db.combat_parry_mode
             del character.db.tutorial_bridge_position
-            for tut_obj in [obj for obj in character.contents
-                                  if utils.inherits_from(obj, TutorialObject)]:
-                tut_obj.reset()
+            for obj in [obj for obj in character.contents
+                                  if utils.inherits_from(obj, Object)]:
+                obj.reset()

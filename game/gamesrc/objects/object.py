@@ -358,7 +358,7 @@ class Wand(DefaultObject):
         "Called at first creation of the object"
         super(Wand, self).at_object_creation()
         self.db.hit = 0.4    # hit chance
-        self.db.magic = False
+        self.db.magic = True
         self.cmdset.add_default(CmdSetSpell, permanent=True)
 
     def reset(self):
@@ -430,6 +430,21 @@ class CmdArania(Command):
             self.caller.msg("A {yblast of light{n apears from the tip of the wand.")
             self.caller.location.msg_contents("A {yblast of light{n appears from {c%s{n's wand" %
                                                         (self.caller), exclude=[self.caller])
+            # call enemy hook
+            if self.caller.search("Spider"):
+                target = self.caller.search("Spider")
+            else:
+                self.caller.msg("There are no spiders to attack.")
+                return
+            if hasattr(target, "at_hit"):
+                # should return True if target is defeated, False otherwise.
+                return target.at_hit(self.obj, self.caller, damage = 10)
+            elif target.db.health:
+                target.db.health -= damage
+            else:
+                # sorry, impossible to fight this enemy ...
+                self.caller.msg("The enemy seems unaffacted.")
+                return False
         else:
             self.caller.msg("You said your spell but nothing happens! Don't worry, say it with all your heart.")
 
