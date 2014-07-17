@@ -434,7 +434,8 @@ class CmdArania(Command):
             self.caller.msg("You said your spell but nothing happens! Don't worry, say it with all your heart.")
 
 #---------------------------------------------------------------------------------
-
+#   Mob - Mobile Enemy Object
+#---------------------------------------------------------------------------------
 class Mob(Object):
     """
     This type of mobile will roam from exit to exit at

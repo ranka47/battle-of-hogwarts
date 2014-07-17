@@ -79,3 +79,78 @@ class WeatherRoom(Room):
         if irand > 10:
             return  # don't return anything, to add more randomness
         self.msg_contents("{w%s{n" % strings[irand])
+
+#-----------------------------------------------------------
+#
+# Intro Room - unique room
+#
+# This room marks the start of the MUDtrix. It sets up properties on
+# the player char that is needed for the game.
+#
+#------------------------------------------------------------
+
+class IntroRoom(Room):
+    """
+    Intro room
+
+    properties to customize:
+     char_health - integer > 0 (default 20)
+    """
+
+    def at_object_receive(self, character, source_location):
+        """
+        Assign properties on characters
+        """
+
+        # setup
+        health = self.db.char_health
+        if not health:
+            health = 20
+
+        if character.has_player:
+            character.db.health = health
+            character.db.health_max = health
+
+        if character.is_superuser:
+            string = "-"*78
+            string += "\nWARNING: YOU ARE PLAYING AS A SUPERUSER (%s). TO EXPLORE NORMALLY YOU NEED " % character.key
+            string += "\nTO CREATE AND LOG IN AS A REGULAR USER INSTEAD. IF YOU CONTINUE, KNOW THAT "
+            string += "\nMANY FUNCTIONS AND PUZZLES WILL IGNORE THE PRESENCE OF A SUPERUSER.\n"
+            string += "-"*78
+            character.msg("{r%s{n" % string)
+
+
+#------------------------------------------------------------
+#
+# Outro room - unique room
+#
+# Cleans up the character from all game-related properties.
+#
+#------------------------------------------------------------
+
+class OutroRoom(Room):
+    """
+    Outro room.
+
+    One can set an attribute list "wracklist" with weapon-rack ids
+        in order to clear all weapon rack ids from the character.
+
+    """
+
+    def at_object_receive(self, character, source_location):
+        """
+        Do cleanup.
+        """
+        if character.has_player:
+            if self.db.wracklist:
+                for wrackid in self.db.wracklist:
+                    character.del_attribute(wrackid)
+            del character.db.health_max
+            del character.db.health
+            del character.db.last_climbed
+            del character.db.puzzle_clue
+            del character.db.combat_parry_mode
+            del character.db.tutorial_bridge_position
+            for tut_obj in [obj for obj in character.contents
+                                  if utils.inherits_from(obj, TutorialObject)]:
+                tut_obj.reset()
