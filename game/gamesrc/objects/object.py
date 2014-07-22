@@ -344,6 +344,7 @@ class CmdSetSpell(CmdSet):
         "called at first object creation."
         self.add(CmdAvis())
         self.add(CmdArania())
+        self.add(CmdExpelliarmus())
 
 class Wand(DefaultObject):
     """
@@ -434,6 +435,50 @@ class CmdArania(Command):
             self.caller.msg("You said your spell but nothing happens! Don't worry, say it with all your heart.")
 
 #---------------------------------------------------------------------------------
+# Expelliarmus - Throws the opponent's wand
+#---------------------------------------------------------------------------------
+
+class CmdExpelliarmus(Command):
+    """
+    throws away opponent's wand
+
+    Usage:
+    Expelliarmus <opponent>
+    """
+
+    key = "expelliarmus"
+    aliases = ["Expelliarmus", "expell", "Expell"]
+    lock = "cmd:holds()"
+    help_category = "Spells"
+
+    def func(self):
+        "Actual function"
+        hit = float(self.obj.db.hit)*1.5    # high difficulty
+ 
+        if random.random() >= hit:
+            if self.args:
+                #target is the opponent whose wand is being targeted
+                target = self.caller.search(self.args.strip())
+            else:
+                return
+
+            #if an object "Wand" is found with opponent
+            if target.search(r'Wand'):
+                wand = target.search(r'Wand')
+                #wand drops on the room location
+                #exits = [ex for ex in target.location.exits]
+                #wand.location = exits[random.randint(0, len(exits) - 1)]
+                wand.location = target.location
+                self.caller.msg("A {yflash of light{n comes out of your wand and %s's wand falls down" %(target))
+                self.caller.location.msg_contents("A {yflash of light{n emerging from {c%s{n's wand" % (self.caller), exclude=[self.caller,target])
+                target.msg("{c%s{n hits your wand with a {ylightning storm{n and your wand falls off somewhere" %(self.caller))
+            else:
+                return
+
+        else:
+            self.caller.msg("You said your spell but nothing happens! Don't worry, aim properly and say it with all your heart.")
+
+#-------------------------------------------------------------------------------------
 
 class Mob(Object):
     """
@@ -787,3 +832,5 @@ class Spider(Mob):
             if not string:
                 string = "%s fades into existence from out of thin air. It's looking pissed." % self.key
                 self.location.msg_contents(string)
+
+#--------------------------------------------------------------------------------------------------------
