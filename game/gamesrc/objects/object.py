@@ -478,7 +478,7 @@ class CmdExpelliarmus(Command):
         else:
             self.caller.msg("You said your spell but nothing happens! Don't worry, aim properly and say it with all your heart.")
 
-#------------------------------------------------------------------------------------
+#-----------------------------------------------------------------------------------
 
 class Mob(Object):
     """
