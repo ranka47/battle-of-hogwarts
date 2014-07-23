@@ -734,6 +734,6 @@ class OutroRoom(TutorialRoom):
             del character.db.puzzle_clue
             del character.db.combat_parry_mode
             del character.db.tutorial_bridge_position
-            for tut_obj in [obj for obj in character.contents
-                                  if utils.inherits_from(obj, TutorialObject)]:
-                tut_obj.reset()
+            for obj in [obj for obj in character.contents
+                                  if utils.inherits_from(obj, Object)]:
+                obj.reset()
