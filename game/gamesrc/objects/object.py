@@ -345,6 +345,7 @@ class CmdSetSpell(CmdSet):
         self.add(CmdAvis())
         self.add(CmdArania())
         self.add(CmdExpelliarmus())
+        self.add(CmdWingardium())
 
 class Wand(DefaultObject):
     """
@@ -425,6 +426,7 @@ class CmdArania(Command):
 
     def func(self):
         "Actual function"
+        name = self.args
         hit = float(self.obj.db.hit)*1.2    # medium difficulty
 
         if random.random() <= hit:
@@ -432,11 +434,11 @@ class CmdArania(Command):
             self.caller.location.msg_contents("A {yblast of light{n appears from {c%s{n's wand" %
                                                         (self.caller), exclude=[self.caller])
             # call enemy hook
-            if self.caller.search("Spider"):
+            if self.caller.search(self.args):
                 target = self.caller.search("Spider")
             else:
-                self.caller.msg("There are no spiders to attack.")
                 return
+
             if hasattr(target, "at_hit"):
                 # should return True if target is defeated, False otherwise.
                 return target.at_hit(self.obj, self.caller, damage = 10)
@@ -492,6 +494,59 @@ class CmdExpelliarmus(Command):
 
         else:
             self.caller.msg("You said your spell but nothing happens! Don't worry, aim properly and say it with all your heart.")
+
+
+#---------------------------------------------------------------------------------
+# Arania Exumai - Kills or attacks Spiders
+#---------------------------------------------------------------------------------
+
+class CmdWingardium(Command):
+    """
+    levitates objects into air
+
+    Usage:
+    Wingardium Leviosa <target>
+
+    (aliases: leviosa)
+
+    """
+    key = "Wingardium Leviosa"
+    aliases = ["leviosa", "wingardium"]
+    locks = "cmd:holds()"
+    help_category = "Spells"
+
+    def func(self):
+        "Actual function"
+
+        # If no target is given
+        if not self.args:
+            self.caller.msg("Specify the target.")
+            return
+
+        # Lower the hit rate
+        hit = float(self.obj.db.hit)*1.2    # high difficulty
+
+        if random.random() <= hit:
+            self.caller.msg("A {yblast of light{n apears from the tip of the wand.")
+            self.caller.location.msg_contents("A {yblast of light{n appears from {c%s{n's wand" %
+                                                        (self.caller), exclude=[self.caller])
+            # call target
+            if self.caller.search(self.args):
+                target = self.caller.search(self.args)
+            else:
+                return
+            if hasattr(target, "at_hit"):
+                # should return True if target is defeated, False otherwise.
+                return target.at_hit(self.obj, self.caller, damage = 10)
+            elif target.db.health:
+                target.db.health -= damage
+            else:
+                # sorry, impossible to fight this enemy ...
+                self.caller.msg("The enemy seems unaffacted.")
+                return False
+        else:
+            self.caller.msg("You said your spell but nothing happens! Don't worry, say it with all your heart.")
+
 
 #-----------------------------------------------------------------------------------
 #   Mob - Mobile Enemy Object
