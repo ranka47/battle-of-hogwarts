@@ -434,7 +434,7 @@ class CmdArania(Command):
             self.caller.location.msg_contents("A {yblast of light{n appears from {c%s{n's wand" %
                                                         (self.caller), exclude=[self.caller])
             # call enemy hook
-            if self.caller.search(self.args):
+            if self.caller.search("spider"):
                 target = self.caller.search("Spider")
             else:
                 return
@@ -497,7 +497,7 @@ class CmdExpelliarmus(Command):
 
 
 #---------------------------------------------------------------------------------
-# Arania Exumai - Kills or attacks Spiders
+# Wingardium Leviosa - Levitates selective objects into air
 #---------------------------------------------------------------------------------
 
 class CmdWingardium(Command):
@@ -527,8 +527,8 @@ class CmdWingardium(Command):
         hit = float(self.obj.db.hit)*1.2    # high difficulty
 
         if random.random() <= hit:
-            self.caller.msg("A {yblast of light{n apears from the tip of the wand.")
-            self.caller.location.msg_contents("A {yblast of light{n appears from {c%s{n's wand" %
+            self.caller.msg("You say the magical words {mWingardium Leviosa{n.")
+            self.caller.location.msg_contents("{c%s{n says the magical words {mWingardium Leviosa{n." %
                                                         (self.caller), exclude=[self.caller])
             # call target
             if self.caller.search(self.args):
@@ -765,7 +765,7 @@ class Spider(Mob):
                 tstring = self.db.defeat_text
                 if not tstring:
                     tstring = "You feel your conciousness slip away ... you fall to the ground as "
-                    tstring += "the spiders envelops you ...\n"
+                    tstring += "the spiders envelop you ...\n"
                 target.msg(tstring)
                 ostring = self.db.defeat_text_room
                 if tloc:
