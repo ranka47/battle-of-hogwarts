@@ -111,6 +111,9 @@ class IntroRoom(Room):
         if character.has_player:
             character.db.health = health
             character.db.health_max = health
+            houses = ["Gryffindor","Hufflepuff","Ravenclaw","Slytherin"]
+            if not character.db.house:
+                character.db.house = houses[random.randint(0, len(houses) - 1)]
 
         if character.is_superuser:
             string = "-"*78

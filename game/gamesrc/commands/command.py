@@ -204,3 +204,31 @@ class CmdScore(Command):
         caller.msg("Added %s to current score of %s." % 
                           (self.propaddval, self.key))
         return
+
+#--------------------------------------------------------------------------------------------------------------
+# House - Reveals the house of the targetted player
+#--------------------------------------------------------------------------------------------------------------
+
+class CmdHouse(Command):
+    """
+    This command will reveal the house of the other player
+
+    Usage
+    house <playername>
+    """
+    key = "house"
+    locks = "cmd:all()"
+    help_category = "General"
+
+    def func(self):
+        if self.args:
+            obj = self.caller.search(self.args.strip())
+        else:
+            obj = self.obj
+        if not obj:
+            return
+        self.caller.msg("{c%s{n's house is {y%s{n." % (obj,obj.db.house))
+
+
+
+#---------------------------------------------------------------------------------------------------------------

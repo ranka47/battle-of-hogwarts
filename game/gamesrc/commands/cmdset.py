@@ -78,6 +78,7 @@ class CharacterCmdSet(default_cmds.CharacterCmdSet):
         #self.add(lineeditor.CmdEditor())
         #self.add(misc_commands.CmdQuell())
         self.add(command.CmdScore)
+        self.add(command.CmdHouse)
         self.add(CmdTrade)
 
 class UnloggedinCmdSet(default_cmds.UnloggedinCmdSet):

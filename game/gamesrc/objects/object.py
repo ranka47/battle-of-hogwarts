@@ -537,9 +537,11 @@ class CmdWingardium(Command):
                 return
             if hasattr(target, "at_hit"):
                 # should return True if target is defeated, False otherwise.
+                target.db.ground = False
                 return target.at_hit(self.obj, self.caller, damage = 10)
             elif target.db.health:
-                target.db.health -= damage
+                target.db.ground = False
+                target.db.health -= 10
             else:
                 # sorry, impossible to fight this enemy ...
                 self.caller.msg("The enemy seems unaffacted.")
@@ -906,3 +908,67 @@ class Spider(Mob):
                 self.location.msg_contents(string)
 
 #--------------------------------------------------------------------------------------------------------
+
+class StaticAttackTimer(Script):
+    """
+    This script is what makes an enemy "tick".
+    """
+    def at_script_creation(self):
+        "This sets up the script"
+        self.key = "StaticAttackTimer"
+        self.desc = "Drives an Enemy's combat."
+        self.interval = random.randint(10,15) # how fast the Enemy acts
+        self.start_delay = True # wait self.interval before first call
+        self.persistent = True
+ 
+    def at_repeat(self):
+        "Called every self.interval seconds."
+        if self.obj.db.inactive or not self.obj.db.ground:
+            return
+        if self.obj.db.ground:
+            if self.obj.location:
+                self.obj.attack(damage = 3)
+            else:
+                self.obj.attack(damage = 1)
+        else:
+            return
+ 
+ 
+class VineWhip(DefaultObject):
+    """
+    It is an insectivorous plant monster more powerful in dark rooms and dies when is derooted
+    """
+    def at_object_creation(self):
+        self.db.ground = True
+        self.db.full_health = 20
+        self.db.health = 20
+        #this is used during creation to make sure the mob does not attack before
+        self.db.inactive = True
+        self.scripts.add(StaticAttackTimer)
+ 
+    def attack(self, damage):
+        """
+        This is the main mode of combat. It will try to hit players in
+        the location. If players are defeated, it will whisp them off
+        to the defeat location.
+        """
+        players = [obj for obj in self.location.contents if utils.inherits_from(obj, BASE_CHARACTER_TYPECLASS) and not obj.is_superuser]
+        if players:
+            for target in players:
+                if target.db.health >= 0 and damage == 1:
+                    target.msg("{rThe VineWhip hits you with its stem{n")
+                    target.db.health -= damage
+                if target.db.health >= 0 and damage == 3:
+                    target.msg("{r Some monsterous plant bites you and you bleed{n")
+                    target.db.health -= damage
+
+    def at_hit(self, weapon, attacker, damage):
+        """
+        This is called when the player attacks the plant with Wingardium Leviosa
+        """
+        if self.db.health:
+            self.db.health -= damage
+            if self.db.health == 10:
+                attacker.msg("The plant is almost {yderooted{n. Try harder you can lift it!")
+            if self.db.health <=0:
+                attacker.msg("You are able to {glevitate{n the plant. Move away by the time it again holds the ground.")
