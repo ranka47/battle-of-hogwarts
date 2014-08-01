@@ -346,6 +346,7 @@ class CmdSetSpell(CmdSet):
         self.add(CmdArania())
         self.add(CmdExpelliarmus())
         self.add(CmdWingardium())
+        self.add(CmdImmobilis())
 
 class Wand(DefaultObject):
     """
@@ -549,10 +550,59 @@ class CmdWingardium(Command):
         else:
             self.caller.msg("You said your spell but nothing happens! Don't worry, say it with all your heart.")
 
+#----------------------------------------------------------------------------------
+# Immobilis - freezes the Cannibulus Rodents
+#----------------------------------------------------------------------------------
+
+class CmdImmobilis(Command):
+    """
+    freezes the Cannibulus Rodents
+
+    Usage:
+    Immobilis <target>
+
+    """
+    key = "Immobilis"
+    aliases = ["Immobilis"]
+    locks = "cmd:holds()"
+    help_category = "Spells"
+
+    def func(self):
+        "Actual function"
+
+        # If no target is given
+        if not self.args:
+            self.caller.msg("Specify the target.")
+            return
+
+        # Lower the hit rate
+        hit = float(self.obj.db.hit)*1.2    # high difficulty
+
+        if random.random() <= hit:
+            self.caller.msg("You say the magical words {mImmobilis{n.")
+            self.caller.location.msg_contents("{c%s{n says the magical words {mImmobilis{n." %
+                                                        (self.caller), exclude=[self.caller])
+            # call target
+            if self.caller.search(self.args):
+                target = self.caller.search(self.args)
+            else:
+                return
+            if hasattr(target, "at_hit"):
+                # should return True if target is defeated, False otherwise.
+                return target.at_hit(self.obj, self.caller, damage = 20)
+            elif target.db.health:
+                target.db.health -= 10
+            else:
+                # sorry, impossible to fight this enemy ...
+                self.caller.msg("The enemy seems unaffacted.")
+                return False
+        else:
+            self.caller.msg("You said your spell but nothing happens! Don't worry, aim properly and say it with all your heart.")
+
 
 #-----------------------------------------------------------------------------------
 #   Mob - Mobile Enemy Object
-#---------------------------------------------------------------------------------
+#-----------------------------------------------------------------------------------
 
 class Mob(Object):
     """
@@ -582,7 +632,7 @@ class Mob(Object):
 
     def update_irregular(self):
         "Called at irregular intervals. Moves the mob."
-        if self.roam_mode:
+        if self.db.roam_mode:
             exits = [ex for ex in self.location.exits
                                     if ex.access(self, "traverse")]
             if exits:
@@ -621,7 +671,7 @@ class AttackTimer(Script):
         "This sets up the script"
         self.key = "AttackTimer"
         self.desc = "Drives an Enemy's combat."
-        self.interval = random.randint(2, 3) # how fast the Enemy acts
+        self.interval = random.randint(6, 10) # how fast the Enemy acts
         self.start_delay = True # wait self.interval before first call
         self.persistent = True
 
@@ -731,7 +781,7 @@ class Spider(Mob):
                 self.db.last_location = self.location
                 # locks should be checked here
                 self.move_to(exits[random.randint(0, len(exits) - 1)])
-            else:
+            else:         
                 # no exits - a dead end room. Respawn back to start.
                 self.move_to(self.home)
 
@@ -747,7 +797,7 @@ class Spider(Mob):
         if players:
 
             # find a target
-            if last_attacker in players:
+            if last_attacker in players: 
                 # prefer to attack the player last attacking.
                 target = last_attacker
             else:
@@ -755,10 +805,6 @@ class Spider(Mob):
                 target = players[random.randint(0, len(players) - 1)]
 
             # try to use the weapon in hand
-            attack_cmds = ("pierce", "slash")                                 #attention required
-            cmd = attack_cmds[random.randint(0, len(attack_cmds) - 1)]
-            self.execute_cmd("%s %s" % (cmd, target))
-
             # analyze result.
             if target.db.health <= 0:
                 # we reduced enemy to 0 health. Whisp them off to
@@ -766,10 +812,10 @@ class Spider(Mob):
                 tloc = search_object(self.db.defeat_location)
                 tstring = self.db.defeat_text
                 if not tstring:
-                    tstring = "You feel your conciousness slip away ... you fall to the ground as "
-                    tstring += "the spiders envelop you ...\n"
+                    tstring = "{rYou feel your conciousness slip away ... you fall to the ground as{n "
+                    tstring += "{rthe spiders envelop you ...{n\n"
                 target.msg(tstring)
-                ostring = self.db.defeat_text_room
+                ostring = self.db.defeat_text_room 
                 if tloc:
                     if not ostring:
                         ostring = "\n%s envelops the fallen ... and then their body is suddenly gone!" % self.key
@@ -781,15 +827,18 @@ class Spider(Mob):
                     ostring = "%s falls to the ground!" % target.key
                 self.location.msg_contents(ostring, exclude=[target])
                 # Pursue any stragglers after the battle
-                self.battle_mode = False
-                self.roam_mode = False
-                self.pursue_mode = True
+                self.db.battle_mode = False
+                self.db.roam_mode = False
+                self.db.pursue_mode = True
+            else:
+                target.db.health -= 2
+                target.msg("The spiders bite you. You try to run and escape.")
         else:
             # no players found, this could mean they have fled.
             # Switch to pursue mode.
-            self.battle_mode = False
-            self.roam_mode = False
-            self.pursue_mode = True
+            self.db.battle_mode = False
+            self.db.roam_mode = False
+            self.db.pursue_mode = True
 
     def pursue(self):
         """
@@ -802,9 +851,9 @@ class Spider(Mob):
             # we found players in the room. Maybe we caught up with some,
             # or some walked in on us before we had time to pursue them.
             # Switch to battle mode.
-            self.battle_mode = True
-            self.roam_mode = False
-            self.pursue_mode = False
+            self.db.battle_mode = True #this
+            self.db.roam_mode = False
+            self.db.pursue_mode = False
         else:
             # find all possible destinations.
             destinations = [ex.destination for ex in self.location.exits
@@ -829,9 +878,9 @@ class Spider(Mob):
                     self.move_to(players[key])
             else:
                 # we found no players nearby. Return to roam mode.
-                self.battle_mode = False
-                self.roam_mode = True
-                self.pursue_mode = False
+                self.db.battle_mode = False
+                self.db.roam_mode = True
+                self.db.pursue_mode = False
 
     def at_hit(self, weapon, attacker, damage):
         """
@@ -972,3 +1021,263 @@ class VineWhip(DefaultObject):
                 attacker.msg("The plant is almost {yderooted{n. Try harder you can lift it!")
             if self.db.health <=0:
                 attacker.msg("You are able to {glevitate{n the plant. Move away by the time it again holds the ground.")
+
+#------------------------------------------------------------------------------------------------------
+
+class CannibulusRodent(Mob):
+    """
+    This is a monster with health (hit points).
+
+    Spiders can be in four modes:
+       roam (inherited from Mob) - where it just moves around randomly
+       battle - where it stands in one place and attacks players
+       dead - passive and invisible until it is respawned
+
+    Upon creation, the following attributes describe the enemy's actions
+      desc - description
+      full_health - integer number > 0
+      defeat_location - unique name or #dbref to the location the player is
+                        taken when defeated. If not given, will remain in room.
+      defeat_text - text to show player when they are defeated (just before
+                    being whisped away to defeat_location)
+      defeat_text_room - text to show other players in room when a player
+                         is defeated
+      win_text - text to show player when defeating the enemy
+      win_text_room - text to show room when a player defeates the enemy
+      respawn_text - text to echo to room when the mob is reset/respawn in
+                     that room.
+    """
+    def at_object_creation(self):
+        "Called at object creation."
+        super(CannibulusRodent, self).at_object_creation()
+
+        #self.db.info = "This rodents will attack players in the same room."
+
+        # state machine modes
+        self.db.roam_mode = True
+        self.db.battle_mode = False
+        self.db.dead_mode = False
+        self.db.pursue_mode = False
+        # health (change this at creation time)
+        self.db.full_health = 20
+        self.db.health = 20
+        self.db.dead_at = time.time()
+        self.db.dead_timer = 20 # how long to stay dead
+        # this is used during creation to make sure the mob doesn't move away
+        self.db.inactive = True
+        # store the last player to hit
+        self.db.last_attacker = None
+        # where to take defeated enemies
+        #self.db.defeat_location = "darkcell"
+        self.scripts.add(AttackTimer)
+
+    def update_irregular(self):
+        "the irregular event is inherited from Mob class"
+        strings = self.db.irregular_echoes
+        if strings:
+            self.location.msg_contents(strings[random.randint(0, len(strings) - 1)])
+
+    def roam(self):
+        "Called by Attack timer. Will move randomly as long as exits are open."
+
+        # in this mode, the mob is healed.
+        self.db.health = self.db.full_health
+        players = [obj for obj in self.location.contents
+                   if utils.inherits_from(obj, BASE_CHARACTER_TYPECLASS) and not obj.is_superuser]
+
+        if players:
+            # we found players in the room. Attack.
+            self.db.roam_mode = False
+            self.db.battle_mode = True
+            self.db.pursue_mode = False
+
+        elif random.random() < 0.2:
+            # no players to attack, move about randomly.
+            self.db.roam_mode = True
+            self.db.battle_mode = False
+            self.db.pursue_mode = False
+            exits = [ex.destination for ex in self.location.exits
+                                                if ex.access(self, "traverse")]
+            if exits:
+                # Try to make it so the mob doesn't backtrack.
+                new_exits = [ex for ex in exits
+                                    if ex.destination != self.db.last_location]
+                if new_exits:
+                    exits = new_exits
+                self.db.last_location = self.location
+                # locks should be checked here
+                self.move_to(exits[random.randint(0, len(exits) - 1)])
+            else:
+                # no exits - a dead end room. Respawn back to start.
+                self.move_to(self.home)
+
+    def attack(self):
+        """
+        This is the main mode of combat. It will try to hit players in
+        the location. If players are defeated, it will whisp them off
+        to the defeat location.
+        """
+        last_attacker = self.db.last_attacker
+        players = [obj for obj in self.location.contents
+                   if utils.inherits_from(obj, BASE_CHARACTER_TYPECLASS) and not obj.is_superuser]
+        if players:
+            # find a target
+            if last_attacker in players: 
+                # prefer to attack the player last attacking.
+                target = last_attacker
+            else:
+                # otherwise attack a random player in location
+                target = players[random.randint(0, len(players) - 1)]
+            # analyze result.
+            if target.db.health <= 0:
+                # we reduced enemy to 0 health. Whisp them off to
+                # the prison room.
+                tloc = search_object(self.db.defeat_location)
+                tstring = self.db.defeat_text
+                if not tstring:
+                    tstring = "You feel your conciousness slip away ... you fall to the ground as "
+                    tstring += "the Cannibulus Rodents eat your unused brains ...\n"
+                target.msg(tstring)
+                ostring = self.db.defeat_text_room
+                if tloc:
+                    if not ostring:
+                        ostring = "\n%s envelops the fallen ... and then their body is suddenly gone!" % self.key
+                        # silently move the player to defeat location
+                        # (we need to call hook manually)
+                    target.location = tloc[0]
+                    tloc[0].at_object_receive(target, self.location)
+                elif not ostring:
+                    ostring = "%s falls to the ground!" % target.key
+                self.location.msg_contents(ostring, exclude=[target])
+                # Pursue any stragglers after the battle
+                self.db.battle_mode = False
+                self.db.roam_mode = False
+                self.db.pursue_mode = True
+            else:
+                target.db.health -= 2
+                target.msg("The rodents are after your jammed brains!")
+        else:
+            # no players found, this could mean they have fled.
+            # Switch to persue mode.
+            self.db.battle_mode = False
+            self.db.roam_mode = False
+            self.db.pursue_mode = True
+
+    def pursue(self):
+        """
+        In pursue mode, the enemy tries to find players in adjoining rooms, preferably
+        those that previously attacked it.
+        """
+        last_attacker = self.db.last_attacker
+        players = [obj for obj in self.location.contents if utils.inherits_from(obj, BASE_CHARACTER_TYPECLASS) and not obj.is_superuser]
+        if players:
+            # we found players in the room. Maybe we caught up with some,
+            # or some walked in on us before we had time to pursue them.
+            # Switch to battle mode.
+            self.db.battle_mode = True
+            self.db.roam_mode = False
+            self.db.pursue_mode = False
+        else:
+            # find all possible destinations.
+            destinations = [ex.destination for ex in self.location.exits
+                                                if ex.access(self, "traverse")]
+            # find all players in the possible destinations. OBS-we cannot
+            # just use the player's current position to move the Enemy; this
+            # might have changed when the move is performed, causing the enemy
+            # to teleport out of bounds.
+            players = {}
+            for dest in destinations:
+                for obj in [o for o in dest.contents
+                           if utils.inherits_from(o, BASE_CHARACTER_TYPECLASS)]:
+                    players[obj] = dest
+            if players:
+                # we found targets. Move to intercept.
+                if last_attacker in players:
+                    # preferably the one that last attacked us
+                    self.move_to(players[last_attacker])
+                else:
+                    # otherwise randomly.
+                    key = players.keys()[random.randint(0, len(players) - 1)]
+                    self.move_to(players[key])
+            else:
+                # we found no players nearby. Return to roam mode.
+                self.db.battle_mode = False
+                self.db.roam_mode = True
+                self.db.pursue_mode = False
+    
+    def at_hit(self, weapon, attacker, damage):
+        """
+        Called when this object is hit by an enemy's weapon
+        Should return True if enemy is defeated, False otherwise.
+
+        In the case of players attacking, we handle all the events
+        and information from here, so the return value is not used.
+        """
+
+        self.db.last_attacker = attacker
+        if not self.db.battle_mode:
+            # we were attacked, so switch to battle mode.
+            self.db.roam_mode = False
+            self.db.pursue_mode = False
+            self.db.battle_mode = True
+            #self.scripts.add(AttackTimer)
+
+        if not weapon.db.magic:
+            # In the tutorial, the enemy is a ghostly apparition, so
+            # only magical weapons can harm it.
+            string = self.db.weapon_ineffective_text
+            if not string:
+                string = "Your weapon just passes through your enemy, causing no effect!"
+            attacker.msg(string)
+            return
+        else:
+            # an actual hit
+            health = float(self.db.health)
+            health -= damage
+            self.db.health = health
+            if health <= 0:
+                string = self.db.win_text
+                if not string:
+                    string = "After your last hit, the %s {bfreeze{n in on itself. " % self.key
+                    string += "In a moment they pause their creepy motion. But you have a "
+                    string += "feeling it is only temporarily weakened. "
+                    string += "You fear it's only a matter of time before they regain their powers again."
+                attacker.msg(string)
+                string = self.db.win_text_room
+                if not string:
+                    string = "After %s's last hit, %s {bfreeze{n in on itself. " % (attacker.name, self.key)
+                    string += "In a moment they pause their creepy motion. But you have a "
+                    string += "feeling it is only temporarily weakened. "
+                    string += "You fear it's only a matter of time before they regain their powers again."
+                self.location.msg_contents(string, exclude=[attacker])
+
+                # put mob in dead mode and hide it from view.
+                # AttackTimer will bring it back later.
+                self.db.dead_at = time.time()
+                self.db.roam_mode = False
+                self.db.pursue_mode = False
+                self.db.battle_mode = False
+                self.db.dead_mode = True
+                self.location = None
+            else:
+                self.location.msg_contents("The %s are struck hard, they shudder." % self.key)
+        return False
+
+    def reset(self):
+        """
+        If the mob was 'dead', respawn it to its home position and reset
+        all modes and damage."""
+        if self.db.dead_mode:
+            self.db.health = self.db.full_health
+            
+            self.db.roam_mode = False
+            self.db.pursue_mode = True
+            self.db.battle_mode = False
+            self.db.dead_mode = False
+            self.location = self.home
+            string = self.db.respawn_text
+            if not string:
+                string = "%s fades into existence from out of thin air. It's looking pissed." % self.key
+                self.location.msg_contents(string)
+
+#--------------------------------------------------------------------------------------------------------
