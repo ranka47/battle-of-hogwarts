@@ -347,6 +347,7 @@ class CmdSetSpell(CmdSet):
         self.add(CmdExpelliarmus())
         self.add(CmdWingardium())
         self.add(CmdImmobilis())
+        self.add(CmdExpecto())
 
 class Wand(DefaultObject):
     """
@@ -599,6 +600,54 @@ class CmdImmobilis(Command):
         else:
             self.caller.msg("You said your spell but nothing happens! Don't worry, aim properly and say it with all your heart.")
 
+#----------------------------------------------------------------------------------
+# Expecto Patronum - Drive away the Dementors
+#----------------------------------------------------------------------------------
+
+class CmdExpecto(Command):
+    """
+    drive away the Dementors
+
+    Usage:
+    Expecto Patronum <target>
+    """
+    key = "Expecto Patronum"
+    aliases = ["Expecto", "Patronum","expecto"]
+    locks = "cmd:holds()"
+    help_category = "Spells"
+
+    def func(self):
+        "Actual function"
+
+        # If no target is given
+        if not self.args:
+            self.caller.msg("Specify the target.")
+            return
+
+        # Lower the hit rate
+        hit = float(self.obj.db.hit)*1.4   # high difficulty
+
+        if random.random() <= hit:
+            self.caller.msg("You scream the magical words {mExpecto Patronum{n.")
+            self.caller.location.msg_contents("{c%s{n screams the magical words {mExpecto Patronum{n." %
+                                                        (self.caller), exclude=[self.caller])
+            # call target
+            if self.caller.search(self.args):
+                target = self.caller.search(self.args)      #sorry.. tired :-p ok check it now
+            else:
+                return
+            if hasattr(target, "at_hit"):
+                # should return True if target is defeated, False otherwise.
+                return target.at_hit(self.obj, self.caller, damage = 10)
+            elif target.db.health:
+                target.db.health -= 10
+            else:
+                # sorry, impossible to fight this enemy ...
+                self.caller.msg("The enemy seems unaffacted.")
+                return False
+        else:
+            self.caller.msg("You said your spell but nothing happens! Think about some good moments and say it with all your heart.")
+
 
 #-----------------------------------------------------------------------------------
 #   Mob - Mobile Enemy Object
@@ -692,7 +741,6 @@ class AttackTimer(Script):
             #print "pursue"
             self.obj.pursue()
             #return
-        
         else:
             #dead mode. Wait for respawn.
             if not self.obj.db.dead_at:
@@ -1281,3 +1329,81 @@ class CannibulusRodent(Mob):
                 self.location.msg_contents(string)
 
 #--------------------------------------------------------------------------------------------------------
+
+class DementorAttackTimer(Script):
+    """
+    This script is what makes an eneny "tick".
+    """
+    def at_script_creation(self):
+        "This sets up the script"
+        self.key = "DementorAttackTimer"
+        self.desc = "Drives an Enemy's combat."
+        self.interval = random.randint(2, 6) # how fast the Enemy acts
+        self.start_delay = True # wait self.interval before first call
+        self.persistent = True
+
+    def at_repeat(self):
+        "Called every self.interval seconds."
+        if self.obj.db.inactive:
+            return
+        elif self.obj.db.health > 0:
+            #print "attack"
+            self.obj.attack(damage = 1)
+            return
+        elif self.obj.db.health <= 0:
+            #dead mode. Wait for respawn.
+            if (time.time() - self.obj.db.dead_at) > self.obj.db.dead_timer:
+                self.obj.reset()
+
+class Dementor(DefaultObject):
+    """
+    These are ghostly monsters which suck happiness(health)
+    """
+    def at_object_creation(self):
+        self.db.full_health = 20
+        self.db.health = 20
+        #this is used during creation to make sure the mob does not attack before
+        self.db.inactive = True
+        self.db.dead_at = time.time()
+        self.db.dead_timer = 60 # how long to stay dead
+        self.scripts.add(DementorAttackTimer)
+ 
+    def attack(self, damage):
+        """
+        This is the main mode of combat. It will try to hit players in
+        the location. If players are defeated, it will whisp them off
+        to the defeat location.
+        """
+        players = [obj for obj in self.location.contents if utils.inherits_from(obj, BASE_CHARACTER_TYPECLASS) and not obj.is_superuser]
+        if players:
+            for target in players:
+                target.msg("Hello.")
+                if target.db.health >= 0: #??maybe
+                    target.msg("The {rDementors{n suck happiness from you. Things blur and you begin to lose consciousness.{n")
+                    target.db.health -= damage
+
+    def at_hit(self, weapon, attacker, damage):
+        """
+        This is called when the player attacks the plant with Wingardium Leviosa
+        """
+        if self.db.health:
+            self.db.health -= damage
+            if self.db.health > 0:
+                attacker.msg("You try to drive the Dementors away and try to regain your lost happiness")
+            if self.db.health <= 0:
+                self.db.dead_at = time.time()
+                attacker.msg("{gThe Dementors fear and move away.{n")
+                self.location = None
+
+    def reset(self):
+        """
+        If the dementors was 'dead', respawn it to its home position and reset
+        all modes and damage."""
+        self.db.health = self.db.full_health
+        self.location = self.home
+        string = self.db.respawn_text
+        if not string:
+            string = "%s fade into existence from out of thin air. They are in search for happiness." % self.key
+            self.location.msg_contents(string)
+
+#------------------------------------------------------------------------------------------------------
