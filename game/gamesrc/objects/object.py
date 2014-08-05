@@ -346,7 +346,7 @@ class CmdSetSpell(CmdSet):
         self.add(CmdArania())
         self.add(CmdExpelliarmus())
         self.add(CmdWingardium())
-        self.add(CmdImmobilis())
+        self.add(CmdImmobulus())
         self.add(CmdExpecto())
 
 class Wand(DefaultObject):
@@ -552,19 +552,19 @@ class CmdWingardium(Command):
             self.caller.msg("You said your spell but nothing happens! Don't worry, say it with all your heart.")
 
 #----------------------------------------------------------------------------------
-# Immobilis - freezes the Cannibulus Rodents
+# Immobulus - freezes the Cannibulus Rodents
 #----------------------------------------------------------------------------------
 
-class CmdImmobilis(Command):
+class CmdImmobulus(Command):
     """
     freezes the Cannibulus Rodents
 
     Usage:
-    Immobilis <target>
+    Immobulus <target>
 
     """
-    key = "Immobilis"
-    aliases = ["Immobilis"]
+    key = "Immobulus"
+    aliases = ["Immobulus"]
     locks = "cmd:holds()"
     help_category = "Spells"
 
@@ -580,8 +580,8 @@ class CmdImmobilis(Command):
         hit = float(self.obj.db.hit)*1.2    # high difficulty
 
         if random.random() <= hit:
-            self.caller.msg("You say the magical words {mImmobilis{n.")
-            self.caller.location.msg_contents("{c%s{n says the magical words {mImmobilis{n." %
+            self.caller.msg("You say the magical words {mImmobulus{n.")
+            self.caller.location.msg_contents("{c%s{n says the magical words {mImmobulus{n." %
                                                         (self.caller), exclude=[self.caller])
             # call target
             if self.caller.search(self.args):
@@ -1408,11 +1408,6 @@ class Dementor(DefaultObject):
 
 #------------------------------------------------------------------------------------------------------
 
-class CmdSetFlute(CmdSet):
-    "Holds the attack command."
-    def at_cmdset_creation(self):
-        "called at first object creation."
-
 class Flute(DefaultObject):
     """
     This defines the flute which is used for spells.
@@ -1423,15 +1418,16 @@ class Flute(DefaultObject):
         "Called at first creation of the object"
         super(Flute, self).at_object_creation()
         self.desc = "Its a flute. Use this to play music that entertains."
-        self.cmdset.add_default(CmdSetFlute, permanent=True)
 
-    def reset(self):
-        """
-        When reset, the wand is simply deleted, unless it has a place
-        to return to.
-        """
-        if self.location.has_player and self.home == self.location:
-            self.location.msg_contents("%s suddenly and magically fades into nothingness, as if it was never there ..." % self.key)
-            self.delete()
-        else:
-            self.location = self.home
+class BroomStick(DefaultObject):
+    """
+    This is a BroomStick. Use it to traverse through some gates
+    """
+    def at_object_creation(self):
+        "Called at first creation of the object"
+        super(BroomStick, self).at_object_creation()
+        self.desc = "Its a broom. Ride on it to explore the world"
+
+
+
+
