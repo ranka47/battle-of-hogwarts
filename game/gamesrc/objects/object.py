@@ -1407,3 +1407,31 @@ class Dementor(DefaultObject):
             self.location.msg_contents(string)
 
 #------------------------------------------------------------------------------------------------------
+
+class CmdSetFlute(CmdSet):
+    "Holds the attack command."
+    def at_cmdset_creation(self):
+        "called at first object creation."
+
+class Flute(DefaultObject):
+    """
+    This defines the flute which is used for spells.
+
+    Important attributes - set at creation
+    """
+    def at_object_creation(self):
+        "Called at first creation of the object"
+        super(Flute, self).at_object_creation()
+        self.desc = "Its a flute. Use this to play music that entertains."
+        self.cmdset.add_default(CmdSetFlute, permanent=True)
+
+    def reset(self):
+        """
+        When reset, the wand is simply deleted, unless it has a place
+        to return to.
+        """
+        if self.location.has_player and self.home == self.location:
+            self.location.msg_contents("%s suddenly and magically fades into nothingness, as if it was never there ..." % self.key)
+            self.delete()
+        else:
+            self.location = self.home
