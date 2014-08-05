@@ -348,6 +348,7 @@ class CmdSetSpell(CmdSet):
         self.add(CmdWingardium())
         self.add(CmdImmobulus())
         self.add(CmdExpecto())
+        self.add(CmdProtego())
 
 class Wand(DefaultObject):
     """
@@ -647,6 +648,35 @@ class CmdExpecto(Command):
                 return False
         else:
             self.caller.msg("You said your spell but nothing happens! Think about some good moments and say it with all your heart.")
+
+#-----------------------------------------------------------------------------------
+#   Protego - Increases will. Boosts confidence
+#-----------------------------------------------------------------------------------
+
+class CmdProtego(Command):
+    """
+    Increases will. Boosts confidence
+
+    Usage:
+    Protego
+    """
+    key = "Protego"
+    aliases = ["protego"]
+    lock = "cmd:holds()"
+    help_category = "Spells"
+
+    def func(self):
+        "Actual function"
+        if self.caller.db.will < 200:
+            if self.caller.db.will < 150:
+                self.caller.db.will += 10
+                self.caller.msg("You gain confidence.")
+            else:
+                if self.caller.search("Parallax"):
+                    target = self.caller.search("Parallax")
+                    if hasattr(target, "at_hit"):
+                        # should return True if target is defeated, False otherwise.
+                        return target.at_hit(self.obj, self.caller, damage = 10)
 
 
 #-----------------------------------------------------------------------------------
@@ -1407,27 +1437,81 @@ class Dementor(DefaultObject):
             self.location.msg_contents(string)
 
 #------------------------------------------------------------------------------------------------------
+#   Parallax - Will decreasing Monster
+#------------------------------------------------------------------------------------------------------
 
-class Flute(DefaultObject):
+class ParallaxAttackTimer(Script):
     """
-    This defines the flute which is used for spells.
-
-    Important attributes - set at creation
+    This script is what makes an enemy "tick".
+    """
+    def at_script_creation(self):
+        "This sets up the script"
+        self.key = "ParallaxAttackTimer"
+        self.desc = "Drives Parallax's combat."
+        self.interval = random.randint(2, 6) # how fast the Enemy acts
+        self.start_delay = True # wait self.interval before first call
+        self.persistent = True
+ 
+    def at_repeat(self):
+        "Called every self.interval seconds."
+        if self.obj.db.inactive:
+            return
+        elif self.obj.db.health > 0:
+            #print "attack"
+            self.obj.attack(damage = 1)
+            return
+        elif self.obj.db.health <= 0:
+            #dead mode. Wait for respawn.
+            if (time.time() - self.obj.db.dead_at) > self.obj.db.dead_timer:
+                self.obj.reset()
+ 
+class Parallax(DefaultObject):
+    """
+    Monster which decreases will power. Can be defended and attacked by Protego spell.
     """
     def at_object_creation(self):
-        "Called at first creation of the object"
-        super(Flute, self).at_object_creation()
-        self.desc = "Its a flute. Use this to play music that entertains."
-
-class BroomStick(DefaultObject):
-    """
-    This is a BroomStick. Use it to traverse through some gates
-    """
-    def at_object_creation(self):
-        "Called at first creation of the object"
-        super(BroomStick, self).at_object_creation()
-        self.desc = "Its a broom. Ride on it to explore the world"
-
-
-
-
+        self.db.full_health = 20
+        self.db.health = 20
+        #this is used during creation to make sure the mob does not attack before
+        self.db.inactive = True
+        self.db.dead_at = time.time()
+        self.db.dead_timer = 60 # how long to stay dead
+        self.scripts.add(ParallaxAttackTimer)
+ 
+    def attack(self, damage):
+        """
+        This is the main mode of combat. It will try to hit players in
+        the location. If players are defeated, it will whisp them off
+        to the defeat location.
+        """
+        players = [obj for obj in self.location.contents if utils.inherits_from(obj, BASE_CHARACTER_TYPECLASS) and not obj.is_superuser]
+        if players:
+            for target in players:
+                if target.db.health >= 0:
+                    target.msg("The {rParallax{n increases the fear in you.")
+                    target.db.will -= 15
+ 
+    def at_hit(self, weapon, attacker, damage):
+        """
+        This is called when the player attacks it with Protego
+        """
+        if self.db.health:
+            self.db.health -= damage
+            if self.db.health > 0:
+                attacker.msg("You attack Parallax with all your will.")
+            if self.db.health <= 0:
+                self.db.dead_at = time.time()
+                attacker.msg("{gParallax fades away but you have a feeling that it will definitely return.{n")
+                self.location = None
+ 
+    def reset(self):
+        """
+        If the Parallax was 'dead', respawn it to its home position and reset
+        all modes and damage.
+        """
+        self.db.health = self.db.full_health
+        self.location = self.home
+        string = self.db.respawn_text
+        if not string:
+            string = "%s fade into existence from out of thin air." % self.key
+            self.location.msg_contents(string)
