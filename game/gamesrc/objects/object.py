@@ -1515,3 +1515,25 @@ class Parallax(DefaultObject):
         if not string:
             string = "%s fade into existence from out of thin air." % self.key
             self.location.msg_contents(string)
+
+#------------------------------------------------------------------------------------------
+
+class BroomStick(DefaultObject):
+    """
+    This is a BroomStick. Use it to traverse through some gates
+    """
+    def at_object_creation(self):
+        "Called at first creation of the object"
+        super(BroomStick, self).at_object_creation()
+        self.desc = "Its a broom. Ride on it to explore the world"
+
+class Flute(DefaultObject):
+    """
+    This defines the flute which is used for spells.
+
+    Important attributes - set at creation
+    """
+    def at_object_creation(self):
+        "Called at first creation of the object"
+        super(Flute, self).at_object_creation()
+        self.desc = "Its a flute. Use this to play music that entertains."
