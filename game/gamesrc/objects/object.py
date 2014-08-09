@@ -422,8 +422,8 @@ class CmdArania(Command):
 
     Used to attack and kill huge clusters of spiders
     """
-    key = "arania"
-    aliases = ["Arania Exumai"]
+    key = "Arania"
+    aliases = ["Arania Exumai","arania"]
     locks = "cmd:holds()"
     help_category = "Spells"
 
@@ -437,7 +437,7 @@ class CmdArania(Command):
             self.caller.location.msg_contents("A {yblast of light{n appears from {c%s{n's wand" %
                                                         (self.caller), exclude=[self.caller])
             # call enemy hook
-            if self.caller.search("spider"):
+            if self.caller.search("Spider"):
                 target = self.caller.search("Spider")
             else:
                 return
@@ -468,35 +468,38 @@ class CmdExpelliarmus(Command):
 
     key = "expelliarmus"
     aliases = ["Expelliarmus", "expell", "Expell"]
-    lock = "cmd:holds()"
+    locks = "cmd:holds()"
     help_category = "Spells"
 
     def func(self):
         "Actual function"
         hit = float(self.obj.db.hit)*1.5    # high difficulty
  
-        if random.random() >= hit:
-            if self.args:
-                #target is the opponent whose wand is being targeted
+        if self.args:
+            if self.caller.search(self.args.strip()):
                 target = self.caller.search(self.args.strip())
             else:
                 return
-
-            #if an object "Wand" is found with opponent
             if target.search(r'Wand'):
+                #target is the opponent whose wand is being targeted
+                #if an object "Wand" is found with opponent
                 wand = target.search(r'Wand')
-                #wand drops on the room location
-                #exits = [ex for ex in target.location.exits]
-                #wand.location = exits[random.randint(0, len(exits) - 1)]
-                wand.location = target.location
-                self.caller.msg("A {yflash of light{n comes out of your wand and %s's wand falls down" %(target))
-                self.caller.location.msg_contents("A {yflash of light{n emerging from {c%s{n's wand" % (self.caller), exclude=[self.caller,target])
-                target.msg("{c%s{n hits your wand with a {ylightning storm{n and your wand falls off somewhere" %(self.caller))
+                if wand.location != target.location:
+                    #wand drops on the room location
+                    #exits = [ex for ex in target.location.exits]
+                    #wand.location = exits[random.randint(0, len(exits) - 1)]
+                    if random.random() >= hit:
+                        self.caller.msg("A {yflash of light{n comes out of your wand and %s's wand falls down" %(target))
+                        wand.location = target.location
+                        self.caller.location.msg_contents("A {yflash of light{n emerging from {c%s{n's wand" % (self.caller), exclude=[self.caller,target])
+                        target.msg("{c%s{n hits your wand with a {ylightning storm{n and your wand falls off somewhere" %(self.caller))
+                    else:
+                        self.caller.msg("You said your spell but nothing happens! Don't worry, aim properly and say it with all your heart.")
+                        return
+                else:
+                    self.caller.msg("You do not find the Wand.")
             else:
-                return
-
-        else:
-            self.caller.msg("You said your spell but nothing happens! Don't worry, aim properly and say it with all your heart.")
+                self.caller.msg("You do not find the Wand.")
 
 
 #---------------------------------------------------------------------------------
@@ -522,10 +525,11 @@ class CmdWingardium(Command):
         "Actual function"
 
         # If no target is given
+        """
         if not self.args:
             self.caller.msg("Specify the target.")
             return
-
+        """
         # Lower the hit rate
         hit = float(self.obj.db.hit)*1.2    # high difficulty
 
@@ -534,13 +538,12 @@ class CmdWingardium(Command):
             self.caller.location.msg_contents("{c%s{n says the magical words {mWingardium Leviosa{n." %
                                                         (self.caller), exclude=[self.caller])
             # call target
-            if self.caller.search(self.args):
-                target = self.caller.search(self.args)
+            if self.caller.search(r'Vine'):
+                target = self.caller.search(r'Vine')
             else:
                 return
             if hasattr(target, "at_hit"):
                 # should return True if target is defeated, False otherwise.
-                target.db.ground = False
                 return target.at_hit(self.obj, self.caller, damage = 10)
             elif target.db.health:
                 target.db.ground = False
@@ -573,10 +576,11 @@ class CmdImmobulus(Command):
         "Actual function"
 
         # If no target is given
+        """
         if not self.args:
             self.caller.msg("Specify the target.")
             return
-
+        """
         # Lower the hit rate
         hit = float(self.obj.db.hit)*1.2    # high difficulty
 
@@ -585,8 +589,8 @@ class CmdImmobulus(Command):
             self.caller.location.msg_contents("{c%s{n says the magical words {mImmobulus{n." %
                                                         (self.caller), exclude=[self.caller])
             # call target
-            if self.caller.search(self.args):
-                target = self.caller.search(self.args)
+            if self.caller.search(r'Cannibulus'):
+                target = self.caller.search(r'Cannibulus')
             else:
                 return
             if hasattr(target, "at_hit"):
@@ -621,10 +625,11 @@ class CmdExpecto(Command):
         "Actual function"
 
         # If no target is given
+        """
         if not self.args:
             self.caller.msg("Specify the target.")
             return
-
+        """
         # Lower the hit rate
         hit = float(self.obj.db.hit)*1.4   # high difficulty
 
@@ -633,8 +638,8 @@ class CmdExpecto(Command):
             self.caller.location.msg_contents("{c%s{n screams the magical words {mExpecto Patronum{n." %
                                                         (self.caller), exclude=[self.caller])
             # call target
-            if self.caller.search(self.args):
-                target = self.caller.search(self.args)      #sorry.. tired :-p ok check it now
+            if self.caller.search(r'Dementor'):
+                target = self.caller.search(r'Dementor')      #sorry.. tired :-p ok check it now
             else:
                 return
             if hasattr(target, "at_hit"):
@@ -662,7 +667,7 @@ class CmdProtego(Command):
     """
     key = "Protego"
     aliases = ["protego"]
-    lock = "cmd:holds()"
+    locks = "cmd:holds()"
     help_category = "Spells"
 
     def func(self):
@@ -677,7 +682,6 @@ class CmdProtego(Command):
                     if hasattr(target, "at_hit"):
                         # should return True if target is defeated, False otherwise.
                         return target.at_hit(self.obj, self.caller, damage = 10)
-
 
 #-----------------------------------------------------------------------------------
 #   Mob - Mobile Enemy Object
@@ -818,7 +822,7 @@ class Spider(Mob):
         self.db.full_health = 20
         self.db.health = 20
         self.db.dead_at = time.time()
-        self.db.dead_timer = 100 # how long to stay dead
+        self.db.dead_timer = 20 # how long to stay dead
         # this is used during creation to make sure the mob doesn't move away
         self.db.inactive = True
         # store the last player to hit
@@ -1044,21 +1048,23 @@ class StaticAttackTimer(Script):
         "This sets up the script"
         self.key = "StaticAttackTimer"
         self.desc = "Drives an Enemy's combat."
-        self.interval = random.randint(10,15) # how fast the Enemy acts
+        self.interval = random.randint(6,8) # how fast the Enemy acts
         self.start_delay = True # wait self.interval before first call
         self.persistent = True
  
     def at_repeat(self):
         "Called every self.interval seconds."
-        if self.obj.db.inactive or not self.obj.db.ground:
+        if self.obj.db.inactive:
             return
         if self.obj.db.ground:
             if self.obj.location:
                 self.obj.attack(damage = 3)
             else:
                 self.obj.attack(damage = 1)
-        else:
-            return
+        elif self.obj.db.health <= 0:
+            #dead mode. Wait for respawn.
+            if (time.time() - self.obj.db.dead_at) > self.obj.db.dead_timer:
+                self.obj.reset()
  
  
 class VineWhip(DefaultObject):
@@ -1071,6 +1077,8 @@ class VineWhip(DefaultObject):
         self.db.health = 20
         #this is used during creation to make sure the mob does not attack before
         self.db.inactive = True
+        self.db.dead_at = time.time()
+        self.db.dead_timer = 20 # how long to stay dead
         self.scripts.add(StaticAttackTimer)
  
     def attack(self, damage):
@@ -1099,6 +1107,18 @@ class VineWhip(DefaultObject):
                 attacker.msg("The plant is almost {yderooted{n. Try harder you can lift it!")
             if self.db.health <=0:
                 attacker.msg("You are able to {glevitate{n the plant. Move away by the time it again holds the ground.")
+                self.db.ground = False
+
+    def reset(self):
+        """
+        If the plant was 'derooted', respawn it to its home position and reset
+        all modes and damage."""
+        self.db.health = self.db.full_health
+        self.location = self.home
+        string = self.db.respawn_text
+        if not string:
+            string = "%s come into life and spreads its roots on the ground firmly." % self.key
+            self.location.msg_contents(string)
 
 #------------------------------------------------------------------------------------------------------
 
@@ -1407,8 +1427,7 @@ class Dementor(DefaultObject):
         players = [obj for obj in self.location.contents if utils.inherits_from(obj, BASE_CHARACTER_TYPECLASS) and not obj.is_superuser]
         if players:
             for target in players:
-                target.msg("Hello.")
-                if target.db.health >= 0: #??maybe
+                if target.db.health >= 0:
                     target.msg("The {rDementors{n suck happiness from you. Things blur and you begin to lose consciousness.{n")
                     target.db.health -= damage
 
