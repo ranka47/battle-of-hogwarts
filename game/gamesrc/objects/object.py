@@ -912,6 +912,7 @@ class Spider(Mob):
                 self.db.battle_mode = False
                 self.db.roam_mode = False
                 self.db.pursue_mode = True
+                target.respawn()
             else:
                 target.db.health -= 2
                 target.msg("The spiders bite you. You try to run and escape.")
@@ -1057,10 +1058,7 @@ class StaticAttackTimer(Script):
         if self.obj.db.inactive:
             return
         if self.obj.db.ground:
-            if self.obj.location:
-                self.obj.attack(damage = 3)
-            else:
-                self.obj.attack(damage = 1)
+            self.obj.attack(damage = 3)
         elif self.obj.db.health <= 0:
             #dead mode. Wait for respawn.
             if (time.time() - self.obj.db.dead_at) > self.obj.db.dead_timer:
@@ -1090,12 +1088,11 @@ class VineWhip(DefaultObject):
         players = [obj for obj in self.location.contents if utils.inherits_from(obj, BASE_CHARACTER_TYPECLASS) and not obj.is_superuser]
         if players:
             for target in players:
-                if target.db.health >= 0 and damage == 1:
-                    target.msg("{rThe VineWhip hits you with its stem{n")
-                    target.db.health -= damage
-                if target.db.health >= 0 and damage == 3:
+                if target.db.health > 0:
                     target.msg("{r Some monsterous plant bites you and you bleed{n")
                     target.db.health -= damage
+                else:
+                    target.respawn()
 
     def at_hit(self, weapon, attacker, damage):
         """
@@ -1251,6 +1248,7 @@ class CannibulusRodent(Mob):
                 self.db.battle_mode = False
                 self.db.roam_mode = False
                 self.db.pursue_mode = True
+                target.respawn()
             else:
                 target.db.health -= 2
                 target.msg("The rodents are after your jammed brains!")
@@ -1427,9 +1425,11 @@ class Dementor(DefaultObject):
         players = [obj for obj in self.location.contents if utils.inherits_from(obj, BASE_CHARACTER_TYPECLASS) and not obj.is_superuser]
         if players:
             for target in players:
-                if target.db.health >= 0:
+                if target.db.health > 0:
                     target.msg("The {rDementors{n suck happiness from you. Things blur and you begin to lose consciousness.{n")
                     target.db.health -= damage
+                else:
+                    target.respawn()
 
     def at_hit(self, weapon, attacker, damage):
         """
@@ -1477,7 +1477,7 @@ class ParallaxAttackTimer(Script):
             return
         elif self.obj.db.health > 0:
             #print "attack"
-            self.obj.attack(damage = 1)
+            self.obj.attack(damage = 3)
             return
         elif self.obj.db.health <= 0:
             #dead mode. Wait for respawn.
@@ -1506,9 +1506,14 @@ class Parallax(DefaultObject):
         players = [obj for obj in self.location.contents if utils.inherits_from(obj, BASE_CHARACTER_TYPECLASS) and not obj.is_superuser]
         if players:
             for target in players:
-                if target.db.health >= 0:
+                if target.db.will > 0:
                     target.msg("The {rParallax{n increases the fear in you.")
                     target.db.will -= 15
+                    if target.db.will <= 0:
+                        target.db.health -= damage
+                        target.msg("You do not have enough courage left to face Parallax. {rYou loose consciousness{n.")
+                elif target.db.health >= 0:
+                    target.respawn()
  
     def at_hit(self, weapon, attacker, damage):
         """

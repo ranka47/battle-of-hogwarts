@@ -104,17 +104,18 @@ class IntroRoom(Room):
         """
 
         # setup
+        """
         health = self.db.char_health
         if not health:
             health = 100
-
+        """
         if character.has_player:
-            character.db.health = health
-            character.db.health_max = health
+            #character.db.health = health
+            #character.db.health_max = health
             houses = ["Gryffindor","Hufflepuff","Ravenclaw","Slytherin"]
             if not character.db.house:
                 character.db.house = houses[random.randint(0, len(houses) - 1)]
-            character.db.will = 100
+            #character.db.will = 100
 
         if character.is_superuser:
             string = "-"*78

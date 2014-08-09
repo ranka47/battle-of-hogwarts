@@ -17,7 +17,10 @@ this change, you have to convert them manually e.g. with the
 
 """
 from ev import Character as DefaultCharacter
+from ev import Script
 
+class Respawn(Script):
+    pass
 
 class Character(DefaultCharacter):
     """
@@ -41,4 +44,13 @@ class Character(DefaultCharacter):
     """
     def at_object_creation(self):
         self.db.score = 0
-    pass
+        self.db.health_max = 100
+        self.db.health = self.db.health_max
+        self.db.will = 100
+        self.db.respawns = 0
+
+    def respawn(self):
+        self.msg("You lost a life and respawn with all your default powers")
+        self.db.health = self.db.health_max
+        self.db.will = 100
+        self.db.respawns += 1
