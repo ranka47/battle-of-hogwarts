@@ -349,6 +349,7 @@ class CmdSetSpell(CmdSet):
         self.add(CmdImmobulus())
         self.add(CmdExpecto())
         self.add(CmdProtego())
+        self.add(CmdRiddikulus())
 
 class Wand(DefaultObject):
     """
@@ -682,6 +683,29 @@ class CmdProtego(Command):
                     if hasattr(target, "at_hit"):
                         # should return True if target is defeated, False otherwise.
                         return target.at_hit(self.obj, self.caller, damage = 10)
+
+#-----------------------------------------------------------------------------------
+#   Riddikulus - Drives away the Boggart
+#-----------------------------------------------------------------------------------
+
+class CmdRiddikulus(Command):
+    """
+    Drives away the Boggart
+    
+    Usage:
+    Riddikulus
+    """
+
+    key = "Riddikulus"
+    aliases = ["riddikulus"]
+    locks = "cmd:all()"
+    help_category = "Spells"
+
+    def func(self):
+        if self.caller.search(r'Unknown'):
+            target = self.caller.search(r'Unknown')
+            if hasattr(target, "at_hit"):
+                return target.at_hit(self.obj,self.caller,damage = 20)
 
 #-----------------------------------------------------------------------------------
 #   Mob - Mobile Enemy Object
@@ -1561,3 +1585,57 @@ class Flute(DefaultObject):
         "Called at first creation of the object"
         super(Flute, self).at_object_creation()
         self.desc = "Its a flute. Use this to play music that entertains."
+
+#-------------------------------------------------------------------------------------------
+
+class BoggartAttackTimer(Script):
+    """
+    This script is what makes an enemy "tick".
+    """
+    def at_script_creation(self):
+        "This sets up the script"
+        self.key = "BoggartAttackTimer"
+        self.desc = "Drives an Enemy's combat."
+        self.interval = random.randint(6,8) # how fast the Enemy acts
+        self.start_delay = True # wait self.interval before first call
+        self.persistent = True
+ 
+    def at_repeat(self):
+        "Called every self.interval seconds."
+        if self.obj.db.inactive:
+            return
+        elif self.obj.db.health <= 0:
+            #dead mode. Wait for respawn.
+            if (time.time() - self.obj.db.dead_at) > self.obj.db.dead_timer:
+                self.obj.reset()
+
+class Boggart(DefaultObject):
+    """
+    An unknown object which can change its appearence
+    """
+    def at_object_creation(self):
+        super(Boggart, self).at_object_creation()
+        self.desc = "Unknown object."
+        self.db.inactive = True
+        self.db.full_health = 20
+        self.db.health = 20
+        self.db.dead_at = time.time()
+        self.db.dead_timer = 15
+        self.scripts.add(BoggartAttackTimer)
+
+    def at_hit(self, weapon, attacker,damage):
+        """
+        This is called when the player attacks it with Protego
+        """
+        self.db.dead_at = time.time()
+        self.db.health -= damage
+        attacker.msg("{yBoggart fades away but you have a feeling that it will definitely return.{n")
+        self.location = None
+
+    def reset(self):
+        self.location = self.home
+        string = self.db.respawn_text
+        self.db.health = 20
+        if not string:
+            string = "%s fade into existence from out of thin air." % self.key
+            self.location.msg_contents(string)
