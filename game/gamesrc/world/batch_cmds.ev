@@ -1,10 +1,9 @@
-#
-# This is an example batch build file for Evennia.
+# This is a batch build file for Evennia.
 #
 # It allows batch processing of normal Evennia commands.
 # Test it by loading it with the @batchprocess command
 #
-#   @batchprocess[/interactive] examples.batch_example
+#   @batchcommand/interactive game.gamesrc.world.batch_cmds
 #
 # A # as the first symbol on a line begins a comment and
 # marks the end of a previous command definition (important!).
@@ -14,43 +13,303 @@
 # comment line  begins. Extra whitespace is removed; an empty
 # line in a command definition translates into a newline.
 #
-
-# This creates a red button
-
-@create button:examples.red_button.RedButton
-
-# This comment ends input for @create
-# Next command:
-
-@set button/desc =
-  This is a large red button. Now and then
-  it flashes in an evil, yet strangely tantalizing way.
-
-  A big sign sits next to it. It says:
-
-
------------
-
- Press me!
-
------------
-
-
-  ... It really begs to be pressed, doesn't it? You
-know you want to!
-
-# This ends the @set command. Note that line breaks and extra spaces
+#Note that line breaks and extra spaces
 # in the argument are not considered. A completely empty line
 # translates to a \n newline in the command; two empty lines will thus
 # create a new paragraph. (note that few commands support it though, you
 # mainly want to use it for descriptions)
-
 # Now let's place the button where it belongs (let's say limbo #2 is
 # the evil lair in our example)
 
+@teleport Limbo
+
+#inside Limbo
+
+@desc 19 years have passed since the Battle of Hogwarts. Many changes have come into picture not only at Hogwarts but in the Ministry of Magic too. Some liked it AND SOME DIDN'T. It is indeed to keep the balance on the earth Good and Evil, both must exist. 
+The Dementors were removed from the Azkaban and sent to an isolation place as they had helped Voldemort in the Battle of Hogwarts. They found out regarding the Elder Wand and also that it has been kept in front of the portrait of Professor Albus  Percival Wulfric Brian Dumbledore. Wanting revenge against the awful behaviour of the Wizardry World towards them they blamed Harry Potter for all this. So in the advent of stealing the Wand from the Hogwarts they also kidnapped his son Albus Severus Potter. In the process of saving him, Scorpius Malfoy (the son of Draco Malfoy) goes after the Dementors but is eventually caught. Now taking Gilderoy Lockhart as their decoy they cast Memory Charms at many Wizards and take them into their possession. Many beasts have turned against the Ministry on the fear of the Dementor’s Kiss as it sucks the soul. 
+
+Now Harry Potter and Draco Malfoy one times biggest rivals have teamed up to save their sons and ultimately the world. On their journey they used to get caught many times by the Dementors but they succeeded in escaping. Now they are on their way to the Shriecking Shack where their sons have been kept.
+
+#description Limbo
+
+@dig In front of the Gringott’s Bank;room001 = Begin,Limbo
+
+#created room001
+
+Begin
+
+#inside room001
+
+@desc Considered to be the the safest place in the Wizardry World but Harry mocks that (as he had once robbed it) you start your journey from here.
+You apparate in front of a snowy white building that towers over the other little shops. Standing beside its burnished bronze DOORS to your NORTH, wearing a uniform of scarlet and gold. There is also a road coming from EAST and going to the WEST for the shops of the Diagon Alley.
+You recall memories of Ollivanders Wand Shop to the East and The Broomstix to the West. It had been so much fun in the Diagon Alley but today it seems haunted.
+
+#description room001
+
+@dig Gringott’s Wizarding Bank;room002 = north,south
+
+#created room002
+
+north
+
+#inside room002
+
+@desc Through these doors (once flanked with goblins) you see a vast marble hall long counters stretching along its length with doors leading off to the vault passageways with none sitting at them. 
+But there’s a Corporeal Patronus you see at the other end towards SOUTH. It is an Otter, Hermoine’s patronus. It has carried a message for you.
+
+#description room002
+
+@dig Gringott’s Wizarding Bank;room003 = north,south
+
+#created room003
+
+north
+
+#inside room003
+
+@desc “{bHarry. Draco. Beware Using Spells. All Tabooed. Hence Reason You Get Caught Always. Need To Learn Spells Again. Get New Wand, FLOO And Broomstick. Hidden In Shop.{n”
+Otter vanishes now in the thin air. 
+You both just look into each others’ eyes, stunned. Again means you will have to learn all the spells again in the ancient languages which could be casted only with some special types of wands.
+
+#description room003
+
+@teleport room001
+
+#inside room1 again
+
+@dig Diagon Alley;room004 = east;Diagon Alley,west
+
+#created room004
+
+east
+
+#inside room004
+
+@desc To the left you can see Eeylops Owl Emporium which used to be earlier be continuously full of owl’s hooting. But since the attack of the dementors it is also dead as the streets. 
+On the front you see the Broomstix Shop with loads of Broomsticks spread in a random manner as if thrown by somebody. There are signs of a raid on the shop. You also see a door towards your SOUTH.
+
+#description room004
+
+@dig Broomstix;room005 = south;Broomstix,north
+
+#created room005
+
+south
+
+#inside room005
+
+@desc Broken Broomsticks, burnt parchments and quills, pieces of statues of Elliot Smethwyck(one who was the pioneer of the boom in the Broomstick Mass Production). 
+Finding for any hints of someone or something you both search here and there. 
+Draco takes up a broken broomstick and throws it to make way. He doest hear a sound of its falling but doesnt see it anymore. He is astonished. He again picks up another piece and throws. He finds that it disappeared againn. Going their he finds that there is an invisible Cauldron (made by using Disillusionment Charm) where kept is a broomstick.
+To the WEST they see a fireplace with fire lit in it and something written in small letters beside the chimney.
+
+#description room005
+
+@create/drop BroomStick:object.BroomStick
+
+#created and dropped a broomstick
+
+@desc BroomStick = It reads {rFIREBOLT{n.
+
+#description Broomstick
+
+@dig Floo Network;room006 = west;Floo Network,Broomstix;east
+
+#created room006
+
+west
+
+#inside room006
+
+@desc Harry remembers his first travel through it and had accidently reached to Knockturn Alley instead of Diagon Alley.
+
+#description room006
+
+#Floo network to Hogsmeade
+
+@teleport room001
+
+#back inside room001
+
+@dig Diagon Alley;room007 = west,east
+
+#created room007
+
+west
+
+#inside room007
+
+@desc Surrounded by many shops who have been burnt you still could recognise Madam Malkin’s Robs for all Occasion Shop spread at a big area in the Diagon Alley. All the beautiful and magic-made stunning robes have been tore apart by some beasts seems to have pointed teeth. There is also Weasley’s Wizard Wheezes Shop which filled Harry’s heart with mixed emotions. Happy due to fun times they had here and sad due to remembrance of Fred Wealey’s death. 
+Still the happy face of the Mannequin and the rabbit’s ears stand tall untouched. 
+To the far to the SOUTH you see more familiar shops.
+
+#description room007
+
+@dig Diagon Alley;room008 = south,north
+
+#created room008
+
+south
+
+#inside room008
+
+@desc You see to the left the Magical Menagerie Shop where everyone used to take their best friend forever, their own pet. To the right is again the extension of Madam Malkin’s Robs for all Occasion Shop. Seeing straight ahead their hearts filled with hope.
+
+#description room008
+
+@dig Diagon Alley;room009 = south,north
+
+#created room009
+
+south
+
+#inside room009
+
+@desc To the left you see in shining letters Potage’s Cauldron Shop and underneath “Cauldrons — All Sizes — Copper, Brass, Pewter, Silver — Self-Stirring — Collapsible”
+To the front Harry remembers the wall through which he entered the first time in Diagon Alley. It seemed to be locked for the use now. But still he could hear some Muggles (one who dont know about the Wizardry World) having fun at the Leaky Cauldron.
+To the right they see the place which they were eager to come after getting Hermoine’s message - Ollivander’s Wands Shop. The door read with peeling gold letters:
+Ollivanders: Makers of Fine Wands since 382 B.C.
+Unlike all other doors, here they find it half-opened!!!
+
+#description room009
+
+@dig Ollivander’s Wand Shop;room010 = Wand Shop,east
+
+#created room010
+
+Wand Shop
+
+#inside room010
+
+@desc Dready and haunted. Narrow and Shabby. Draco tried calling for someone but Harry stops him. They search for some signs of hint but in vain. Draco remembers that the wand themselves choose their masters. So they just tried looking into the shelf. Both arrive at a shelf which suddenly attracted them. They felt something unusual. But they looked up their and found two wands along with some Floo Powder.They felt some divine feeling cropping up from within.
+
+#description room010
+
+@teleport room006
+
+#back inside room006 Floo Network
+
+@dig Railway Station;room011 = Floo Network to Hogsmeade, Floo Network to Diagon Alley
+
+#created room011
+
+Floo Network to Hogsmeade
+
+#inside room011
+
+@desc Covered in the dust as the Floo Network had not been used since days you both dash out of the chimney, falling on each other. You arrive at the railway station where Hogwarts Express used to stop. Ahhhh!!!! Old memories flocked your mind. You can see the platform heading towards the East.
+
+#description room011
+
+@dig Railway Station;room012 = Platform,Chimney
+
+#created room012
+
+Platform
+
+#inside room012
+
+@desc You travel along the platform. But you both feel someone is watching you two.
+
+#description room012
+
+@dig Entrance of Railway Station;room013 = Entrance,Platform
+
+#created room013
+
+Entrance
+
+#inside room013
+
+@desc You arrive at the exit of the railway station and see the Great Black Lake to the right and the way to the Hogsmeade to your left. Over the Great Black Lake was a dense fog but still you could see light shimmering from the Hogwarts. Seeing that filled the heart with joy and hope. 
+You both still feel that someone is watching you both.
+
+#description room013
+
+@dig Hogsmeade;room014 = Hogsmeade,Railway Entrance;Entrance
+
+#created room014
+
+Hogsmeade
+
+#inside room014
+
+@desc Road is in front of you and across it is Zonko’s Joke Shop. Hahah!!! Funny Time they had their with their friends.
+
+#description room014
+
+@dig Hogsmeade;room015 = west,east
+
+#created room015
+
+west
+
+#inside room015
+
+@desc To the left you see Madam Puddifoot’s Tea Shop. Here Harry gets reminded of how foolish he had been with the girls and shares moments of his first date with Cho Chang. To the right you see a familiar place to Harry but Draco remembers it as an Inn where very few people are known to go. Actually none goes. It is the Hog’s Head Pub.
+But today something is strange. A goat Patronus is circling around the Pub. Harry has a smile on his face but Draco is filled with fear.
+
+Tap-Tap
+Tap-Tap
+Tap-Tap
+Tap-Tap
+Tap-Tap
+Tap-Tap
+Tap-Tap
+Tap-Tap
+
+Moment they move near the door they hear a screeching noise. :o :o :o 
+Ohhh! They exclaimed and put out their wands at once but in another moment their wands are thrown to the ground at once. They understood that someone had Disarmed them!
+
+#description room015
+
+@dig Hog’s Head Inn;room016a = Hog's Head Pub;Hog's Head Inn;Hog's Head,Outside Inn
+
+#created room016a
+
+Hog's Head Pub
+
+#inside room016a
+
+@desc Draco exclaimed seeeing ‘{yAlbus Dumaobledore{n’ standing in front of him but the person points the wand and asks him to be absolutely quite. 
+They entered the Inn and stood behind the counter. Harry greets him and introduces Draco to {mAberforth Dumbledore{n, the brother of Albus Dumbledore. Draco sees a broken mirror in the room which Sirius Black had gifted Harry. You could find a kitchen and besides to it goes down a staircase towards East. Aberforth asks them to follow him downstairs.
+
+#description room016a
+
+@dig Sitting Room;room0016b = Sitting Room,Inn
+
+#created room016b
+
+Sitting Room
+
+#inside room016b
+
+@desc Draco and Harry discussed about getting into the Hogwarts through the secret passage leading them into the Room of Requirement. Aberforth helped them with some snacks. They discussed the raids that the Dementors had been making. All the monsters who were banished from the Wizardry World after the fall of Voldemort had come together to seek revenge. It included the Lethifolds, Inferi, Dementors, Giants, Boggarts, Acromantulas, Werewolves, etc. Lead by {RDementors{n as they know all secret passages of the Ministry and the Hogwarts (except the Room of Requirement) they have taken hold of the Ministry. All the Wizards and Witches are being hunted and tortured brutally to death by the beasts as they have very evil powers. None can even use the spells as they have tabooed almost every usual spell that the wizards would use to protect themselves or do daily chores. The Dementors have been spreading across the Britain and sucking every bit of happiness to make them stronger. Moreover they have also changed the Code of Wand’s Use Clause 3 (passed by the Ministry of Magic in 1631) that had prohibited the Goblins, the Giants, the Dementors to keep a wand. They also now possess the Elder Wand.
+
+Aberforth explains them to learn the spells with new incantation so as to defeat the Dementors and others. Moreover he also warns that only few teachers in Hogwarts know the ancient incantations of the spells.
+On the inquiry of Draco, Aberforth answered that he know just two spells to cast with ancient Incantation. One being the Patronus Charm and the Disarming Charm. 
+However learning ancient incantation is not easy. On learning this spells all students have to make The Unbreakable Vow (which if broken leads to immediate death) that they wont tell anyone the incantation directly. The Caster has to get the Incantation from a Riddle.
+That is the reason they cant be ever tabooed as the beasts can never know what they are. They cant make Unbreakable Vow.
+
+{gDisarming Charm{n - Causes whatever the victim is holding to fly away, knocks down the opponent if used forcefully. 
+YP IDR YJR D[R;; DSU 
+{wRC[R;;P ST,S{n
+
+{gPatronus Charm{n - It is defensive spell which will take form a Patronus (it is an animal form which would depict your character precisely) from all your positive emotions’ energy. Can be used against Lethifolds and Dementors. 
+YP IDR YJR D[R;; DSU
+{wRC[RVYP [SYTPMID{n
+
+Muggle’s (one who dont know magic) world has an instrument names Keyboard. It could be a great help to you two to learn the spell.
+
+After learning the spells, Harry wants to get to the Hogwarts but would need Marauder’s Map which as per James Sirius Potter (Harry’s Second Son), he has hidden it in Hogsmeade but couldn’t convey the location. 
+
+Aberforth points both of them to a secret passage that would take them to the Hogwarts. It is behind the portrait of Ariana Dumbledore, the sister of Albus Dumbledore.
+
+#description room016b
+
+
+
+
+
+
 @teleport #2
-
-#... and drop it (remember, this comment ends input to @teleport, so don't
-#forget it!) The very last command in the file need not be ended with #.
-
-drop button
