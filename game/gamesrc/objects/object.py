@@ -350,6 +350,7 @@ class CmdSetSpell(CmdSet):
         self.add(CmdExpecto())
         self.add(CmdProtego())
         self.add(CmdRiddikulus())
+        self.add(CmdMirror())
 
 class Wand(DefaultObject):
     """
@@ -698,7 +699,7 @@ class CmdRiddikulus(Command):
 
     key = "Riddikulus"
     aliases = ["riddikulus"]
-    locks = "cmd:all()"
+    locks = "cmd:holds()"
     help_category = "Spells"
 
     def func(self):
@@ -706,6 +707,27 @@ class CmdRiddikulus(Command):
             target = self.caller.search(r'Unknown')
             if hasattr(target, "at_hit"):
                 return target.at_hit(self.obj,self.caller,damage = 20)
+
+#-----------------------------------------------------------------------------------
+#   Mirror - Drives away Medusa
+#-----------------------------------------------------------------------------------
+
+class CmdMirror(Command):
+    """
+    Drives away Medusa.
+    Medusa gets struck by its own magic
+    """
+
+    key = "Mirror"
+    aliases = ["mirror","Use Mirror"]
+    locks = "cmd:holds()"
+    help_category = "Spells"
+
+    def func(self):
+        if self.caller.search(r'Medusa'):
+            target = self.caller.search(r'Medusa')
+            if hasattr(target, "at_hit"):
+                return target.at_hit(self.obj,self.caller,damage = 10)
 
 #-----------------------------------------------------------------------------------
 #   Mob - Mobile Enemy Object
@@ -1639,3 +1661,84 @@ class Boggart(DefaultObject):
         if not string:
             string = "%s fade into existence from out of thin air." % self.key
             self.location.msg_contents(string)
+
+#------------------------------------------------------------------------------------
+
+class MedusaAttackTimer(Script):
+    """
+    This script is what makes an enemy "tick".
+    """
+    def at_script_creation(self):
+        "This sets up the script"
+        self.key = "MedusaAttackTimer"
+        self.desc = "Drives an Enemy's combat."
+        self.interval = random.randint(4,7) # how fast the Enemy acts
+        self.start_delay = True # wait self.interval before first call
+        self.persistent = True
+ 
+    def at_repeat(self):
+        "Called every self.interval seconds."
+        if self.obj.db.inactive:
+            return
+        elif self.obj.db.health > 0:
+            #print "attack"
+            self.obj.attack(damage = 2)
+            return
+        elif self.obj.db.health <= 0:
+            #dead mode. Wait for respawn.
+            if (time.time() - self.obj.db.dead_at) > self.obj.db.dead_timer:
+                self.obj.reset()
+ 
+
+class Medusa(DefaultObject):
+    """
+    It is a monster more powerful in dark rooms and dies when a mirror is shown to it
+    """
+    def at_object_creation(self):
+        self.db.full_health = 20
+        self.db.health = 20
+        #this is used during creation to make sure the mob does not attack before
+        self.db.inactive = True
+        self.db.dead_at = time.time()
+        self.db.dead_timer = 15 # how long to stay dead
+        self.scripts.add(MedusaAttackTimer)
+ 
+    def attack(self, damage):
+        """
+        This is the main mode of combat. It will try to hit players in
+        the location. If players are defeated, it will whisp them off
+        to the defeat location.
+        """
+        players = [obj for obj in self.location.contents if utils.inherits_from(obj, BASE_CHARACTER_TYPECLASS) and not obj.is_superuser]
+        if players:
+            for target in players:
+                if target.db.health > 0:
+                    target.msg("{rYou are struck by %s{n" % self.key)
+                    target.db.health -= damage
+                else:
+                    target.respawn()
+
+    def at_hit(self, weapon, attacker, damage):
+        """
+        This is called when the player attacks Medusa
+        """
+        if self.db.health:
+            self.db.health -= damage
+            if self.db.health == 10:
+                attacker.msg("%s strikes you. Your mirror gets cracks on it." % self.key)
+            if self.db.health <=0:
+                attacker.msg("%s's attack is reflected by your mirror. It fears and vanishes in a {wflash{n. You have a feeling that it will haunt you again." % self.key)
+                self.db.dead_at = time.time()
+                self.location = None
+    def reset(self):
+        """
+        If Medusa fears away, respawn it to its home position and reset
+        all modes and damage.
+        """
+        self.db.health = self.db.full_health
+        self.location = self.home
+        string = self.db.respawn_text
+        if not string:
+            string = "%s come into life from the dark dungeons." % self.key
+            self.location.msg_contents(string)
+
