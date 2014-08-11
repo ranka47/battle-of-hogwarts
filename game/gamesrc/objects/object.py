@@ -361,11 +361,13 @@ class Wand(DefaultObject):
                 This can be used for changing probability of all spells depending on
                 score of the player
     """
+
     def at_object_creation(self):
         "Called at first creation of the object"
         super(Wand, self).at_object_creation()
         self.db.hit = 0.4    # hit chance
         self.db.magic = True
+        self.locks.add("get:not holds(Wand)")
         self.cmdset.add_default(CmdSetSpell, permanent=True)
 
     def reset(self):
