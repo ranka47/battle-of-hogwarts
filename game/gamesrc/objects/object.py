@@ -264,6 +264,7 @@ class CmdTalk(default_cmds.MuxCommand):
             menu.add(menusystem.MenuNode(key, **kwargs))
         menu.start()
 
+#----------------------------------------------------------------------------------------------
 
 class TalkingCmdSet(CmdSet):
     "Stores the talk command."

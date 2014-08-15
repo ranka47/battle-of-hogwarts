@@ -25,7 +25,7 @@
 
 #inside Limbo
 
-@desc 19 years have passed since the Battle of Hogwarts. Many changes have come into picture not only at Hogwarts but in the Ministry of Magic too. Some liked it AND SOME DIDN'T. It is indeed to keep the balance on the earth Good and Evil, both must exist. 
+@desc 19 years have passed since the Battle of Hogwarts. Many changes have come into picture not only at Hogwarts but in the Ministry of Magic too. Some liked it AND SOME DIDN'T. It is indeed to keep the balance on the earth between the Good and the Evil; both must exist. 
 The Dementors were removed from the Azkaban and sent to an isolation place as they had helped Voldemort in the Battle of Hogwarts. They found out regarding the Elder Wand and also that it has been kept in front of the portrait of Professor Albus  Percival Wulfric Brian Dumbledore. Wanting revenge against the awful behaviour of the Wizardry World towards them they blamed Harry Potter for all this. So in the advent of stealing the Wand from the Hogwarts they also kidnapped his son Albus Severus Potter. In the process of saving him, Scorpius Malfoy (the son of Draco Malfoy) goes after the Dementors but is eventually caught. Now taking Gilderoy Lockhart as their decoy they cast Memory Charms at many Wizards and take them into their possession. Many beasts have turned against the Ministry on the fear of the Dementor’s Kiss as it sucks the soul. 
 
 Now Harry Potter and Draco Malfoy one times biggest rivals have teamed up to save their sons and ultimately the world. On their journey they used to get caught many times by the Dementors but they succeeded in escaping. Now they are on their way to the Shriecking Shack where their sons have been kept.
@@ -100,7 +100,7 @@ south
 
 @desc Broken Broomsticks, burnt parchments and quills, pieces of statues of Elliot Smethwyck(one who was the pioneer of the boom in the Broomstick Mass Production). 
 Finding for any hints of someone or something you both search here and there. 
-Draco takes up a broken broomstick and throws it to make way. He doest hear a sound of its falling but doesnt see it anymore. He is astonished. He again picks up another piece and throws. He finds that it disappeared againn. Going their he finds that there is an invisible Cauldron (made by using Disillusionment Charm) where kept is a broomstick.
+Draco takes up a broken broomstick and throws it to make way. He doest hear a sound of its falling but doesn't see it anymore. He is astonished. He again picks up another piece and throws. He finds that it disappeared again. Going there he finds that there is an invisible Cauldron (made by using Disillusionment Charm) were kept is a broomstick.
 To the WEST they see a fireplace with fire lit in it and something written in small letters beside the chimney.
 
 #description room005
@@ -166,7 +166,7 @@ south
 #inside room009
 
 @desc To the left you see in shining letters Potage’s Cauldron Shop and underneath “Cauldrons — All Sizes — Copper, Brass, Pewter, Silver — Self-Stirring — Collapsible”
-To the front Harry remembers the wall through which he entered the first time in Diagon Alley. It seemed to be locked for the use now. But still he could hear some Muggles (one who dont know about the Wizardry World) having fun at the Leaky Cauldron.
+To the front Harry remembers the wall through which he entered the first time in Diagon Alley. It seemed to be locked for the use now. But still he could hear some Muggles (one who don't know about the Wizardry World) having fun at the Leaky Cauldron.
 To the right they see the place which they were eager to come after getting Hermoine’s message - Ollivander’s Wands Shop. The door read with peeling gold letters:
 Ollivanders: Makers of Fine Wands since 382 B.C.
 Unlike all other doors, here they find it half-opened!!!
@@ -185,6 +185,10 @@ Wand Shop
 
 #description room010
 
+@create/drop Wand:object.Wand
+
+#created and dropped a wand
+
 @teleport room006
 
 #back inside room006 Floo Network
@@ -192,6 +196,10 @@ Wand Shop
 @dig Railway Station;room011 = Floo Network to Hogsmeade, Floo Network to Diagon Alley
 
 #created room011
+
+@lock Floo Network to Hogsmeade = traverse:holds(Wand)
+
+#added lock to Floo Network
 
 Floo Network to Hogsmeade
 
@@ -265,47 +273,322 @@ Ohhh! They exclaimed and put out their wands at once but in another moment their
 
 @dig Hog’s Head Inn;room016a = Hog's Head Pub;Hog's Head Inn;Hog's Head,Outside Inn
 
-#created room016a
+#created room016
 
 Hog's Head Pub
 
-#inside room016a
+#inside room016
 
-@desc Draco exclaimed seeeing ‘{yAlbus Dumaobledore{n’ standing in front of him but the person points the wand and asks him to be absolutely quite. 
-They entered the Inn and stood behind the counter. Harry greets him and introduces Draco to {mAberforth Dumbledore{n, the brother of Albus Dumbledore. Draco sees a broken mirror in the room which Sirius Black had gifted Harry. You could find a kitchen and besides to it goes down a staircase towards East. Aberforth asks them to follow him downstairs.
+@desc Draco exclaimed seeing ‘Albus Dumbledore’ standing in front of him but the person points the wand and asks him to be absolutely quiet. 
+They entered the Inn and stood behind the counter. Harry greets him and introduces Draco to Aberforth Dumbledore, the brother of Albus Dumbledore. Draco sees a broken mirror in the room which Sirius Black had gifted Harry. You could find a kitchen and besides to it goes down a staircase towards East. 
+Harry informs him that they need to get to the Hogwarts. To which he replies that they must have the Marauder’s Map (Map tells you who is where in Hogwarts Castle but you can't see Room of Requirement, the Chamber of Secret and the Shrieking Shack). Harry agrees and informs him that it had been with his son James Sirius Potter, he had hidden it somewhere in Hogsmeade but couldn’t convey the location. 
+Aberforth asks them to follow him downstairs.
 
-#description room016a
+#description room016
 
-@dig Sitting Room;room0016b = Sitting Room,Inn
+@dig Sitting Room;room017 = Sitting Room,Inn
 
-#created room016b
+#created room017
 
 Sitting Room
 
-#inside room016b
+#inside room017
 
-@desc Draco and Harry discussed about getting into the Hogwarts through the secret passage leading them into the Room of Requirement. Aberforth helped them with some snacks. They discussed the raids that the Dementors had been making. All the monsters who were banished from the Wizardry World after the fall of Voldemort had come together to seek revenge. It included the Lethifolds, Inferi, Dementors, Giants, Boggarts, Acromantulas, Werewolves, etc. Lead by {RDementors{n as they know all secret passages of the Ministry and the Hogwarts (except the Room of Requirement) they have taken hold of the Ministry. All the Wizards and Witches are being hunted and tortured brutally to death by the beasts as they have very evil powers. None can even use the spells as they have tabooed almost every usual spell that the wizards would use to protect themselves or do daily chores. The Dementors have been spreading across the Britain and sucking every bit of happiness to make them stronger. Moreover they have also changed the Code of Wand’s Use Clause 3 (passed by the Ministry of Magic in 1631) that had prohibited the Goblins, the Giants, the Dementors to keep a wand. They also now possess the Elder Wand.
+@desc They saw the portrait of {yAlbus Dumbledore{n (sleeping like always Zzzzzzz……) and also of {yAriana Dumbledore{n (smiling as always) in the front.
+Seeing the portrait, it would be like watching a video as the portraits in the Wizardry world would move unlike in the Muggle’s World.
+Draco and Harry discussed about getting into the Hogwarts through the secret passage leading them into the Room of Requirement. Aberforth helped them with some snacks. Snacks gave them a thought - “{wBetter we were hungry{n.”
+After that Aberforth explains them to learn the spells with new incantation so as to defeat the Dementors and others. Moreover he also informs that only few teachers in Hogwarts know the ancient incantations of the spells. 
+He asks them to come to an empty room to their left to learn the spell.
 
-Aberforth explains them to learn the spells with new incantation so as to defeat the Dementors and others. Moreover he also warns that only few teachers in Hogwarts know the ancient incantations of the spells.
-On the inquiry of Draco, Aberforth answered that he know just two spells to cast with ancient Incantation. One being the Patronus Charm and the Disarming Charm. 
-However learning ancient incantation is not easy. On learning this spells all students have to make The Unbreakable Vow (which if broken leads to immediate death) that they wont tell anyone the incantation directly. The Caster has to get the Incantation from a Riddle.
-That is the reason they cant be ever tabooed as the beasts can never know what they are. They cant make Unbreakable Vow.
+#description room017
 
-{gDisarming Charm{n - Causes whatever the victim is holding to fly away, knocks down the opponent if used forcefully. 
+@dig Sitting Room;room018 = Empty Room,Sitting Room
+
+#created room018
+
+Empty Room
+
+#inside room018
+
+@desc On the inquiry of Draco, Aberforth answered that he know just two spells to cast with ancient Incantation. One being the Patronus Charm and the Disarming Charm. 
+However learning ancient incantation is not easy. On learning this spells all students have to make The Unbreakable Vow (which if broken leads to immediate death) that 
+they won't tell anyone the incantation directly. The Caster has to get the Incantation by going through a test of any form.
+That is the reason they can't be ever tabooed as the beasts can never know what they are because they can't make Unbreakable Vow.
+
+Disarming Charm - Causes whatever the victim is holding to fly away, knocks down the opponent if used forcefully. 
 YP IDR YJR D[R;; DSU 
 {wRC[R;;P ST,S{n
 
-{gPatronus Charm{n - It is defensive spell which will take form a Patronus (it is an animal form which would depict your character precisely) from all your positive emotions’ energy. Can be used against Lethifolds and Dementors. 
+Patronus Charm - It is defensive spell which will take form a Patronus (it is an animal form which would depict your character precisely) from all your positive emotions’ energy. Can be used against Lethifolds and Dementors. 
 YP IDR YJR D[R;; DSU
 {wRC[RVYP [SYTPMID{n
 
-Muggle’s (one who dont know magic) world has an instrument names Keyboard. It could be a great help to you two to learn the spell.
+Muggle’s (one who don't know magic) world has an instrument named Keyboard. It could be of great help to you two to learn the spell.
 
-After learning the spells, Harry wants to get to the Hogwarts but would need Marauder’s Map which as per James Sirius Potter (Harry’s Second Son), he has hidden it in Hogsmeade but couldn’t convey the location. 
+After learning the spells, Aberforth asks them to come back to the Sitting Room as Ariana was ready to open the secret passage.
 
-Aberforth points both of them to a secret passage that would take them to the Hogwarts. It is behind the portrait of Ariana Dumbledore, the sister of Albus Dumbledore.
+#description room018
 
-#description room016b
+@teleport room014
+
+#inside room014 again
+
+@dig Hogsmeade;room019 = east,west
+
+#created room019
+
+east
+
+#inside room019
+
+@desc To the side of Zonko’s Joke Shop you both can see Honeydukes, the most famous sweet shop for its varied chocolates. And to its front is the Three BroomSticks. 
+{r<3 <3 <3 <3{n Looked both Harry and Draco in the memory of Madam Rosemerta {r<3 <3 <3 <3{n
+Madam Rosemerta, a blonde and beautiful woman, was fancied by many wizards, young and old both.
+Straight up they could see a mountain with a cave where Harry in his school years used to visit Sirius Black, his godfather. 
+They were lost in the fancy world when suddenly Draco noticed something moving near the Three Broomsticks.
+
+#description room019
+
+@dig The Three Broomsticks;room020 = The Three Broomsticks, Near Joke Shop
+
+#created room020
+
+The Three Broomsticks
+
+#inside room020
+
+@desc A board near the Three Broomsticks has its letters changing continuously. Draco pointed it is the use of Protean Charm on it. Someone was trying to communicate with them. 
+It reads:
+Been you there when you were small 
+See from the Hogmeade high up in all 
+If you still can't see in their 
+See below to see up their
+
+And then it again changed to the menu of The Three Broomsticks:
+Butterbeer	 | Red Currant Rum
+FireWhiskey	| Cherry Syrup
+Gillywater	 | Soda with Ice and Umbrella
+Mulled Mead	| Shacky Rum
+
+#description room020
+
+@dig ----;room020b = dig;look down;down,look up
+
+#create room020d
+
+dig
+
+#inside room020d
+
+@create/drop Deluminator
+
+#created and dropped deluminator
+
+@desc Deluminator = {wShows light even in the Darkest hour{n - by {yAlbus Dumbledore{n
+
+#description of deluminator
+
+up
+
+#inside room020
+
+@dig The Hogsmeade Cave;room021 = The Hogsmeade Cave, The Three Broomsticks
+
+#created room021
+
+@lock The Hogsmeade Cave = traverse:holds(Deluminator)
+
+#created lock for deluminator
+
+The Hogsmeade Cave
+
+#inside room021
+
+@desc Both reached Hogsmeade Mountain. 
+Their voice echoing...
+Draco says, “Can’t take risk to get in their in the dark. We can’t even use the Light Spell.”
+
+#description room021
+
+@dig The Hogsmeade Cave;room022 = Move ahead;ahead, Go back;back
+
+#created room022
+
+@lock The Hogsmeade Cave = traverse:holds(Deluminator)
+
+#added lock to The Hogsmeade Cave
+
+Move Ahead
+
+#inside room022
+
+@desc One can see some very old establishments for living. Near a fireplace they saw a parchment-like looking thing.
+
+#description room022
+
+@create/drop Parchment
+
+#created Parchment(Marauder’s Map)
+
+@desc Parchment = {gMarauder’s Map{n
+
+#description of Parchment
+
+@teleport room018
+
+#inside room018 again
+
+@dig Secret Passage;room023 = Secret Passage,Sitting Room
+
+#created room023
+
+Secret Passage
+
+#inside room023
+
+@desc Aberforth comes along with them and asks whether they had figured out the riddle and got the incantation for the two spells.
+
+#description room023
+
+@dig Secret Passage;room024 = Move ahead;ahead, Go back;back
+
+#created room024
+
+Move ahead
+
+#inside room024
+
+@desc Along the path they discussed the raids that the Dementors had been making. All the monsters who were banished from the Wizardry World after the fall of Voldemort had come together to seek revenge. It included the Lethifolds, Inferi, Dementors, Giants, Boggarts, Acromantulas, Werewolves, etc.
+
+#description room024
+
+@dig Secret Passage;room025 = Move ahead;ahead,Go back;back
+
+#created room025
+
+Move ahead
+
+#inside room025
+
+@desc Lead by Dementors as they know all secret passages of the Ministry and the Hogwarts (except the Room of Requirement one) they have taken hold of the Ministry. All the Wizards and Witches are being hunted and tortured brutally to death by the beasts as they have very evil powers dealing with one’s most worst lived memory and feeding on their will power.
+
+#description room025
+
+@dig Secret Passage;room026 = Move ahead;ahead,Go back;back
+
+#created room026
+
+Move ahead
+
+#inside room026
+
+@desc None can even use the spells as they have tabooed almost every usual spell that the wizards would use to protect themselves or do daily chores. The Dementors have been spreading across the Britain and sucking every bit of happiness to make them stronger. Moreover they have also changed the Code of Wand’s Use Clause 3 (passed by the Ministry of Magic in 1631) that had prohibited the Goblins, the Giants, the Dementors to keep a wand. They also now possess the Elder Wand.
+
+#description room026
+
+@dig Secret Passage;room027 = Move ahead;ahead,Go back;back
+
+#created room027
+
+Move ahead
+
+#inside room027
+
+@desc They could see the passage becoming narrower as they moved. Aberforth being too huge for to fit in decided to move back rather getting stuck in their for forever.
+
+#description room027
+
+@dig The Room of Requirement;room028 = Move ahead;ahead,Go back;back
+
+#created room028
+
+Move ahead
+
+#inside room028
+
+@desc Opening the portrait leads them to the Room of Requirement which both (Draco and Harry) had many memories for. They could find it quite intact except it was empty as FiendFyre (a beasty fire which turns everything into ashes as soon as it comes in contact) had consumed all the Hidden Objects in it during the Battle of Hogwarts.
+They tried searching for the exit but they didn't get.
+
+#description room028
+
+@dig Wall;room029a = {wExits{n;east,west
+
+#created room029a
+
+east
+
+#inside room029a
+
+@desc East they saw. Again a Wall!
+
+#description room029a
+
+west
+
+#inside room028 back
+
+@dig West;room029b = {wExits{n;west,east
+
+#created room029b
+
+west
+
+#inside room029b
+
+@desc West = West they saw. Not here.
+
+#description room029b
+
+east
+
+#inside room028 back
+
+@dig Dead End;room029c = {wExits{n;north,south
+
+#created room029c
+
+north
+
+#inside room029c
+
+@desc Dead End = North they went. Oh! Dead End here too.
+
+#description room029c
+
+south
+
+#inside room028 back
+
+@dig South;room029d = {wExits{n;south,north
+
+#created room029d
+
+south
+
+#inside room029d
+
+@desc South they searched. No exits.
+
+#description 029d
+
+north
+
+#inside room028 back
+
+@dig Up;room029e = {wExits{n;up,down
+
+#created room029e
+
+up
+
+#inside room029e
+
+@desc Up they saw. As if God’s gonna give him the way and to the amazement so the Draco’s brain had a flash. He remembered that the Room of Requirement opens and closes only for those who are in need of it. But Harry and Draco weren’t in need and also they had forcefully entered it without the Room of Requirement opening itself for themselves. As a result they couldn’t get out.
+Ahhh exclaimed Harry. Now how are we going to get out?
+And he also sees up hoping something also strikes his mind as happened with Draco. And what? It happened.
+“{GHelp will always be given at Hogwarts to those who deserve it.{n”
+
+#description 029e
 
 
 

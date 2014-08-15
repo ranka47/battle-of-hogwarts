@@ -18,9 +18,7 @@ this change, you have to convert them manually e.g. with the
 """
 from ev import Character as DefaultCharacter
 from ev import Script
-
-class Respawn(Script):
-    pass
+import random
 
 class Character(DefaultCharacter):
     """
@@ -48,6 +46,8 @@ class Character(DefaultCharacter):
         self.db.health = self.db.health_max
         self.db.will = 100
         self.db.respawns = 0
+        houses = ["Gryffindor","Hufflepuff","Slytherin","Ravenclaw"]
+        self.db.house = houses[random.randint(0, len(houses) - 1)]
 
     def respawn(self):
         self.msg("You lost a life and respawn with all your default powers")

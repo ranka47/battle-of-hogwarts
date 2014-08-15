@@ -21,6 +21,8 @@ from ev import Room as DefaultRoom
 from ev import utils, Object
 from game.gamesrc.scripts.script import IrregularEvent
 import random
+from ev import utils, create_object, search_object
+from game.gamesrc.objects.object import Wand,BroomStick
 
 class Room(DefaultRoom):
     """
@@ -159,3 +161,5 @@ class OutroRoom(Room):
             for obj in [obj for obj in character.contents
                                   if utils.inherits_from(obj, Object)]:
                 obj.reset()
+
+#----------------------------------------------------------------------------------

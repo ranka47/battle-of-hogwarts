@@ -10,7 +10,9 @@ examples/cmdset.py)
 
 from ev import Command as BaseCommand
 from ev import default_cmds
+from ev import create_object
 from ev import utils
+from ev import Object as DefaultObject
 
 
 class Command(BaseCommand):
@@ -228,7 +230,5 @@ class CmdHouse(Command):
         if not obj:
             return
         self.caller.msg("{c%s{n's house is {y%s{n." % (obj,obj.db.house))
-
-
 
 #---------------------------------------------------------------------------------------------------------------
