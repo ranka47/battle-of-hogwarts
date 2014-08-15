@@ -511,7 +511,7 @@ They tried searching for the exit but they didn't get.
 
 #description room028
 
-@dig Wall;room029a = {wExits{n;east,west
+@dig The Room of Requirement;room029a = {wExits{n;east,west
 
 #created room029a
 
@@ -527,7 +527,7 @@ west
 
 #inside room028 back
 
-@dig West;room029b = {wExits{n;west,east
+@dig The Room of Requirement;room029b = {wExits{n;west,east
 
 #created room029b
 
@@ -543,7 +543,7 @@ east
 
 #inside room028 back
 
-@dig Dead End;room029c = {wExits{n;north,south
+@dig The Room of Requirement;room029c = {wExits{n;north,south
 
 #created room029c
 
@@ -559,7 +559,7 @@ south
 
 #inside room028 back
 
-@dig South;room029d = {wExits{n;south,north
+@dig The Room of Requirement;room029d = {wExits{n;south,north
 
 #created room029d
 
@@ -575,7 +575,7 @@ north
 
 #inside room028 back
 
-@dig Up;room029e = {wExits{n;up,down
+@dig The Room of Requirement;room029e = {wExits{n;look up,down
 
 #created room029e
 
@@ -589,6 +589,16 @@ And he also sees up hoping something also strikes his mind as happened with Drac
 “{GHelp will always be given at Hogwarts to those who deserve it.{n”
 
 #description 029e
+
+@dig The Room of Requirement;room030 = {wExits{n;help,Go back
+
+#created room030
+
+{wExits{n
+
+#inside room030
+
+
 
 
 
