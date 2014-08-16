@@ -315,15 +315,15 @@ However learning ancient incantation is not easy. On learning this spells all st
 they won't tell anyone the incantation directly. The Caster has to get the Incantation by going through a test of any form.
 That is the reason they can't be ever tabooed as the beasts can never know what they are because they can't make Unbreakable Vow.
 
-Disarming Charm - Causes whatever the victim is holding to fly away, knocks down the opponent if used forcefully. 
+{gDisarming Charm{n - Causes whatever the victim is holding to fly away, knocks down the opponent if used forcefully. 
 YP IDR YJR D[R;; DSU 
 {wRC[R;;P ST,S{n
 
-Patronus Charm - It is defensive spell which will take form a Patronus (it is an animal form which would depict your character precisely) from all your positive emotions’ energy. Can be used against Lethifolds and Dementors. 
+{gPatronus Charm{n - It is defensive spell which will take form a Patronus (it is an animal form which would depict your character precisely) from all your positive emotions’ energy. Can be used against Lethifolds and Dementors. 
 YP IDR YJR D[R;; DSU
 {wRC[RVYP [SYTPMID{n
 
-Muggle’s (one who don't know magic) world has an instrument named Keyboard. It could be of great help to you two to learn the spell.
+Muggle’s (one who don’t know magic) world has an instrument named Keyboard. It could be of great help to you two to learn the spell if you both could please excuse to move to your left.
 
 After learning the spells, Aberforth asks them to come back to the Sitting Room as Ariana was ready to open the secret passage.
 
@@ -551,7 +551,7 @@ north
 
 #inside room029c
 
-@desc Dead End = North they went. Oh! Dead End here too.
+@desc North they went. Oh! Dead End here too.
 
 #description room029c
 
@@ -579,7 +579,7 @@ north
 
 #created room029e
 
-up
+look up
 
 #inside room029e
 
@@ -594,9 +594,129 @@ And he also sees up hoping something also strikes his mind as happened with Drac
 
 #created room030
 
-{wExits{n
+@teleport room030
 
 #inside room030
+
+@desc Suddenly, within a blink of an eye the room transformed into something that was familiar to Harry. It looked the same as used to be when Dumbledore’s Army practised various Spells in this room. It had provided again all that facilities again with all the objects kept before gone. 
+And they heard some voices behind them. Happy but with pain.
+
+#description room030
+
+@dig The Room of Requirement;room031a = Look Back
+
+#created room031a
+
+Look Back
+
+#inside room031a
+
+@desc Professor McGonagall (Headmistress of the Hogwarts), Professor Neville (:P their friend actually but Professor of Herbology at Hogwarts), Professor Sprout (Ex-Professor of Herbology), Professor Slughorn (ex-Professor of Potions), Professor Flitwick (Ex-Professor of Charms Master) and Rubeus Hagrid (Gamekeeper of Hogwarts).
+Professor McGonagall: We know why you are here and will help you as much as we can.
+
+Rubeus Hagrid: Harry, so good to see you! (And hugs him). I will be teaching you the spell to fight against the Acromantulas and other spiders. {wNever use this on humans as it leaves large black scorch mark on them.{n
+{wTwo letter Spell.
+First part has two parts.
+Last part of the first matches to the last half of my name.
+What remains of the first has four parts with an alphabet in each. 
+First and third part is same as the first of the basics of the english (Muggles’ Nursery English) and second-third-fourth would be known if you had{n rang {wup someone but call couldn’t be completed as you forgot to put “jee” in respect in the verb of your task.
+Second of the spell comes with an ex and a u and also an o.{n
+
+After this Professor Sprout asks them (including Neville) to step forward.
+
+#description room031a
+
+@dig The Room of Requirement;room031b = Forward
+
+#created room031b
+
+Forward
+
+#inside room031b
+
+@desc Professor Sprout steps forward:
+{gShield Charm{n - Creates a magical barrier to deflect physical entities and spell. 
+
+{w1-5-2
+CON you do
+EGO you rise
+care you yourself
+let you relax
+so Tea you drink,
+follow my numbers 
+and you get it right.{n
+
+{gBoggart-Defense Charm{n - Remember Boggart takes the form of your worst fear and it may or may not be that powerful compared to what form it takes. 
+Harry knew what he feared the most was - A Dementor. 
+
+{w|)\ | |) | ( |_| |_ |_| ^^{n
+{wHaha! World is never too big. Just compress a bit and you will find everything.{n
+
+Shorty and Smarty, Professor Flitwick asks them to move BACK.
+
+#description room031b
+
+@dig The Room of Requirement;room031c = Back
+
+#created room031c
+
+Back
+
+#inside room031c
+
+@desc Moment they step backwards a flock of birds emerge from his wand.  
+Adjusting his specs he says: 
+
+{gBird-Conjuring Spell{n: Seems a normal spell but has the ability to take you out of big problems, mind that. It conjures (causes to appear) a flock (group) of birds from the tip of the caster’s (one who is telling the spell) wand. Can also make some deadly spell or monsters get away from you as they get casted on or distracted by the birds.
+
+{wIt is of four letter.
+First shows itself when you take out a jeans for you.
+Second appears when you win.
+Third appears when you always address your ownself.
+Fourth appears, will mostly appear if you say something in plural.{n
+
+{gLevitation Spell{n: To make objects fly or levitate. Maybe you can use to make them away from the touch of the ground.
+
+Three Words: {w18 iii 11 5	i 14 3 v v 15	9 ii 17 iii 15{n
+
+Professor Slughorn asks them to step FORWARD.
+
+#description room031c
+
+@dig The Room of Requirement;room031d = Forward
+
+#created room031d
+
+Forward
+
+#inside room031d
+
+@desc They couldn’t move a bit as if they were freezed. 
+Slughorn introduced:
+{gFreezing Charm{n - Immobilises living targets.
+
+You know kids Muggles are so lazy that unlike us they don’t pay respect to the every sound and syllable of the words. So hurry while chatting that they even SPELL incorrectly but inspite of that the interpreter takes it correctly and understands it. 
+You see boys even I am found of this things.
+And then he raises his wand and haphazardly (quickly)
+{wI M hvin two MOBILIS.{n
+
+And then Professor McGonagall blesses them and tells:
+“{wThe future of the Magical World lies in your hands now. We believe you.{n”
+And then Neville asks both of them (Harry and Draco) to take the door to the east which had just appeared out of nowhere. 
+They understood it was their need to go out and so the Room of Requirement fulfilled it.
+
+#description room031d
+
+@dig The Room of Requirement;room032 = east,west
+
+#created room032
+
+east
+
+#inside room032
+
+
+
 
 
 

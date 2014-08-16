@@ -427,8 +427,8 @@ class CmdArania(Command):
 
     Used to attack and kill huge clusters of spiders
     """
-    key = "Arania"
-    aliases = ["Arania Exumai","arania"]
+    key = "Araneus Exuo"
+    #aliases = ["Arania Exumai","arania"]
     locks = "cmd:holds()"
     help_category = "Spells"
 
@@ -471,8 +471,8 @@ class CmdExpelliarmus(Command):
     Expelliarmus <opponent>
     """
 
-    key = "expelliarmus"
-    aliases = ["Expelliarmus", "expell", "Expell"]
+    key = "expello arma"
+    #aliases = ["Expelliarmus", "expell", "Expell"]
     locks = "cmd:holds()"
     help_category = "Spells"
 
@@ -521,8 +521,8 @@ class CmdWingardium(Command):
     (aliases: leviosa)
 
     """
-    key = "Wingardium Leviosa"
-    aliases = ["leviosa", "wingardium"]
+    key = "Wing Arduus Levis"
+    #aliases = ["leviosa", "wingardium"]
     locks = "cmd:holds()"
     help_category = "Spells"
 
@@ -572,8 +572,8 @@ class CmdImmobulus(Command):
     Immobulus <target>
 
     """
-    key = "Immobulus"
-    aliases = ["Immobulus"]
+    key = "Immobilis"
+    #aliases = ["Immobulus"]
     locks = "cmd:holds()"
     help_category = "Spells"
 
@@ -621,8 +621,8 @@ class CmdExpecto(Command):
     Usage:
     Expecto Patronum <target>
     """
-    key = "Expecto Patronum"
-    aliases = ["Expecto", "Patronum","expecto"]
+    key = "Expecto Patronus"
+    #aliases = ["Expecto", "Patronum","expecto"]
     locks = "cmd:holds()"
     help_category = "Spells"
 
@@ -670,8 +670,8 @@ class CmdProtego(Command):
     Usage:
     Protego
     """
-    key = "Protego"
-    aliases = ["protego"]
+    key = "Contego"
+    #aliases = ["protego"]
     locks = "cmd:holds()"
     help_category = "Spells"
 
@@ -700,8 +700,8 @@ class CmdRiddikulus(Command):
     Riddikulus
     """
 
-    key = "Riddikulus"
-    aliases = ["riddikulus"]
+    key = "Ridiculum"
+    #aliases = ["riddikulus"]
     locks = "cmd:holds()"
     help_category = "Spells"
 
@@ -1676,7 +1676,7 @@ class MedusaAttackTimer(Script):
         self.key = "MedusaAttackTimer"
         self.desc = "Drives an Enemy's combat."
         self.interval = random.randint(4,7) # how fast the Enemy acts
-        self.start_delay = True # wait self.interval before first call
+        self.start_delay = False #wait self.interval before first call
         self.persistent = True
  
     def at_repeat(self):
