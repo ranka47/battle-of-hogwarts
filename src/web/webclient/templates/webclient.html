@@ -18,9 +18,8 @@
 
     {% if websocket_enabled %}
         <script language="javascript" type="text/javascript">
-            if ("WebSocket" in window) {
                 <!-- No websocket support in browser. Importing the Evennia ajax webclient component (requires jQuery)  -->
-                document.write("\<script src=\"{% static "webclient/js/evennia_ajax_webclient.js" %}\" type=\"text/javascript\" charset=\"utf-8\"\>\</script\>")}
+                document.write("\<script src=\"{% static "webclient/js/evennia_ajax_webclient.js" %}\" type=\"text/javascript\" charset=\"utf-8\"\>\</script\>")
                 
         </script>
     {% else %}
