@@ -232,3 +232,33 @@ class CmdHouse(Command):
         self.caller.msg("{c%s{n's house is {y%s{n." % (obj,obj.db.house))
 
 #---------------------------------------------------------------------------------------------------------------
+
+#-----------------------------------------------------------------------
+# Status - Displays the one's own health, will and score
+#-----------------------------------------------------------------------
+
+class CmdStatus(Command):
+    """
+    This command will print the attributes like health, will
+    and score of the player.
+
+    Usage
+    status
+    """
+    key = "status"
+    locks = "cmd:all()"
+    help_category = "General"
+
+    def func(self):
+        if(self.caller.db.health or self.caller.db.will or self.caller.db.score):
+            self.caller.msg("{gYour Status:\n")
+            if self.caller.db.health:
+                self.caller.msg("{wHealth : {y%d{n" % (self.caller.db.health))
+            if self.caller.db.will:
+                self.caller.msg("{wWill   : {y%d{n" % (self.caller.db.will))
+            if self.caller.db.score:
+                self.caller.msg("{wScore  : {y%d{n" % (self.caller.db.score))
+        else:
+            self.caller.msg("{rNo health, will or score attributes. Contact your administrator.{n")
+
+#-----------------------------------------------------------------------
