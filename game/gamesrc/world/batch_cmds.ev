@@ -575,7 +575,7 @@ north
 
 #inside room028 back
 
-@dig The Room of Requirement;room029e = {wExits{n;look up,down
+@dig The Room of Requirement;room029e = {wExits{n;up;look up,down
 
 #created room029e
 
@@ -677,7 +677,7 @@ Fourth appears, will mostly appear if you say something in plural.{n
 
 {gLevitation Spell{n: To make objects fly or levitate. Maybe you can use to make them away from the touch of the ground.
 
-Three Words: {w18 iii 11 5	i 14 3 v v 15	9 ii 17 iii 15{n
+Three Words: {w18 iii 11 5    i 14 3 v v 15    9 ii 17 iii 15{n
 
 Professor Slughorn asks them to step FORWARD.
 

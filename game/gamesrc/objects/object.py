@@ -400,7 +400,8 @@ class CmdAvis(Command):
     key = "avis"
     aliases = ["Avis"]
     locks = "cmd:holds()"
-    help_category = "Spells"
+    #help_category = "Spells"
+    auto_help = False
 
     def func(self):
         "Actual function"
@@ -430,7 +431,8 @@ class CmdArania(Command):
     key = "Araneus Exuo"
     #aliases = ["Arania Exumai","arania"]
     locks = "cmd:holds()"
-    help_category = "Spells"
+    #help_category = "Spells"
+    auto_help = False
 
     def func(self):
         "Actual function"
@@ -474,7 +476,8 @@ class CmdExpelliarmus(Command):
     key = "expello arma"
     #aliases = ["Expelliarmus", "expell", "Expell"]
     locks = "cmd:holds()"
-    help_category = "Spells"
+    #help_category = "Spells"
+    auto_help = False
 
     def func(self):
         "Actual function"
@@ -524,7 +527,8 @@ class CmdWingardium(Command):
     key = "Wing Arduus Levis"
     #aliases = ["leviosa", "wingardium"]
     locks = "cmd:holds()"
-    help_category = "Spells"
+    #help_category = None
+    auto_help = False
 
     def func(self):
         "Actual function"
@@ -575,7 +579,8 @@ class CmdImmobulus(Command):
     key = "Immobilis"
     #aliases = ["Immobulus"]
     locks = "cmd:holds()"
-    help_category = "Spells"
+    #help_category = "Spells"
+    auto_help = False
 
     def func(self):
         "Actual function"
@@ -624,7 +629,8 @@ class CmdExpecto(Command):
     key = "Expecto Patronus"
     #aliases = ["Expecto", "Patronum","expecto"]
     locks = "cmd:holds()"
-    help_category = "Spells"
+    #help_category = "Spells"
+    auto_help = False
 
     def func(self):
         "Actual function"
@@ -673,7 +679,8 @@ class CmdProtego(Command):
     key = "Contego"
     #aliases = ["protego"]
     locks = "cmd:holds()"
-    help_category = "Spells"
+    #help_category = "Spells"
+    auto_help = False
 
     def func(self):
         "Actual function"
@@ -703,7 +710,8 @@ class CmdRiddikulus(Command):
     key = "Ridiculum"
     #aliases = ["riddikulus"]
     locks = "cmd:holds()"
-    help_category = "Spells"
+    #help_category = "Spells"
+    auto_help = False
 
     def func(self):
         if self.caller.search(r'Unknown'):
@@ -724,7 +732,8 @@ class CmdMirror(Command):
     key = "Mirror"
     aliases = ["mirror","Use Mirror"]
     locks = "cmd:holds()"
-    help_category = "Spells"
+    #help_category = "Spells"
+    auto_help = False
 
     def func(self):
         if self.caller.search(r'Medusa'):
