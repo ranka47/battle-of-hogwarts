@@ -52,5 +52,6 @@ class Character(DefaultCharacter):
     def respawn(self):
         self.msg("You lost a life and respawn with all your default powers")
         self.db.health = self.db.health_max
+        self.db.score -= 150
         self.db.will = 100
         self.db.respawns += 1

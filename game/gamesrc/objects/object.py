@@ -412,8 +412,10 @@ class CmdAvis(Command):
            self.caller.location.msg_contents("A heavy cluttering noise distracts you. You see a flock of birds "+
                                        "emerging from {c%s{n's wand. They fly away into nowhere..." % 
                                                            (self.caller), exclude=[self.caller])
+           self.caller.db.score += 50
         else:
            self.caller.msg("You said your spell but nothing happens! Don't worry, say it again with all your heart.")
+           self.caller.db.score += 7
 
 #---------------------------------------------------------------------------------
 # Arania Exumai - Kills or attacks Spiders
@@ -451,15 +453,19 @@ class CmdArania(Command):
 
             if hasattr(target, "at_hit"):
                 # should return True if target is defeated, False otherwise.
+                self.caller.db.score += 100
                 return target.at_hit(self.obj, self.caller, damage = 10)
             elif target.db.health:
                 target.db.health -= damage
+                self.caller.db.score += 1000
             else:
                 # sorry, impossible to fight this enemy ...
                 self.caller.msg("The enemy seems unaffacted.")
+                self.caller.db.score += 20
                 return False
         else:
             self.caller.msg("You said your spell but nothing happens! Don't worry, say it with all your heart.")
+            self.caller.db.score += 10
 
 #---------------------------------------------------------------------------------
 # Expelliarmus - Throws the opponent's wand
@@ -499,10 +505,13 @@ class CmdExpelliarmus(Command):
                     if random.random() >= hit:
                         self.caller.msg("A {yflash of light{n comes out of your wand and %s's wand falls down" %(target))
                         wand.location = target.location
+                        self.caller.db.score += 80
+                        target.db.score -= 80
                         self.caller.location.msg_contents("A {yflash of light{n emerging from {c%s{n's wand" % (self.caller), exclude=[self.caller,target])
                         target.msg("{c%s{n hits your wand with a {ylightning storm{n and your wand falls off somewhere" %(self.caller))
                     else:
                         self.caller.msg("You said your spell but nothing happens! Don't worry, aim properly and say it with all your heart.")
+                        self.caller.db.score += 8
                         return
                 else:
                     self.caller.msg("You do not find the Wand.")
@@ -553,16 +562,20 @@ class CmdWingardium(Command):
                 return
             if hasattr(target, "at_hit"):
                 # should return True if target is defeated, False otherwise.
+                self.caller.db.score += 100
                 return target.at_hit(self.obj, self.caller, damage = 10)
             elif target.db.health:
                 target.db.ground = False
                 target.db.health -= 10
+                self.caller.db.score += 100
             else:
                 # sorry, impossible to fight this enemy ...
                 self.caller.msg("The enemy seems unaffacted.")
+                self.caller.db.score += 20
                 return False
         else:
             self.caller.msg("You said your spell but nothing happens! Don't worry, say it with all your heart.")
+            self.caller.db.score += 10
 
 #----------------------------------------------------------------------------------
 # Immobulus - freezes the Cannibulus Rodents
@@ -584,7 +597,6 @@ class CmdImmobulus(Command):
 
     def func(self):
         "Actual function"
-
         # If no target is given
         """
         if not self.args:
@@ -605,15 +617,19 @@ class CmdImmobulus(Command):
                 return
             if hasattr(target, "at_hit"):
                 # should return True if target is defeated, False otherwise.
-                return target.at_hit(self.obj, self.caller, damage = 20)
+                self.caller.db.score += 100
+                return target.at_hit(self.obj, self.caller, damage = 10)
             elif target.db.health:
                 target.db.health -= 10
+                self.caller.db.score += 100
             else:
                 # sorry, impossible to fight this enemy ...
                 self.caller.msg("The enemy seems unaffacted.")
+                self.caller.db.score += 20
                 return False
         else:
             self.caller.msg("You said your spell but nothing happens! Don't worry, aim properly and say it with all your heart.")
+            self.caller.db.score += 10
 
 #----------------------------------------------------------------------------------
 # Expecto Patronum - Drive away the Dementors
@@ -655,15 +671,19 @@ class CmdExpecto(Command):
                 return
             if hasattr(target, "at_hit"):
                 # should return True if target is defeated, False otherwise.
+                self.caller.db.score += 100
                 return target.at_hit(self.obj, self.caller, damage = 10)
             elif target.db.health:
                 target.db.health -= 10
+                self.caller.db.score += 100
             else:
                 # sorry, impossible to fight this enemy ...
                 self.caller.msg("The enemy seems unaffacted.")
+                self.caller.db.score += 20
                 return False
         else:
             self.caller.msg("You said your spell but nothing happens! Think about some good moments and say it with all your heart.")
+            self.caller.db.score += 10
 
 #-----------------------------------------------------------------------------------
 #   Protego - Increases will. Boosts confidence
@@ -687,12 +707,14 @@ class CmdProtego(Command):
         if self.caller.db.will < 200:
             if self.caller.db.will < 150:
                 self.caller.db.will += 10
+                self.caller.db.score += 2
                 self.caller.msg("You gain confidence.")
             else:
                 if self.caller.search("Parallax"):
                     target = self.caller.search("Parallax")
                     if hasattr(target, "at_hit"):
                         # should return True if target is defeated, False otherwise.
+                        self.caller.db.score += 100
                         return target.at_hit(self.obj, self.caller, damage = 10)
 
 #-----------------------------------------------------------------------------------
@@ -717,6 +739,7 @@ class CmdRiddikulus(Command):
         if self.caller.search(r'Unknown'):
             target = self.caller.search(r'Unknown')
             if hasattr(target, "at_hit"):
+                self.caller.db.score += 100
                 return target.at_hit(self.obj,self.caller,damage = 20)
 
 #-----------------------------------------------------------------------------------
@@ -739,6 +762,7 @@ class CmdMirror(Command):
         if self.caller.search(r'Medusa'):
             target = self.caller.search(r'Medusa')
             if hasattr(target, "at_hit"):
+                self.caller.db.score += 100
                 return target.at_hit(self.obj,self.caller,damage = 10)
 
 #-----------------------------------------------------------------------------------
@@ -954,6 +978,7 @@ class Spider(Mob):
                 if not tstring:
                     tstring = "{rYou feel your conciousness slip away ... you fall to the ground as{n "
                     tstring += "{rthe spiders envelop you ...{n\n"
+                    target.db.score -= 20
                 target.msg(tstring)
                 ostring = self.db.defeat_text_room 
                 if tloc:
@@ -973,6 +998,7 @@ class Spider(Mob):
                 target.respawn()
             else:
                 target.db.health -= 2
+                target.db.score -= 10
                 target.msg("The spiders bite you. You try to run and escape.")
         else:
             # no players found, this could mean they have fled.
@@ -1148,6 +1174,7 @@ class VineWhip(DefaultObject):
             for target in players:
                 if target.db.health > 0:
                     target.msg("{r Some monsterous plant bites you and you bleed{n")
+                    target.db.score -= 20
                     target.db.health -= damage
                 else:
                     target.respawn()
@@ -1290,6 +1317,7 @@ class CannibulusRodent(Mob):
                 if not tstring:
                     tstring = "You feel your conciousness slip away ... you fall to the ground as "
                     tstring += "the Cannibulus Rodents eat your unused brains ...\n"
+                    target.db.score -= 20
                 target.msg(tstring)
                 ostring = self.db.defeat_text_room
                 if tloc:
@@ -1310,6 +1338,7 @@ class CannibulusRodent(Mob):
             else:
                 target.db.health -= 2
                 target.msg("The rodents are after your jammed brains!")
+                target.db.score -= 20
         else:
             # no players found, this could mean they have fled.
             # Switch to persue mode.
@@ -1485,6 +1514,7 @@ class Dementor(DefaultObject):
             for target in players:
                 if target.db.health > 0:
                     target.msg("The {rDementors{n suck happiness from you. Things blur and you begin to lose consciousness.{n")
+                    target.db.score -= 25
                     target.db.health -= damage
                 else:
                     target.respawn()
@@ -1566,10 +1596,12 @@ class Parallax(DefaultObject):
             for target in players:
                 if target.db.will > 0:
                     target.msg("The {rParallax{n increases the fear in you.")
+                    target.db.score -= 8
                     target.db.will -= 15
                     if target.db.will <= 0:
                         target.db.health -= damage
                         target.msg("You do not have enough courage left to face Parallax. {rYou loose consciousness{n.")
+                        target.db.score -= 21
                 elif target.db.health >= 0:
                     target.respawn()
  
@@ -1726,6 +1758,7 @@ class Medusa(DefaultObject):
             for target in players:
                 if target.db.health > 0:
                     target.msg("{rYou are struck by %s{n" % self.key)
+                    target.db.score -= 20
                     target.db.health -= damage
                 else:
                     target.respawn()
