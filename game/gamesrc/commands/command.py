@@ -261,4 +261,37 @@ class CmdStatus(Command):
         else:
             self.caller.msg("{rNo health, will or score attributes. Contact your administrator.{n")
 
+
 #-----------------------------------------------------------------------
+# Remind - Reminds player of the puzzles to the spells 
+#-----------------------------------------------------------------------
+
+class CmdRemind(Command):
+    """
+    This command will print the puzzles of the spells.
+
+    Usage:
+    remind <number>
+
+    number is the section of puzzles you want to print
+    """
+    key = "remind"
+    locks = "cmd:all()"
+    help_category = "General"
+
+    def func(self):
+        if not self.args:
+            self.caller.msg("Usage: remind <number>      ; number refers to the section of the puzzles.")
+            return
+        if self.args == " 1":
+            string = "{cPuzzle(1){n\n"
+            string+= "content"
+        elif self.args == " 2":
+            string = "{cPuzzle(2){n\n"
+            string+= "contents"
+        elif self.args == " 3":
+            string = "{cPuzzle(3){n\n"
+            string+= "contents"
+        else:
+            string = "Please enter a valid serial number of the puzzle you want to remind yourself."
+        self.caller.msg("%s"%string)
