@@ -351,7 +351,7 @@ def cmdhandler(called_by, raw_string, testing=False, callertype="session", sessi
                                     cmdset.get_all_cmd_keys_and_aliases(caller),
                                     cutoff=0.7, maxnum=3)
                     if suggestions:
-                        sysarg += _(" Maybe you meant %s?") % utils.list_to_string(suggestions, _('or'), addquote=True)
+                        pass # sysarg += _(" Maybe you meant %s?") % utils.list_to_string(suggestions, _('or'), addquote=True)
                     else:
                         sysarg += _(" Type \"help\" for help.")
                 raise ExecSystemCommand(syscmd, sysarg)

@@ -206,7 +206,7 @@ function msg_display(type, msg){
 
 // Input history mechanism
 
-var HISTORY_MAX_LENGTH = 21
+var HISTORY_MAX_LENGTH = 0
 var HISTORY = new Array();
 HISTORY[0] = '';
 var HISTORY_POS = 0;
@@ -223,13 +223,14 @@ function history_step_fwd() {
 }
 function history_add(input) {
     // add an entry to history
-    if (input != HISTORY[HISTORY.length-1]) {
-        if (HISTORY.length >= HISTORY_MAX_LENGTH) {
-            HISTORY.shift(); // kill oldest history entry
-        }
-        HISTORY[HISTORY.length-1] = input;
-        HISTORY[HISTORY.length] = '';
-    }
+    // ---------------------------------------
+    // if (input != HISTORY[HISTORY.length-1]) {
+    //     if (HISTORY.length >= HISTORY_MAX_LENGTH) {
+    //         HISTORY.shift(); // kill oldest history entry
+    //     }
+    //     HISTORY[HISTORY.length-1] = input;
+    //     HISTORY[HISTORY.length] = '';
+    // }
 }
 
 // Catching keyboard shortcuts
@@ -296,3 +297,9 @@ $(window).resize(webclient_set_sizes);
 
 // Callback function - called when page is closed or moved away from.
 $(window).bind("beforeunload", webclient_close);
+
+$(document).ready(function() {
+ $('body').bind('copy paste cut',function(e) { 
+ e.preventDefault(); //disable cut,copy,paste
+ });
+});
