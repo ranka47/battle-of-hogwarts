@@ -25,41 +25,41 @@
 
 #inside Limbo
 
-@desc 19 years have passed since the Battle of Hogwarts. Many changes have come into picture not only at Hogwarts but in the Ministry of Magic too. Some liked it AND SOME DIDN'T. It is indeed to keep the balance on the earth between the Good and the Evil; both must exist. 
-The Dementors were removed from the Azkaban and sent to an isolation place as they had helped Voldemort in the Battle of Hogwarts. They found out regarding the Elder Wand and also that it has been kept in front of the portrait of Professor Albus  Percival Wulfric Brian Dumbledore. Wanting revenge against the awful behaviour of the Wizardry World towards them they blamed Harry Potter for all this. So in the advent of stealing the Wand from the Hogwarts they also kidnapped his son Albus Severus Potter. In the process of saving him, Scorpius Malfoy (the son of Draco Malfoy) goes after the Dementors but is eventually caught. Now taking Gilderoy Lockhart as their decoy they cast Memory Charms at many Wizards and take them into their possession. Many beasts have turned against the Ministry on the fear of the Dementor’s Kiss as it sucks the soul. 
+@desc 19 years have passed since the Battle of Hogwarts. Many changes have come into picture, not only at Hogwarts but in the Ministry of Magic too. Some liked it AND SOME DIDN'T. It is indeed to keep the balance on the earth between the Good and the Evil; both must exist. 
+The Dementors were removed from the Azkaban and sent to an isolation place as they had helped Voldemort in the Battle of Hogwarts. They found out regarding the Elder Wand and also that it has been kept in front of the portrait of Professor Albus Percival Wulfric Brian Dumbledore. Wanting revenge against the awful behaviour of the Wizardry World towards them they blamed Harry Potter for all this. So in the advent of stealing the Wand from the Hogwarts they also kidnapped his son Albus Severus Potter. In the process of saving him, Scorpius Malfoy (the son of Draco Malfoy) goes after the Dementors but is eventually caught. Now taking Gilderoy Lockhart as their decoy they cast Memory Charms at many Wizards and take them into their possession. Many beasts have turned against the Ministry on the fear of the Dementor’s Kiss as it sucks the soul. 
 
-Now Harry Potter and Draco Malfoy one times biggest rivals have teamed up to save their sons and ultimately the world. On their journey they used to get caught many times by the Dementors but they succeeded in escaping. Now they are on their way to the Shriecking Shack where their sons have been kept.
+Now Harry Potter and Draco Malfoy one times biggest rivals have teamed up to save their sons and ultimately the world. On their journey they used to get caught many times by the Dementors but they succeeded in escaping.
 
 #description Limbo
 
-@dig In front of the Gringott’s Bank;room001 = Begin,Limbo
+@dig In front of the Gringott’s Bank;room001a = Begin,Limbo
 
-#created room001
+#created room001a
 
 Begin
 
-#inside room001
+#inside room001a
 
-@desc Considered to be the the safest place in the Wizardry World but Harry mocks that (as he had once robbed it) you start your journey from here.
-You apparate in front of a snowy white building that towers over the other little shops. Standing beside its burnished bronze DOORS to your NORTH, wearing a uniform of scarlet and gold. There is also a road coming from EAST and going to the WEST for the shops of the Diagon Alley.
-You recall memories of Ollivanders Wand Shop to the East and The Broomstix to the West. It had been so much fun in the Diagon Alley but today it seems haunted.
+@desc Considered to be the safest place in the Wizardry World but Harry mocks that (as he had once robbed it) you start your journey from here.
+You apparate in front of a snowy white building that towers over the other little shops. Standing besides its burnished bronze doors to your NORTH, wearing a uniform of scarlet and gold, there is also a road coming from EAST and going to the WEST for the shops of the Diagon Alley.
+You recall memories of Ollivanders Wand Shop to the East and The Broomstix to the West. It had been so much fun in the Diagon Alley but today it seems haunted. Seeming haunted lets go first inside the Gringotts Bank.
 
-#description room001
+#description room001a
 
-@dig Gringott’s Wizarding Bank;room002 = north,south
+@dig Gringott’s Wizarding Bank;room002a = north
 
-#created room002
+#created room002a
 
 north
 
-#inside room002
+#inside room002a
 
 @desc Through these doors (once flanked with goblins) you see a vast marble hall long counters stretching along its length with doors leading off to the vault passageways with none sitting at them. 
-But there’s a Corporeal Patronus you see at the other end towards SOUTH. It is an Otter, Hermoine’s patronus. It has carried a message for you.
+But there’s a Corporeal Patronus you see at the other end towards NORTH. It is an Otter, Hermoine’s patronus. It has carried a message for you.
 
-#description room002
+#description room002a
 
-@dig Gringott’s Wizarding Bank;room003 = north,south
+@dig Gringott’s Wizarding Bank;room003 = north
 
 #created room003
 
@@ -67,21 +67,56 @@ north
 
 #inside room003
 
-@desc “{yHarry. Draco. Beware Using Spells. All Tabooed. Hence Reason You Get Caught Always. Need To Learn Spells Again. Get New Wand, FLOO And Broomstick. Hidden In Shop.{n”
+@desc “{yHarry. Draco. Beware Using Spells. All Tabooed. Hence Reason You Get Caught Always. Need To Learn Spells Again. Get New Wand, FLOO And Broomstick. Hidden In Shop{n.”
 Otter vanishes now in the thin air. 
 You both just look into each others’ eyes, stunned. Again means you will have to learn all the spells again in the ancient languages which could be casted only with some special types of wands.
 
 #description room003
 
-@teleport room001
+@dig Gringott’s Wizarding Bank;room002b = south
 
-#inside room1 again
+#created room002b
 
-@dig Diagon Alley;room004 = east;Diagon Alley,west
+south
+
+#inside room002b
+
+@desc Oh! Not just outside, it is scary inside too. As if you feel you will never be happy. Too cold to resist, too fearful to regain hope.
+You turn around and see a {rDementor{n. It is sucking your positive energy. 
+{rMove out!!!!!!!{n
+
+#description room002b
+
+@create/drop Dementors:object.Dementor
+
+#created a Dementor
+
+@set Dem/inactive = False
+
+#active state
+
+@lock Dementors = get:false()
+
+#Dementors locked
+
+@dig In front of the Gringott’s Bank;room001b = south
+
+#created room001b
+
+south
+
+#inside room001b
+
+@desc Thank God! They managed out of Gringotts.
+Where should we go now?
+
+#description room001b
+
+@dig Diagon Alley;room004 = south
 
 #created room004
 
-east
+south
 
 #inside room004
 
@@ -98,9 +133,10 @@ south
 
 #inside room005
 
-@desc Broken Broomsticks, burnt parchments and quills, pieces of statues of Elliot Smethwyck(one who was the pioneer of the boom in the Broomstick Mass Production). 
+@desc Broken broomsticks, burnt parchments and quills, pieces of statues of Elliot Smethwyck (one who was the pioneer of the boom in the Broomstick Mass Production). 
 Finding for any hints of someone or something you both search here and there. 
-Draco takes up a broken broomstick and throws it to make way. He doest hear a sound of its falling but doesn't see it anymore. He is astonished. He again picks up another piece and throws. He finds that it disappeared again. Going there he finds that there is an invisible Cauldron (made by using Disillusionment Charm) were kept is a broomstick.
+Draco takes up a broken broomstick and throws it to make way. He does hear a sound of it falling but doesn’t see it anymore. He is astonished. He again picks up another piece and throws. He finds that it disappeared again. Going there he finds that there is an invisible Cauldron (made by using Disillusionment Charm) where kept is a broomstick.
+
 To the WEST they see a fireplace with fire lit in it and something written in small letters beside the chimney.
 
 #description room005
@@ -113,7 +149,7 @@ To the WEST they see a fireplace with fire lit in it and something written in sm
 
 #description Broomstick
 
-@dig Floo Network;room006 = west;Floo Network,Broomstix;east
+@dig Floo Network;room006 = west,east
 
 #created room006
 
@@ -127,9 +163,9 @@ west
 
 #Floo network to Hogsmeade
 
-@teleport room001
+@teleport room001b
 
-#back inside room001
+#back inside room001b
 
 @dig Diagon Alley;room007 = west,east
 
@@ -139,7 +175,7 @@ west
 
 #inside room007
 
-@desc Surrounded by many shops who have been burnt you still could recognise Madam Malkin’s Robs for all Occasion Shop spread at a big area in the Diagon Alley. All the beautiful and magic-made stunning robes have been tore apart by some beasts seems to have pointed teeth. There is also Weasley’s Wizard Wheezes Shop which filled Harry’s heart with mixed emotions. Happy due to fun times they had here and sad due to remembrance of Fred Wealey’s death. 
+@desc Surrounded by many shops who have been burnt, you still could recognise Madam Malkin’s Robs for all Occasion Shop spread at a big area in the Diagon Alley. All the beautiful and magic-made stunning robes have been tore apart by some beasts seem to have pointed teeth. There is also Weasley’s Wizard Wheezes Shop which filled Harry’s heart with mixed emotions. Happy due to fun times they had here and sad due to remembrance of Fred Wealey’s death. 
 Still the happy face of the Mannequin and the rabbit’s ears stand tall untouched. 
 To the far to the SOUTH you see more familiar shops.
 
@@ -166,18 +202,18 @@ south
 #inside room009
 
 @desc To the left you see in shining letters Potage’s Cauldron Shop and underneath “Cauldrons — All Sizes — Copper, Brass, Pewter, Silver — Self-Stirring — Collapsible”
-To the front Harry remembers the wall through which he entered the first time in Diagon Alley. It seemed to be locked for the use now. But still he could hear some Muggles (one who don't know about the Wizardry World) having fun at the Leaky Cauldron.
+To the front Harry remembers the wall through which he entered the first time in Diagon Alley. It seemed to be locked for the use now. But still he could hear some Muggles (one who don’t know about the Wizardry World) having fun at the Leaky Cauldron.
 To the right they see the place which they were eager to come after getting Hermoine’s message - Ollivander’s Wands Shop. The door read with peeling gold letters:
 Ollivanders: Makers of Fine Wands since 382 B.C.
 Unlike all other doors, here they find it half-opened!!!
 
 #description room009
 
-@dig Ollivander’s Wand Shop;room010 = Wand Shop,east
+@dig Ollivander’s Wand Shop;room010 = west,east
 
 #created room010
 
-Wand Shop
+west
 
 #inside room010
 
@@ -185,15 +221,19 @@ Wand Shop
 
 #description room010
 
-@create/drop Wand:object.Wand
+@create/drop table:object.WandRack
 
-#created and dropped a wand
+#created and dropped a wandrack
+
+@lock table = get:false()
+
+#table locked
 
 @teleport room006
 
 #back inside room006 Floo Network
 
-@dig Railway Station;room011 = Floo Network to Hogsmeade, Floo Network to Diagon Alley
+@dig Railway Station;room011 = Floo
 
 #created room011
 
@@ -201,7 +241,7 @@ Wand Shop
 
 #added lock to Floo Network
 
-Floo Network to Hogsmeade
+Floo
 
 #inside room011
 
@@ -209,11 +249,11 @@ Floo Network to Hogsmeade
 
 #description room011
 
-@dig Railway Station;room012 = Platform,Chimney
+@dig Railway Station;room012 = east
 
 #created room012
 
-Platform
+east
 
 #inside room012
 
@@ -221,30 +261,191 @@ Platform
 
 #description room012
 
-@dig Entrance of Railway Station;room013 = Entrance,Platform
+@dig Entrance of Railway Station;room013 = east
 
 #created room013
 
-Entrance
+east
 
 #inside room013
 
-@desc You arrive at the exit of the railway station and see the Great Black Lake to the right and the way to the Hogsmeade to your left. Over the Great Black Lake was a dense fog but still you could see light shimmering from the Hogwarts. Seeing that filled the heart with joy and hope. 
+@desc You arrive at the exit of the railway station and see the Great Black Lake to the right and the way to the Hogsmeade to your left (NORTH). Over the Great Black Lake was a dense fog but still you could see light shimmering from the Hogwarts. Seeing that filled the heart with joy and hope. 
 You both still feel that someone is watching you both.
 
 #description room013
 
-@dig Hogsmeade;room014 = Hogsmeade,Railway Entrance;Entrance
+@dig Hogsmeade;room014a = north
 
-#created room014
+#created room014a
 
-Hogsmeade
+north
 
-#inside room014
+#inside room014a
 
-@desc Road is in front of you and across it is Zonko’s Joke Shop. Hahah!!! Funny Time they had their with their friends.
+@desc {rAAAAAAAAAAAAhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh!!!!!!!!!!!!!!{n
 
-#description room014
+It is {wRubeus Hagrid{n. So amazing to see him here. Harry is so happy to see him. You had got a bit scary seeing him suddenly but now it is Okay!
+Road is in front of you and across it is Zonko’s Joke Shop. Hahah!!! Funny Time they had their with their friends.
+Rubeus Hagrid: “Harry, so good to see you! (And hugs him). I am here to teach you the spell to fight against the Acromantulas and other spiders. Never use this on humans as it leaves large black scorch mark on them. Time is short. Just listen to this riddle and get the spell.
+
+Two letter Spell.
+{wFirst part has two parts.
+Last part of the first matches to the last half of my name.
+What remains of the first has four parts with an alphabet in each. 
+First and third part is same as the first of the alphabets (Muggles’ Nursery English) and second-third-fourth would be known if you had rang <give it grey color while other statement remains white> up someone but call couldn’t be completed as you forgot to put “jee” in respect in the verb of your task.
+Second of the spell comes with an ex and a u and also an o.{n
+
+Saying this he diapparated immediately leaving them wonder what the heck just happended. Why didnt he tell the spell directly? But now they will have to crack down it and move on. 
+Draco: “Inky Pinky Bonky Father had a Donkey ………… “
+He acted weird but atlast they decided to move EAST.
+
+#description room014a
+
+@dig Hogsmeade;room019 = east
+
+#created room019
+
+east
+
+#inside room019
+
+@desc To the side of Zonko’s Joke Shop you both can see Honeydukes, the most famous sweet shop for its varied chocolates. And to its front is the Three BroomSticks. 
+{r<3 <3 <3 <3{n Looked both Harry and Draco in the memory of {yMadam Rosemerta{n {r<3 <3 <3 <3{n
+Madam Rosemerta, a blonde and beautiful woman, was fancied by many wizards, young and old both.
+Straight up they could see a mountain with a cave where Harry in his school years used to visit Sirius Black, his godfather. 
+They were lost in the fancy world when suddenly Draco noticed something moving near the Three Broomsticks.
+
+#description room019
+
+@dig The Three Broomsticks;room020a = south,north
+
+#created room020a
+
+south
+
+#inside room020a
+
+@desc A board near the Three Broomsticks has its letters changing continuously. MOREOVER their is soft soil around the shop. Draco pointed it is the use of Protean Charm on it. Someone was trying to communicate with them.
+It read:
+Been you there when you were small 
+See from the Hogsmeade high up in all 
+If you still can’t see in there 
+See below to see up there
+
+And then it again changed to the menu of The Three Broomsticks:
+Butterbeer	  |	Red Currant Rum
+FireWhiskey	|	Cherry Syrup
+Gillywater	  |	Soda with Ice and Umbrella
+Mulled Mead	|	Shacky Rum
+
+#description room020a
+
+@dig Secret Room;room020b = dig,up
+
+#created room020b
+
+dig
+
+#inside room020b
+
+@desc {w:O{n
+You both fell to the ground.
+Digging the soft ground made you fell in a secret room. Need to go back UP.
+You see Deluminator.
+
+#description room020b
+
+@create/drop Deluminator
+
+#created deluminator
+
+up
+
+#inside room020a
+
+north
+
+#inside room019
+
+@dig The Hogsmeade Cave;room021a = east,west
+
+#created room021a
+
+east
+
+#inside room021a
+
+@desc Both reached Hogsmeade Mountain.
+Their voice echoing.
+Draco says, “{wCan’t take risk to get in their in the dark. We can’t even use the Light Spell.{n”
+What to do now? What did that riddle say?
+
+#description room021a
+
+@dig The Hogsmeade Cave;room022a = east,west
+
+#created room022a
+
+@lock east = traverse:holds(Deluminator)
+
+#set lock to the next room
+
+east
+
+#inside room022a
+
+@desc Eight legged Acromantulas and spiders!!!!!!
+You see a path behind them towards the EAST.
+
+#description room022a
+
+@create/drop Spiders:object.Spider
+
+#created Spiders
+
+@set Spi/inactive = False
+
+#spiders active
+
+@lock Spiders = get:false()
+
+#locked Spiders
+
+@dig The Hogsmeade Cave;room022b = east,west
+
+#created room022b
+
+east
+
+#inside room022b
+
+@desc One can see some very old establishments for living. Near a fireplace they saw a parchment-like looking thing.
+
+#describe room022b
+
+@create/drop map
+
+#craeted map
+
+@desc map = {gMarauder’s Map{n
+
+#description map
+
+@teleport room019
+
+#inside room019 again
+
+@dig Hogsmeade;room014b = west
+
+#created room019
+
+west
+
+#inside room014b
+
+@desc To the left you see the entrance of the Railway Station and to the right you see the Zonko’s Joke Shop. Straight you see some white light.
+
+#description room014b
 
 @dig Hogsmeade;room015 = west,east
 
@@ -254,7 +455,7 @@ west
 
 #inside room015
 
-@desc To the left you see Madam Puddifoot’s Tea Shop. Here Harry gets reminded of how foolish he had been with the girls and shares moments of his first date with Cho Chang. To the right you see a familiar place to Harry but Draco remembers it as an Inn where very few people are known to go. Actually none goes. It is the Hog’s Head Pub.
+@desc To the left you see Madam Puddifoot’s Tea Shop. Here Harry gets reminded of how foolish he had been with the girls and shares moments of his first date with Cho Chang. To the right you see a familiar place to Harry but Draco remembers it as an Inn where very few people are known to go :P Actually none goes. It is the Hog’s Head Pub. 
 But today something is strange. A goat Patronus is circling around the Pub. Harry has a smile on his face but Draco is filled with fear.
 
 Tap-Tap
@@ -267,53 +468,54 @@ Tap-Tap
 Tap-Tap
 
 Moment they move near the door they hear a screeching noise. :o :o :o 
-Ohhh! They exclaimed and put out their wands at once but in another moment their wands are thrown to the ground at once. They understood that someone had Disarmed them!
+Ohhh! They exclaimed and put out their wands at once but in another moment their wands are thrown to the ground at once. They understood that someone had Disarmed them.
 
 #description room015
 
-@dig Hog’s Head Inn;room016a = Hog's Head Pub;Hog's Head Inn;Hog's Head,Outside Inn
+@dig Hog’s Head Inn;room016 = north,south
 
 #created room016
 
-Hog's Head Pub
+north
 
 #inside room016
 
 @desc Draco exclaimed seeing ‘Albus Dumbledore’ standing in front of him but the person points the wand and asks him to be absolutely quiet. 
 They entered the Inn and stood behind the counter. Harry greets him and introduces Draco to Aberforth Dumbledore, the brother of Albus Dumbledore. Draco sees a broken mirror in the room which Sirius Black had gifted Harry. You could find a kitchen and besides to it goes down a staircase towards East. 
-Harry informs him that they need to get to the Hogwarts. To which he replies that they must have the Marauder’s Map (Map tells you who is where in Hogwarts Castle but you can't see Room of Requirement, the Chamber of Secret and the Shrieking Shack). Harry agrees and informs him that it had been with his son James Sirius Potter, he had hidden it somewhere in Hogsmeade but couldn’t convey the location. 
+Harry informs him that they need to get to the Hogwarts. To which he replies that they must have the Marauder’s Map (Map tells you who is where in Hogwarts Castle but you can’t see Room of Requirement, the Chamber of Secret and the Shrieking Shack). Harry agrees and informs him that it had been with his son James Sirius Potter, he had hidden it somewhere in Hogsmeade but they had managed to find it.
 Aberforth asks them to follow him downstairs.
 
 #description room016
 
-@dig Sitting Room;room017 = Sitting Room,Inn
+@dig Sitting Room;room017 = east,west
 
 #created room017
 
-Sitting Room
+east
 
 #inside room017
 
-@desc They saw the portrait of {yAlbus Dumbledore{n (sleeping like always Zzzzzzz……) and also of {yAriana Dumbledore{n (smiling as always) in the front.
+@desc They saw the portrait of Albus Dumbledore (sleeping like always Zzzzzzz……) and also of Ariana Dumbledore (smiling as always) in the front (to the EAST).
 Seeing the portrait, it would be like watching a video as the portraits in the Wizardry world would move unlike in the Muggle’s World.
-Draco and Harry discussed about getting into the Hogwarts through the secret passage leading them into the Room of Requirement. Aberforth helped them with some snacks. Snacks gave them a thought - “{wBetter we were hungry{n.”
+Draco and Harry discussed about getting into the Hogwarts through the secret passage leading them into the Room of Requirement. Aberforth helped them with some snacks. Snacks gave them a thought - “Better we were hungry.” 
 After that Aberforth explains them to learn the spells with new incantation so as to defeat the Dementors and others. Moreover he also informs that only few teachers in Hogwarts know the ancient incantations of the spells. 
-He asks them to come to an empty room to their left to learn the spell.
+He asks them to come to an empty room to the NORTH to learn the spell.
 
 #description room017
 
-@dig Sitting Room;room018 = Empty Room,Sitting Room
+@dig Sitting Room;room018 = north,south
 
 #created room018
 
-Empty Room
+north
 
 #inside room018
 
 @desc On the inquiry of Draco, Aberforth answered that he know just two spells to cast with ancient Incantation. One being the Patronus Charm and the Disarming Charm. 
 However learning ancient incantation is not easy. On learning this spells all students have to make The Unbreakable Vow (which if broken leads to immediate death) that 
-they won't tell anyone the incantation directly. The Caster has to get the Incantation by going through a test of any form.
-That is the reason they can't be ever tabooed as the beasts can never know what they are because they can't make Unbreakable Vow.
+they won’t tell anyone the incantation directly. The Caster has to get the Incantation by going through a test of any form.
+That is the reason they can’t be ever tabooed as the beasts can never know what they are because they can’t make Unbreakable Vow.
+Now they understood why Hagrid had acted so weird.
 
 {gDisarming Charm{n - Causes whatever the victim is holding to fly away, knocks down the opponent if used forcefully. 
 YP IDR YJR D[R;; DSU 
@@ -323,195 +525,135 @@ YP IDR YJR D[R;; DSU
 YP IDR YJR D[R;; DSU
 {wRC[RVYP [SYTPMID{n
 
-Muggle’s (one who don’t know magic) world has an instrument named Keyboard. It could be of great help to you two to learn the spell if you both could please excuse to move to your left.
-
+Muggle’s (one who don’t know magic) world has an instrument named Keyboard. It could be of great help to you two to learn the spell if you both could please excuse to move to your left. 
+ 
 After learning the spells, Aberforth asks them to come back to the Sitting Room as Ariana was ready to open the secret passage.
 
 #description room018
 
-@teleport room014
+@teleport room017
 
-#inside room014 again
+#inside room017 again
 
-@dig Hogsmeade;room019 = east,west
-
-#created room019
-
-east
-
-#inside room019
-
-@desc To the side of Zonko’s Joke Shop you both can see Honeydukes, the most famous sweet shop for its varied chocolates. And to its front is the Three BroomSticks. 
-{r<3 <3 <3 <3{n Looked both Harry and Draco in the memory of Madam Rosemerta {r<3 <3 <3 <3{n
-Madam Rosemerta, a blonde and beautiful woman, was fancied by many wizards, young and old both.
-Straight up they could see a mountain with a cave where Harry in his school years used to visit Sirius Black, his godfather. 
-They were lost in the fancy world when suddenly Draco noticed something moving near the Three Broomsticks.
-
-#description room019
-
-@dig The Three Broomsticks;room020 = The Three Broomsticks, Near Joke Shop
-
-#created room020
-
-The Three Broomsticks
-
-#inside room020
-
-@desc A board near the Three Broomsticks has its letters changing continuously. Draco pointed it is the use of Protean Charm on it. Someone was trying to communicate with them. 
-It reads:
-Been you there when you were small 
-See from the Hogmeade high up in all 
-If you still can't see in their 
-See below to see up their
-
-And then it again changed to the menu of The Three Broomsticks:
-Butterbeer	 | Red Currant Rum
-FireWhiskey	| Cherry Syrup
-Gillywater	 | Soda with Ice and Umbrella
-Mulled Mead	| Shacky Rum
-
-#description room020
-
-@dig ----;room020b = dig;look down;down,look up
-
-#create room020d
-
-dig
-
-#inside room020d
-
-@create/drop Deluminator
-
-#created and dropped deluminator
-
-@desc Deluminator = {wShows light even in the Darkest hour{n - by {yAlbus Dumbledore{n
-
-#description of deluminator
-
-up
-
-#inside room020
-
-@dig The Hogsmeade Cave;room021 = The Hogsmeade Cave, The Three Broomsticks
-
-#created room021
-
-@lock The Hogsmeade Cave = traverse:holds(Deluminator)
-
-#created lock for deluminator
-
-The Hogsmeade Cave
-
-#inside room021
-
-@desc Both reached Hogsmeade Mountain. 
-Their voice echoing...
-Draco says, “Can’t take risk to get in their in the dark. We can’t even use the Light Spell.”
-
-#description room021
-
-@dig The Hogsmeade Cave;room022 = Move ahead;ahead, Go back;back
-
-#created room022
-
-@lock The Hogsmeade Cave = traverse:holds(Deluminator)
-
-#added lock to The Hogsmeade Cave
-
-Move Ahead
-
-#inside room022
-
-@desc One can see some very old establishments for living. Near a fireplace they saw a parchment-like looking thing.
-
-#description room022
-
-@create/drop Parchment
-
-#created Parchment(Marauder’s Map)
-
-@desc Parchment = {gMarauder’s Map{n
-
-#description of Parchment
-
-@teleport room018
-
-#inside room018 again
-
-@dig Secret Passage;room023 = Secret Passage,Sitting Room
+@dig Secret Passage;room023 = east
 
 #created room023
 
-Secret Passage
+@lock east = traverse:holds(map)
+
+#created map
+
+east
 
 #inside room023
 
 @desc Aberforth comes along with them and asks whether they had figured out the riddle and got the incantation for the two spells.
+ 
+Along the path they discussed the raids that the Dementors had been making. All the monsters who were banished from the Wizardry World after the fall of Voldemort had come together to seek revenge. It included the {rLethifolds, Inferi, Dementors, Giants, Boggarts, Acromantulas, Werewolves, Cannibulus Rodents{n etc.
 
 #description room023
 
-@dig Secret Passage;room024 = Move ahead;ahead, Go back;back
+@dig Secret Passage;room024 = east
 
 #created room024
 
-Move ahead
+east
 
 #inside room024
 
-@desc Along the path they discussed the raids that the Dementors had been making. All the monsters who were banished from the Wizardry World after the fall of Voldemort had come together to seek revenge. It included the Lethifolds, Inferi, Dementors, Giants, Boggarts, Acromantulas, Werewolves, etc.
+@desc Lead by Dementors as they know all secret passages of the Ministry and the Hogwarts (except the Room of Requirement one) they have taken hold of the Ministry. All the Wizards and Witches are being hunted and tortured brutally to death by the beasts as they have very evil powers dealing with one’s most worst lived memory and feeding on their will power. None can even use the spells as they have tabooed almost every usual spell that the wizards would use to protect themselves or do daily chores. The Dementors have been spreading across the Britain and sucking every bit of happiness to make them stronger. Moreover they have also changed the Code of Wand’s Use Clause 3 (passed by the Ministry of Magic in 1631) that had prohibited the Goblins, the Giants, the Dementors to keep a wand. They also now possess the Elder Wand.
 
 #description room024
 
-@dig Secret Passage;room025 = Move ahead;ahead,Go back;back
+@dig Secret Passage;room025 = east
 
 #created room025
 
-Move ahead
+east
 
 #inside room025
 
-@desc Lead by Dementors as they know all secret passages of the Ministry and the Hogwarts (except the Room of Requirement one) they have taken hold of the Ministry. All the Wizards and Witches are being hunted and tortured brutally to death by the beasts as they have very evil powers dealing with one’s most worst lived memory and feeding on their will power.
+@desc They could see the passage becoming narrower as they moved. Aberforth being too huge for to fit in decided to move back rather getting stuck in their for forever. :P
+They were hearing some screeching noises from the tunnel ahead. Aberforth asked them to take care.
 
 #description room025
 
-@dig Secret Passage;room026 = Move ahead;ahead,Go back;back
+@dig Secret Passage;room026 = east
 
 #created room026
 
-Move ahead
+east
 
 #inside room026
 
-@desc None can even use the spells as they have tabooed almost every usual spell that the wizards would use to protect themselves or do daily chores. The Dementors have been spreading across the Britain and sucking every bit of happiness to make them stronger. Moreover they have also changed the Code of Wand’s Use Clause 3 (passed by the Ministry of Magic in 1631) that had prohibited the Goblins, the Giants, the Dementors to keep a wand. They also now possess the Elder Wand.
+@desc Screeching Noises increased. Take Care. Need to move out ASAP (as soon as possible).
 
 #description room026
 
-@dig Secret Passage;room027 = Move ahead;ahead,Go back;back
+@create/drop Cannibulus Rodents:object.CannibulusRodent
 
-#created room027
+#created CannibulusRodents
 
-Move ahead
+@set Can/inactive = False
 
-#inside room027
+#Cannibulus active
 
-@desc They could see the passage becoming narrower as they moved. Aberforth being too huge for to fit in decided to move back rather getting stuck in their for forever.
+@lock Cannibulus Rodents = get:false()
 
-#description room027
+#rodents locked
 
-@dig The Room of Requirement;room028 = Move ahead;ahead,Go back;back
+@dig Secret Passage;room027a = east,west
+
+#created room027a
+
+east
+
+#inside room027a
+
+@desc It seems the screeching noise is following you here. Move out immediately!!!!!! Run!!!!!
+
+#description room027a
+
+@dig Secret Passage;room027b = east,west
+
+#created room027b
+
+east
+
+#inside room027b
+
+@desc Run!!!!! If they are following you.
+
+#description room027b
+
+@dig Secret Passage;room027c = east,west
+
+#created room027c
+
+east
+
+#inside room027c
+
+@desc Secure yourself. You are near the end.
+
+#description room027c
+
+@dig The Room of Requirement;room28 = east
 
 #created room028
 
-Move ahead
+east
 
 #inside room028
 
 @desc Opening the portrait leads them to the Room of Requirement which both (Draco and Harry) had many memories for. They could find it quite intact except it was empty as FiendFyre (a beasty fire which turns everything into ashes as soon as it comes in contact) had consumed all the Hidden Objects in it during the Battle of Hogwarts.
-They tried searching for the exit but they didn't get.
+
+They tried searching for the exit but they didn’t get. 
+Starting from the East.
 
 #description room028
 
-@dig The Room of Requirement;room029a = {wExits{n;east,west
+@dig The Room of Requirement;room029a = east
 
 #created room029a
 
@@ -520,14 +662,11 @@ east
 #inside room029a
 
 @desc East they saw. Again a Wall!
+West now.
 
 #description room029a
 
-west
-
-#inside room028 back
-
-@dig The Room of Requirement;room029b = {wExits{n;west,east
+@dig The Room of Requirement;room029b = west
 
 #created room029b
 
@@ -535,15 +674,12 @@ west
 
 #inside room029b
 
-@desc West = West they saw. Not here.
+@desc West they saw. Not here.
+Lets check north too.
 
 #description room029b
 
-east
-
-#inside room028 back
-
-@dig The Room of Requirement;room029c = {wExits{n;north,south
+@dig The Room of Requirement;room029c = north
 
 #created room029c
 
@@ -552,14 +688,11 @@ north
 #inside room029c
 
 @desc North they went. Oh! Dead End here too.
+Last Chance! South.
 
 #description room029c
 
-south
-
-#inside room028 back
-
-@dig The Room of Requirement;room029d = {wExits{n;south,north
+@dig The Room of Requirement;room029d = south
 
 #created room029d
 
@@ -569,73 +702,184 @@ south
 
 @desc South they searched. No exits.
 
-#description 029d
-
-north
-
-#inside room028 back
-
-@dig The Room of Requirement;room029e = {wExits{n;up;look up,down
-
-#created room029e
-
-look up
-
-#inside room029e
-
-@desc Up they saw. As if God’s gonna give him the way and to the amazement so the Draco’s brain had a flash. He remembered that the Room of Requirement opens and closes only for those who are in need of it. But Harry and Draco weren’t in need and also they had forcefully entered it without the Room of Requirement opening itself for themselves. As a result they couldn’t get out.
+Up they saw. As if God’s gonna give him the way and to the amazement so the Draco’s brain had a flash. He remembered that the Room of Requirement opens and closes only for those who are in need of it. But Harry and Draco weren’t in need and also they had forcefully entered it without the Room of Requirement opening itself for themselves. As a result they couldn’t get out.
 Ahhh exclaimed Harry. Now how are we going to get out?
 And he also sees up hoping something also strikes his mind as happened with Draco. And what? It happened.
-“{GHelp will always be given at Hogwarts to those who deserve it.{n”
+“{gHelp will always be given at Hogwarts to those who deserve it.{g”
+He asked then “{yDo we deserve it?{n”
 
-#description 029e
+#description room029d
 
-@dig The Room of Requirement;room030 = {wExits{n;help,Go back
+@dig The Room of Requirement;room030 = yes
 
 #created room030
 
-@teleport room030
+yes
 
 #inside room030
 
 @desc Suddenly, within a blink of an eye the room transformed into something that was familiar to Harry. It looked the same as used to be when Dumbledore’s Army practised various Spells in this room. It had provided again all that facilities again with all the objects kept before gone. 
-And they heard some voices behind them. Happy but with pain.
+And then heard some voices behind them. Happy but with pain.
+
+Professor McGonagall (Headmistress of the Hogwarts), Professor Neville (:P their friend actually but Professor of Herbology at Hogwarts),  Professor Slughorn (ex-Professor of Potions), Professor Flitwick (Ex-Professor of Charms Master) and Rubeus Hagrid (Gamekeeper of Hogwarts).
+Professor McGonagall: We know why you are here and will help you as much as we can.
+
+Shorty and Smarty, Professor Flitwick asks them to move BACK.
 
 #description room030
 
-@dig The Room of Requirement;room031a = Look Back
+@dig The Room of Requirement;room031a = back
 
 #created room031a
 
-Look Back
+back
 
 #inside room031a
 
-@desc Professor McGonagall (Headmistress of the Hogwarts), Professor Neville (:P their friend actually but Professor of Herbology at Hogwarts), Professor Sprout (Ex-Professor of Herbology), Professor Slughorn (ex-Professor of Potions), Professor Flitwick (Ex-Professor of Charms Master) and Rubeus Hagrid (Gamekeeper of Hogwarts).
-Professor McGonagall: We know why you are here and will help you as much as we can.
+@desc Moment they step backwards a flock of birds emerge from his wand.  
+Adjusting his specs he says: 
 
-Rubeus Hagrid: Harry, so good to see you! (And hugs him). I will be teaching you the spell to fight against the Acromantulas and other spiders. {wNever use this on humans as it leaves large black scorch mark on them.{n
-{wTwo letter Spell.
-First part has two parts.
-Last part of the first matches to the last half of my name.
-What remains of the first has four parts with an alphabet in each. 
-First and third part is same as the first of the basics of the english (Muggles’ Nursery English) and second-third-fourth would be known if you had{n rang {wup someone but call couldn’t be completed as you forgot to put “jee” in respect in the verb of your task.
-Second of the spell comes with an ex and a u and also an o.{n
+{gBird-Conjuring Spell{n: Seems a normal spell but has the ability to take you out of big problems, mind that. It conjures (causes to appear) a flock (group) of birds from the tip of the caster’s (one who is telling the spell) wand. CAN ALSO MAKE some DEADLY SPELL OR MONSTERS GET DISTRACTED FROM YOU AS THEY IT DEFLECTS TOWARDS THE BIRDS.
 
-After this Professor Sprout asks them (including Neville) to step forward.
+{wIt is of four letter.
+First shows itself the first when you start learning English from Nursery..
+Second appears through your fingers when you win.
+Third appears when you always address your ownself.
+Fourth appears, will mostly appear if you say something in plural.{n
+
+{gLevitation Spell{n: To make objects fly or levitate. Maybe you can use to make them away from the touch of the ground.
+
+Three Words: {w18 iii 11 5    i 14 3 v v 15    9 ii 17 iii 15{n
+You need to know how many vowels and consonants are their in the English Language.
+
+Professor Slughorn asks them to step FORWARD.
 
 #description room031a
 
-@dig The Room of Requirement;room031b = Forward
+@dig The Room of Requirement;room031b = forward
 
-#created room031b
+#created room 031b
 
-Forward
+forward
 
 #inside room031b
 
-@desc Professor Sprout steps forward:
-{gShield Charm{n - Creates a magical barrier to deflect physical entities and spell. 
+@desc They couldn’t move a bit as if they were freezed. 
+Slughorn introduced:
+{gFreezing Charm{n - Immobilises living targets.
+
+You know, Muggles’ kids are so lazy that unlike us they don’t pay respect to the every sound and syllable of the words. So hurry they are while chatting that they even SPELL incorrectly but inspite of that, the interpreter does takes it correctly and understands it. 
+You see boys even I am found of this things.
+And then he raises his wand and haphazardly(quickly) moves it in air. Letter emerges on the Wall.
+{wI M hvin 2 MOBILIS.{n
+Get the Caps and ignore the rest.
+
+
+And then Professor McGonagall blesses them and tells:
+“{yThe future of the Magical World lies in your hands now. We believe you. You will find Professor Pomona Sprout in the Forbidden Forest. You need to meet her too. Just go towards the East of the Whomping Willow.{n”
+And then Neville asks both of them (Harry and Draco) to take the door to the east which had just appeared out of nowhere. 
+They understood it was their need to go out and so the Room of Requirement fulfilled it.
+
+#description room031b
+
+@dig The Whomping Willow;room032 = east
+
+#created room032
+
+east
+
+#inside room032
+
+@desc The gate had been opened to the corridors of the Hogwarts. They looked around and headed for the gate of the Hogwarts. 
+Down near the Whomping Willow.
+They were attacked by a plant that was the extension of the Whomping Willow. It was attacking with pointed thorns and it was creaking and lashing with its lower branches. Its ROOTS were attacking from the underground.
+
+#description room032
+
+@create/drop Vine Whip:object.WhompingWillow
+
+#created Whomping Willow
+
+@set Vine/inactive = False
+
+#Whomping willow active
+
+@lock Vine Whip = get:false()
+
+#willow locked
+
+@dig The Forbidden Forest;room033a = east
+
+#created room033a
+
+east
+
+#inside room033a
+
+@desc {GThey started down a narrow, winding earth track that disappeared into the thick black trees. A light breeze lifted their hair as they looked into the forest. It was this way they had to move. Heading to the South.{n
+
+#description room033a
+
+@dig The Forbidden Forest;room034 = south
+
+#created room034
+
+south
+
+#inside room034
+
+@desc {GNothing is visible.{n
+
+#description room034
+
+@teleport room032
+
+#inside room032 again
+
+@dig The Forbidden Forest;room033b:room.EscapeRoom = escape
+
+#created room033b
+
+escape
+
+#inside room033b
+
+@desc Escaping the Whomping Willow they entered the Forbidden Forest. They started down a narrow, winding earth track that disappeared into the thick black trees. A light breeze lifted their hair as they looked into the forest. It was this way they had to move. Heading to the South.
+
+#description room033b
+
+@open south = room034
+
+#created exit to room034
+
+south
+
+#inside room034
+
+@create/drop Dementors:object.Dementor
+
+#create Dementors
+
+@set Dem/inative = False
+
+#Dementors active
+
+@lock Dementors = get:false()
+
+#dementors locked
+
+@dig The Forbidden Forest;room035a = south
+
+#created room035a
+
+south
+
+#inside room035a
+
+@desc Professor Sprout steps forward out of nowhere:
+{GHarry and Draco good to see you both. I will be telling you about the Shield Charm and the Boggart Defense Charm.{n
+
+{gShield Charm{n - {GCreates a magical barrier to deflect physical entities and spell.{n 
 
 {w1-5-2
 CON you do
@@ -644,85 +888,167 @@ care you yourself
 let you relax
 so Tea you drink,
 follow my numbers 
+follow the caps
 and you get it right.{n
 
-{gBoggart-Defense Charm{n - Remember Boggart takes the form of your worst fear and it may or may not be that powerful compared to what form it takes. 
-Harry knew what he feared the most was - A Dementor. 
+{gBoggart-Defense Charm{n - {GRemember Boggart takes the form of your worst fear and it may or may not be that powerful compared to what form it takes. 
+Harry knew what he feared the most was - A Dementor.{n 
 
 {w|)\ | |) | ( |_| |_ |_| ^^{n
-{wHaha! World is never too big. Just compress a bit and you will find everything.{n
+{GHaha! World is never too big. Just compress a bit and you will find everything.
+Head to the West you both. It is near the{n {cGreat Lake{n {Gthat they have been hiding. Wish you both.{n
 
-Shorty and Smarty, Professor Flitwick asks them to move BACK.
+#description room035a
 
-#description room031b
+@dig The Forbidden Forest;room036 = west
 
-@dig The Room of Requirement;room031c = Back
+#created room036
 
-#created room031c
+west
 
-Back
+#inside room036
 
-#inside room031c
+@desc {GThe forest was black and silent. They walked past a mossy tree stump. Harry could hear splashing water; they must be near to the Lake but{n {rNOT ALONE{n.
 
-@desc Moment they step backwards a flock of birds emerge from his wand.  
-Adjusting his specs he says: 
+#description room036
 
-{gBird-Conjuring Spell{n: Seems a normal spell but has the ability to take you out of big problems, mind that. It conjures (causes to appear) a flock (group) of birds from the tip of the caster’s (one who is telling the spell) wand. Can also make some deadly spell or monsters get away from you as they get casted on or distracted by the birds.
+@teleport room034
 
-{wIt is of four letter.
-First shows itself when you take out a jeans for you.
-Second appears when you win.
-Third appears when you always address your ownself.
-Fourth appears, will mostly appear if you say something in plural.{n
+#inside room034 again
 
-{gLevitation Spell{n: To make objects fly or levitate. Maybe you can use to make them away from the touch of the ground.
+@dig The Forbidden Forest;room035b:room.EscapeRoom = escape
 
-Three Words: {w18 iii 11 5    i 14 3 v v 15    9 ii 17 iii 15{n
+#created room035b
 
-Professor Slughorn asks them to step FORWARD.
+escape
 
-#description room031c
+#inside room035b
 
-@dig The Room of Requirement;room031d = Forward
+@desc {GProfessor Sprout came forward out of nowhere. She was a bit disappointed to see of them as they had escaped from the Dementors withour fighting. 
+She said: Fear can only make you weaker. You will be needing courage what come up next.
+For now,
+I will be telling you about the Shield Charm and the Boggart Defense Charm.{n
 
-#created room031d
+{gShield Charm{n - {GCreates a magical barrier to deflect physical entities and spell.{n 
 
-Forward
+{w1-5-2
+CON you do
+EGO you rise
+care you yourself
+let you relax
+so Tea you drink,
+follow my numbers
+follow the caps
+and you get it right.{n
 
-#inside room031d
+{gBoggart-Defense Charm{n - {GRemember Boggart takes the form of your worst fear when they are infront of you and it may or may not be as powerful as when compared to the form it takes. The spell working on real monsters dont work on the Boggart.
+Harry knew what he feared the most was - A Dementor.
+Draco had always feared the death of his son since the beginning of this invasion.{n
 
-@desc They couldn’t move a bit as if they were freezed. 
-Slughorn introduced:
-{gFreezing Charm{n - Immobilises living targets.
+{w|)\ | |) | ( |_| |_ |_| ^^{n
+{GHaha! World is never too big. Just compress a bit and you will find everything.
 
-You know kids Muggles are so lazy that unlike us they don’t pay respect to the every sound and syllable of the words. So hurry while chatting that they even SPELL incorrectly but inspite of that the interpreter takes it correctly and understands it. 
-You see boys even I am found of this things.
-And then he raises his wand and haphazardly (quickly)
-{wI M hvin two MOBILIS.{n
+Head to the West you both. It is near the Great Lake that they have been hiding. Wish you both.{n
 
-And then Professor McGonagall blesses them and tells:
-“{wThe future of the Magical World lies in your hands now. We believe you.{n”
-And then Neville asks both of them (Harry and Draco) to take the door to the east which had just appeared out of nowhere. 
-They understood it was their need to go out and so the Room of Requirement fulfilled it.
+#description room035b
 
-#description room031d
+@open west = room036
 
-@dig The Room of Requirement;room032 = east,west
+#created exit to room036
 
-#created room032
+west
 
-east
+#inside room036 again
 
-#inside room032
+@dig The Forbidden Forest;room037 = west
 
+#created room037
 
+west
 
+#inside room037
 
+@desc {GThe full moon shined in the black sky of the night, in a distance owls chattered loudly sending vibs down her spine. As they moved cautiously through the thick but deserted forest, twigs cracked under their feet placing fright in their every step, beads of sweat gathered on their forehead. The wind whistled over their ears and  they could feel their own fright consuming them bit by bit. The tall trees made eerie shadows on the ground. They felt every moment that someone is just going to grasp them from behind. Horror stricken they were. They still kept moving.{n
 
+#description room037
 
+@dig The Forbidden Forest;room038 = west
 
+#create room038
 
+west
 
+#inside room038
 
+@desc {GAs soon they had entered Hogsmeade they had many encounters to the monsters. But now since a long time they hadnt encountered one. They kept moving.{n
+
+#description room038
+
+@dig The Forbidden Forest;room039 = west
+
+#created room039
+
+west
+
+#inside room039
+
+@desc {GThey saw the Great Lake towards the North but not just that was seen.
+
+One hadn’t appeared since long time but now loads have come together. Again they found Dementors. But this time it was not one but many. And in their mid above a huge rock was laid down the dead body of Scopius Malfoy. Draco sobbed seeing that. 
+All the Dementors moved towards Harry ALONE and sucking his happiness and hope. While Draco moved near the body of his son very easily as if Dementors hadn’t seen him.{n
+
+#description room039
+
+@create/drop Dementor:object.Boggart
+
+#created Boggart
+
+@set Dem/inactive = False
+
+#Boggart active
+
+@create/drop Dead body
+
+#created dead body
+
+@lock Dementor = get:false()
+
+#get lock on Dementor
+
+@lock Dead body = get:false()
+
+#dead bady locked
+
+@dig The Bank of the Great Lake;room040a = north
+
+#created room040a
+
+north
+
+#inside room040a
+
+@desc There existed a muddy path leading them to the centre of the Great Lake. With many horizontal strips in between seeming like rings around the centre. Monster voices had filled their heart with fear. 
+But the will to save their son made them strong again. 
+They understood the time had come for {rBATTLE OF THE GREAT LAKE.{n
+
+#description room040a
+
+@teleport room039
+
+#inside room039 again
+
+@dig The Bank of the Great Lake;room040b:room.EscapeRoom = escape
+
+#created room040b
+
+escape
+
+#inside room040b
+
+@desc There existed a muddy path leading them to the centre of the Great Lake. With many horizontal strips in between seeming like rings around the centre. Monster voices had filled their heart with fear. 
+But the will to save their son made them strong again. 
+They understood the time had come for {rBATTLE OF THE GREAT LAKE.{n
+
+#description room040b
 
 @teleport #2

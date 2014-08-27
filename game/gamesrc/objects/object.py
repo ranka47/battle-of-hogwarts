@@ -25,7 +25,7 @@ import random, time
 from django.conf import settings
 
 from ev import Object as DefaultObject
-from ev import Exit, Command, CmdSet, Script, default_cmds, search_object, utils
+from ev import Exit, Command, CmdSet, Script, default_cmds, search_object, utils, create_object
 from contrib import menusystem
 from game.gamesrc.scripts import script as mudtrix_script
 
@@ -736,8 +736,8 @@ class CmdRiddikulus(Command):
     auto_help = False
 
     def func(self):
-        if self.caller.search(r'Unknown'):
-            target = self.caller.search(r'Unknown')
+        if self.caller.search("Dementor"):
+            target = self.caller.search("Dementor")
             if hasattr(target, "at_hit"):
                 self.caller.db.score += 100
                 return target.at_hit(self.obj,self.caller,damage = 20)
@@ -999,7 +999,15 @@ class Spider(Mob):
             else:
                 target.db.health -= 2
                 target.db.score -= 10
-                target.msg("The spiders bite you. You try to run and escape.")
+                string = "        _       _ \n"
+                string += "  _     \     /     _                    _       _\n"
+                string += "/   \....!....!.../   \             _     \     /     _\n"
+                string += "  __/  |.'',,''.| /   \__         /   \....!....!.../   \ \n"
+                string += "       /        \                   __/  |.'',,''.| /   \__\n"
+                string += "  /\__/          \__/\                   /        \ \n"
+                string += "                                    /\__/          \__/\ \n"
+                string += "The spiders bite you. You try to run and escape.\n"
+                target.msg(string)
         else:
             # no players found, this could mean they have fled.
             # Switch to pursue mode.
@@ -1149,7 +1157,7 @@ class StaticAttackTimer(Script):
                 self.obj.reset()
  
  
-class VineWhip(DefaultObject):
+class WhompingWillow(DefaultObject):
     """
     It is an insectivorous plant monster more powerful in dark rooms and dies when is derooted
     """
@@ -1787,3 +1795,78 @@ class Medusa(DefaultObject):
             string = "%s come into life from the dark dungeons." % self.key
             self.location.msg_contents(string)
 
+#------------------------------------------------------------------------------------------------
+
+class CmdGetWand(Command):
+    """
+    Usage:
+      get weapon
+ 
+    This will try to obtain a weapon from the container.
+    """
+    key = "get wand"
+    locks = "cmd:not holds(Wand)"
+ 
+    def func(self):
+        "Implement the command"
+        name, aliases, desc, magic = self.obj.randomize_type()
+        new_weapon = create_object(Wand, key=name, aliases=aliases,location=self.caller, home=self.caller)
+        new_weapon.db.desc = desc
+        new_weapon.db.magic = magic
+        ostring = self.obj.db.get_text
+        if not ostring:
+            ostring = "You pick up %s."
+        if '%s' in ostring:
+            self.caller.msg(ostring % name)
+        else:
+            self.caller.msg(ostring)
+        # tag the caller so they cannot keep taking objects from the rack.
+ 
+class CmdDropWand(Command):
+    """
+    Usage:
+        ovverrides drop command in same room as rack
+    """
+    key = "drop wand"
+    locks = "cmd:all()"
+ 
+    def func(self):
+        "Implement the command"
+        self.caller.msg("You cannot drop the wand here.")
+ 
+class CmdSetWandRack(CmdSet):
+    "group the rack cmd"
+    key = "wandrack_cmdset"
+    mergemode = "Replace"
+ 
+    def at_cmdset_creation(self):
+        "Called at first creation of cmdset"
+        self.add(CmdGetWand())
+        self.add(CmdDropWand())
+ 
+ 
+class WandRack(DefaultObject):
+    """
+    This will spawn a new wand for the player unless the player already has
+    one from this rack.
+ 
+    attribute to set at creation:
+    magic - if weapons should be magical (have the magic flag set)
+    get_text - the echo text to return when getting the wand. Give '%s'
+               to include the name of the wand.
+    """
+    def at_object_creation(self):
+        "called at creation"
+        self.cmdset.add_default(CmdSetWandRack, permanent=True)
+        self.locks.add("get:false()")
+        self.db.magic = False
+ 
+    def randomize_type(self):
+        """
+        this returns a random weapon
+        """
+        magic = bool(self.db.magic)
+        aliases = ["wand"]
+        name = "Wand"
+        desc = "A wooden stick used to cast spells or curses."
+        return name, aliases, desc, magic

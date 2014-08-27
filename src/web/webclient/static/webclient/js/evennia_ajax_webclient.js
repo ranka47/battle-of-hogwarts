@@ -206,7 +206,7 @@ function msg_display(type, msg){
 
 // Input history mechanism
 
-var HISTORY_MAX_LENGTH = 0
+var HISTORY_MAX_LENGTH = 21
 var HISTORY = new Array();
 HISTORY[0] = '';
 var HISTORY_POS = 0;

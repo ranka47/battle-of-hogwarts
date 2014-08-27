@@ -163,3 +163,8 @@ class OutroRoom(Room):
                 obj.reset()
 
 #----------------------------------------------------------------------------------
+
+class EscapeRoom(Room):
+    def at_object_recieve(self, character, source_location):
+        if character.has_player:
+            character.db.score -= 100
