@@ -99,7 +99,7 @@ You turn around and see a {rDementor{n. It is sucking your positive energy.
 
 #Dementors locked
 
-@dig In front of the Gringott’s Bank;room001b = south
+@dig In front of the Gringott’s Bank;room001b = south,north
 
 #created room001b
 
@@ -112,11 +112,11 @@ Where should we go now?
 
 #description room001b
 
-@dig Diagon Alley;room004 = south
+@dig Diagon Alley;room004 = east,west
 
 #created room004
 
-south
+east
 
 #inside room004
 
@@ -237,7 +237,7 @@ west
 
 #created room011
 
-@lock Floo Network to Hogsmeade = traverse:holds(Wand)
+@lock Floo = traverse:holds(Wand)
 
 #added lock to Floo Network
 
@@ -860,7 +860,7 @@ south
 
 #create Dementors
 
-@set Dem/inative = False
+@set Dem/inactive = False
 
 #Dementors active
 
