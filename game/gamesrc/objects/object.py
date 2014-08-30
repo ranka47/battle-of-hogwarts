@@ -836,7 +836,7 @@ class AttackTimer(Script):
         "This sets up the script"
         self.key = "AttackTimer"
         self.desc = "Drives an Enemy's combat."
-        self.interval = random.randint(6, 10) # how fast the Enemy acts
+        self.interval = random.randint(6, 8) # how fast the Enemy acts
         self.start_delay = True # wait self.interval before first call
         self.persistent = True
 
@@ -999,7 +999,7 @@ class Spider(Mob):
             else:
                 target.db.health -= 2
                 target.db.score -= 10
-                string = "        _       _ \n"
+                string  = "       _       _ \n"
                 string += "  _     \     /     _                    _       _\n"
                 string += "/   \....!....!.../   \             _     \     /     _\n"
                 string += "  __/  |.'',,''.| /   \__         /   \....!....!.../   \ \n"

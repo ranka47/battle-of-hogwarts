@@ -333,9 +333,9 @@ If you still can’t see in there
 See below to see up there
 
 And then it again changed to the menu of The Three Broomsticks:
-Butterbeer	  |	Red Currant Rum
+Butterbeer	 |	Red Currant Rum
 FireWhiskey	|	Cherry Syrup
-Gillywater	  |	Soda with Ice and Umbrella
+Gillywater	 |	Soda with Ice and Umbrella
 Mulled Mead	|	Shacky Rum
 
 #description room020a
@@ -392,7 +392,7 @@ What to do now? What did that riddle say?
 
 east
 
-#inside room022a
+#inside room022a        ///////////////
 
 @desc Eight legged Acromantulas and spiders!!!!!!
 You see a path behind them towards the EAST.
@@ -411,7 +411,43 @@ You see a path behind them towards the EAST.
 
 #locked Spiders
 
-@dig The Hogsmeade Cave;room022b = east,west
+@dig The Hogsmeade Cave;room022c:room.EscapeRoom = escape
+
+#created room022c
+
+@lock escape = traverse:not attr(is_mob)
+
+#mob lock
+
+escape
+
+#inside room022c
+
+@desc Thank God! We were able to escape it.
+
+#description room022c
+
+@dig The Hogsmeade Cave;room021b = west
+
+#created room021b
+
+west
+
+#inside room021b
+
+@desc The Entrance of the Hogsmeade  cave. Straight to the west you see the Hogsmeade.
+
+#description room021b
+
+@open west = room019
+
+#exit to room019
+
+@teleport room022a
+
+#inside room022a
+
+@dig The Hogsmeade Cave;room022b = east
 
 #created room022b
 
@@ -430,6 +466,10 @@ east
 @desc map = {gMarauder’s Map{n
 
 #description map
+
+@open west = room021b
+
+#exit to room021b
 
 @teleport room019
 
@@ -475,6 +515,10 @@ Ohhh! They exclaimed and put out their wands at once but in another moment their
 @dig Hog’s Head Inn;room016 = north,south
 
 #created room016
+
+@lock north = traverse:not attr(is_mob)
+
+#mob lock added
 
 north
 
@@ -638,7 +682,7 @@ east
 
 #description room027c
 
-@dig The Room of Requirement;room28 = east
+@dig The Room of Requirement;room28 = east,west
 
 #created room028
 
@@ -656,6 +700,10 @@ Starting from the East.
 @dig The Room of Requirement;room029a = east
 
 #created room029a
+
+@lock east = traverse:not attr(is_mob)
+
+#mob lock added
 
 east
 
