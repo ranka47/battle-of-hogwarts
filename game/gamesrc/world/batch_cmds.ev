@@ -382,7 +382,7 @@ What to do now? What did that riddle say?
 
 #description room021a
 
-@dig The Hogsmeade Cave;room022a = east,west
+@dig The Hogsmeade Cave;room022a = east
 
 #created room022a
 
@@ -392,7 +392,7 @@ What to do now? What did that riddle say?
 
 east
 
-#inside room022a        ///////////////
+#inside room022a
 
 @desc Eight legged Acromantulas and spiders!!!!!!
 You see a path behind them towards the EAST.
@@ -450,6 +450,10 @@ west
 @dig The Hogsmeade Cave;room022b = east
 
 #created room022b
+
+@lock east = traverse:not attr(is_mob)
+
+#mob lock
 
 east
 

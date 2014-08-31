@@ -392,13 +392,11 @@ class Wand(DefaultObject):
 class CmdAvis(Command):
     """
     conjures a flock of birds from the tip of wand.
-
     Usage:
     avis
-
     """
     key = "avis"
-    aliases = ["Avis"]
+    aliases = ["Avis","broomstick"]
     locks = "cmd:holds()"
     #help_category = "Spells"
     auto_help = False
@@ -408,14 +406,14 @@ class CmdAvis(Command):
         hit = float(self.obj.db.hit) * 1.5      # increased the probability of hitting because this is an easy spell.
 
         if random.random() <= hit:
-           self.caller.msg("A flock of birds emerge from your wand. They fly away noisily into nowhere...")
-           self.caller.location.msg_contents("A heavy cluttering noise distracts you. You see a flock of birds "+
-                                       "emerging from {c%s{n's wand. They fly away into nowhere..." % 
-                                                           (self.caller), exclude=[self.caller])
-           self.caller.db.score += 50
+            self.caller.msg("A flock of birds emerge from your wand. They fly away noisily into nowhere...")
+            self.caller.location.msg_contents("A heavy cluttering noise distracts you. You see a flock of birds "+
+                                        "emerging from {c%s{n's wand. They fly away into nowhere..." % 
+                                                            (self.caller), exclude=[self.caller])
+            self.caller.db.score += 50
         else:
-           self.caller.msg("You said your spell but nothing happens! Don't worry, say it again with all your heart.")
-           self.caller.db.score += 7
+            self.caller.msg("You said your spell but nothing happens! Don't worry, say it again with all your heart.")
+            self.caller.db.score += 7
 
 #---------------------------------------------------------------------------------
 # Arania Exumai - Kills or attacks Spiders
