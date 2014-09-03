@@ -12,7 +12,8 @@ html, body { height: 100% }
 body {
   margin: 0;
   padding: 0;
-  background: #000;
+  background-image: url('background.jpg');
+  background-size: cover;
   color: #ccc;
   font-size: .9em;
   font-family: 'DejaVu Sans Mono', Consolas, Inconsolata, 'Lucida Console', monospace;
