@@ -63,7 +63,8 @@ class CmdAddCom(MuxPlayerCommand):
 
     key = "addcom"
     aliases = ["aliaschan", "chanalias"]
-    auto_help = false
+
+    auto_help = False
     locks = "cmd:not pperm(channel_banned)"
 
     def func(self):
@@ -131,7 +132,7 @@ class CmdDelCom(MuxPlayerCommand):
 
     key = "delcom"
     aliases = ["delaliaschan, delchanalias"]
-    auto_help = false
+    auto_help = False
     locks = "cmd:not perm(channel_banned)"
 
     def func(self):
@@ -190,7 +191,7 @@ class CmdAllCom(MuxPlayerCommand):
 
     key = "allcom"
     locks = "cmd: not pperm(channel_banned)"
-    auto_help = false
+    auto_help = False
 
     def func(self):
         "Runs the function"
@@ -255,7 +256,7 @@ class CmdChannels(MuxPlayerCommand):
     """
     key = "@channels"
     aliases = ["@clist", "channels", "comlist", "chanlist", "channellist", "all channels"]
-    auto_help = false
+    auto_help = False
     locks = "cmd: not pperm(channel_banned)"
 
     def func(self):
@@ -316,7 +317,8 @@ class CmdCdestroy(MuxPlayerCommand):
     """
 
     key = "@cdestroy"
-    auto_help = false
+    auto_help = False
+    locks = "cmd:not pperm(channel_banned)"
 
     def func(self):
         "Destroy objects cleanly."
@@ -357,7 +359,7 @@ class CmdCBoot(MuxPlayerCommand):
 
     key = "@cboot"
     locks = "cmd: not pperm(channel_banned)"
-    auto_help = false
+    auto_help = False
 
     def func(self):
         "implement the function"
@@ -422,7 +424,7 @@ class CmdCemit(MuxPlayerCommand):
     key = "@cemit"
     aliases = ["@cmsg"]
     locks = "cmd: not pperm(channel_banned)"
-    auto_help = false
+    auto_help = False
 
     def func(self):
         "Implement function"
@@ -458,7 +460,7 @@ class CmdCWho(MuxPlayerCommand):
     """
     key = "@cwho"
     locks = "cmd: not pperm(channel_banned)"
-    auto_help = false
+    auto_help = False
 
     def func(self):
         "implement function"
@@ -498,7 +500,7 @@ class CmdChannelCreate(MuxPlayerCommand):
     key = "@ccreate"
     aliases = "channelcreate"
     locks = "cmd:not pperm(channel_banned)"
-    auto_help = false
+    auto_help = False
 
     def func(self):
         "Implement the command"
@@ -549,7 +551,7 @@ class CmdClock(MuxPlayerCommand):
     key = "@clock"
     locks = "cmd:not pperm(channel_banned)"
     aliases = ["@clock"]
-    auto_help = false
+    auto_help = False
 
     def func(self):
         "run the function"
@@ -594,7 +596,7 @@ class CmdCdesc(MuxPlayerCommand):
 
     key = "@cdesc"
     locks = "cmd:not pperm(channel_banned)"
-    auto_help = false
+    auto_help = False
 
     def func(self):
         "Implement command"
@@ -639,7 +641,7 @@ class CmdPage(MuxPlayerCommand):
     key = "page"
     aliases = ['tell']
     locks = "cmd:not pperm(page_banned)"
-    auto_help = false
+    auto_help = False
 
     def func(self):
         "Implement function using the Msg methods"
@@ -778,7 +780,7 @@ class CmdIRC2Chan(MuxCommand):
 
     key = "@irc2chan"
     locks = "cmd:serversetting(IRC_ENABLED) and pperm(Immortals)"
-    auto_help = false
+    auto_help = False
 
     def func(self):
         "Setup the irc-channel mapping"
@@ -877,7 +879,7 @@ class CmdRSS2Chan(MuxCommand):
 
     key = "@rss2chan"
     locks = "cmd:serversetting(RSS_ENABLED) and pperm(Immortals)"
-    auto_help = false
+    auto_help = False
 
     def func(self):
         "Setup the rss-channel mapping"
