@@ -451,11 +451,11 @@ class CmdArania(Command):
 
             if hasattr(target, "at_hit"):
                 # should return True if target is defeated, False otherwise.
-                self.caller.db.score += 100
+                self.caller.db.score += 147
                 return target.at_hit(self.obj, self.caller, damage = 10)
             elif target.db.health:
                 target.db.health -= damage
-                self.caller.db.score += 1000
+                self.caller.db.score += 147
             else:
                 # sorry, impossible to fight this enemy ...
                 self.caller.msg("The enemy seems unaffacted.")
@@ -504,7 +504,7 @@ class CmdExpelliarmus(Command):
                         self.caller.msg("A {yflash of light{n comes out of your wand and %s's wand falls down" %(target))
                         wand.location = target.location
                         self.caller.db.score += 80
-                        target.db.score -= 80
+                        target.db.will -= 7
                         self.caller.location.msg_contents("A {yflash of light{n emerging from {c%s{n's wand" % (self.caller), exclude=[self.caller,target])
                         target.msg("{c%s{n hits your wand with a {ylightning storm{n and your wand falls off somewhere" %(self.caller))
                     else:
@@ -547,7 +547,7 @@ class CmdWingardium(Command):
             return
         """
         # Lower the hit rate
-        hit = float(self.obj.db.hit)*1.2    # high difficulty
+        hit = float(self.obj.db.hit)*1    # high difficulty
 
         if random.random() <= hit:
             self.caller.msg("You say the magical words {mWingardium Leviosa{n.")
@@ -560,12 +560,12 @@ class CmdWingardium(Command):
                 return
             if hasattr(target, "at_hit"):
                 # should return True if target is defeated, False otherwise.
-                self.caller.db.score += 100
+                self.caller.db.score += 117
                 return target.at_hit(self.obj, self.caller, damage = 10)
             elif target.db.health:
                 target.db.ground = False
                 target.db.health -= 10
-                self.caller.db.score += 100
+                self.caller.db.score += 117
             else:
                 # sorry, impossible to fight this enemy ...
                 self.caller.msg("The enemy seems unaffacted.")
@@ -615,11 +615,11 @@ class CmdImmobulus(Command):
                 return
             if hasattr(target, "at_hit"):
                 # should return True if target is defeated, False otherwise.
-                self.caller.db.score += 100
+                self.caller.db.score += 75
                 return target.at_hit(self.obj, self.caller, damage = 10)
             elif target.db.health:
                 target.db.health -= 10
-                self.caller.db.score += 100
+                self.caller.db.score += 75
             else:
                 # sorry, impossible to fight this enemy ...
                 self.caller.msg("The enemy seems unaffacted.")
@@ -664,16 +664,16 @@ class CmdExpecto(Command):
                                                         (self.caller), exclude=[self.caller])
             # call target
             if self.caller.search(r'Dementor'):
-                target = self.caller.search(r'Dementor')      #sorry.. tired :-p ok check it now
+                target = self.caller.search(r'Dementor')
             else:
                 return
             if hasattr(target, "at_hit"):
                 # should return True if target is defeated, False otherwise.
-                self.caller.db.score += 100
+                self.caller.db.score += 99
                 return target.at_hit(self.obj, self.caller, damage = 10)
             elif target.db.health:
                 target.db.health -= 10
-                self.caller.db.score += 100
+                self.caller.db.score += 99
             else:
                 # sorry, impossible to fight this enemy ...
                 self.caller.msg("The enemy seems unaffacted.")
@@ -705,14 +705,13 @@ class CmdProtego(Command):
         if self.caller.db.will < 200:
             if self.caller.db.will < 150:
                 self.caller.db.will += 10
-                self.caller.db.score += 2
                 self.caller.msg("You gain confidence.")
             else:
                 if self.caller.search("Parallax"):
                     target = self.caller.search("Parallax")
                     if hasattr(target, "at_hit"):
                         # should return True if target is defeated, False otherwise.
-                        self.caller.db.score += 100
+                        self.caller.db.score += 147
                         return target.at_hit(self.obj, self.caller, damage = 10)
 
 #-----------------------------------------------------------------------------------
@@ -737,7 +736,7 @@ class CmdRiddikulus(Command):
         if self.caller.search("Dementor"):
             target = self.caller.search("Dementor")
             if hasattr(target, "at_hit"):
-                self.caller.db.score += 100
+                self.caller.db.score += 75
                 return target.at_hit(self.obj,self.caller,damage = 20)
 
 #-----------------------------------------------------------------------------------
@@ -834,7 +833,7 @@ class AttackTimer(Script):
         "This sets up the script"
         self.key = "AttackTimer"
         self.desc = "Drives an Enemy's combat."
-        self.interval = random.randint(6, 8) # how fast the Enemy acts
+        self.interval = random.randint(4, 7) # how fast the Enemy acts
         self.start_delay = True # wait self.interval before first call
         self.persistent = True
 
@@ -902,7 +901,7 @@ class Spider(Mob):
         self.db.full_health = 20
         self.db.health = 20
         self.db.dead_at = time.time()
-        self.db.dead_timer = 20 # how long to stay dead
+        self.db.dead_timer = 5 # how long to stay dead
         # this is used during creation to make sure the mob doesn't move away
         self.db.inactive = True
         # store the last player to hit
@@ -976,7 +975,7 @@ class Spider(Mob):
                 if not tstring:
                     tstring = "{rYou feel your conciousness slip away ... you fall to the ground as{n "
                     tstring += "{rthe spiders envelop you ...{n\n"
-                    target.db.score -= 20
+                    target.db.score -= 10
                 target.msg(tstring)
                 ostring = self.db.defeat_text_room 
                 if tloc:
@@ -995,7 +994,7 @@ class Spider(Mob):
                 self.db.pursue_mode = True
                 target.respawn()
             else:
-                target.db.health -= 2
+                target.db.health -= 10
                 target.db.score -= 10
                 string  = "       _       _ \n"
                 string += "  _     \     /     _                    _       _\n"
@@ -1100,7 +1099,7 @@ class Spider(Mob):
                     string += "feeling it is only temporarily weakened. "
                     string += "You fear it's only a matter of time before it comes into life somewhere again."
                 self.location.msg_contents(string, exclude=[attacker])
-
+                attacker.db.spiders = 1
                 # put mob in dead mode and hide it from view.
                 # AttackTimer will bring it back later.
                 self.db.dead_at = time.time()
@@ -1139,7 +1138,7 @@ class StaticAttackTimer(Script):
         "This sets up the script"
         self.key = "StaticAttackTimer"
         self.desc = "Drives an Enemy's combat."
-        self.interval = random.randint(6,8) # how fast the Enemy acts
+        self.interval = random.randint(4,8) # how fast the Enemy acts
         self.start_delay = True # wait self.interval before first call
         self.persistent = True
  
@@ -1148,7 +1147,7 @@ class StaticAttackTimer(Script):
         if self.obj.db.inactive:
             return
         if self.obj.db.ground:
-            self.obj.attack(damage = 3)
+            self.obj.attack(damage = 5)
         elif self.obj.db.health <= 0:
             #dead mode. Wait for respawn.
             if (time.time() - self.obj.db.dead_at) > self.obj.db.dead_timer:
@@ -1166,7 +1165,7 @@ class WhompingWillow(DefaultObject):
         #this is used during creation to make sure the mob does not attack before
         self.db.inactive = True
         self.db.dead_at = time.time()
-        self.db.dead_timer = 20 # how long to stay dead
+        self.db.dead_timer = 5 # how long to stay dead
         self.scripts.add(StaticAttackTimer)
  
     def attack(self, damage):
@@ -1180,7 +1179,7 @@ class WhompingWillow(DefaultObject):
             for target in players:
                 if target.db.health > 0:
                     target.msg("{r Some monsterous plant bites you and you bleed{n")
-                    target.db.score -= 20
+                    target.db.score -= 7
                     target.db.health -= damage
                 else:
                     target.respawn()
@@ -1195,6 +1194,7 @@ class WhompingWillow(DefaultObject):
                 attacker.msg("The plant is almost {yderooted{n. Try harder you can lift it!")
             if self.db.health <=0:
                 attacker.msg("You are able to {glevitate{n the plant. Move away by the time it again holds the ground.")
+                attacker.db.willow = 1
                 self.db.ground = False
 
     def reset(self):
@@ -1248,7 +1248,7 @@ class CannibulusRodent(Mob):
         self.db.full_health = 20
         self.db.health = 20
         self.db.dead_at = time.time()
-        self.db.dead_timer = 20 # how long to stay dead
+        self.db.dead_timer = 5 # how long to stay dead
         # this is used during creation to make sure the mob doesn't move away
         self.db.inactive = True
         # store the last player to hit
@@ -1439,7 +1439,7 @@ class CannibulusRodent(Mob):
                     string += "feeling it is only temporarily weakened. "
                     string += "You fear it's only a matter of time before they regain their powers again."
                 self.location.msg_contents(string, exclude=[attacker])
-
+                attacker.db.rodents = 1
                 # put mob in dead mode and hide it from view.
                 # AttackTimer will bring it back later.
                 self.db.dead_at = time.time()
@@ -1479,7 +1479,7 @@ class DementorAttackTimer(Script):
         "This sets up the script"
         self.key = "DementorAttackTimer"
         self.desc = "Drives an Enemy's combat."
-        self.interval = random.randint(2, 6) # how fast the Enemy acts
+        self.interval = random.randint(4, 6) # how fast the Enemy acts
         self.start_delay = True # wait self.interval before first call
         self.persistent = True
 
@@ -1489,7 +1489,7 @@ class DementorAttackTimer(Script):
             return
         elif self.obj.db.health > 0:
             #print "attack"
-            self.obj.attack(damage = 1)
+            self.obj.attack(damage = 10)
             return
         elif self.obj.db.health <= 0:
             #dead mode. Wait for respawn.
@@ -1506,7 +1506,7 @@ class Dementor(DefaultObject):
         #this is used during creation to make sure the mob does not attack before
         self.db.inactive = True
         self.db.dead_at = time.time()
-        self.db.dead_timer = 60 # how long to stay dead
+        self.db.dead_timer = 5 # how long to stay dead
         self.scripts.add(DementorAttackTimer)
  
     def attack(self, damage):
@@ -1520,7 +1520,8 @@ class Dementor(DefaultObject):
             for target in players:
                 if target.db.health > 0:
                     target.msg("The {rDementors{n suck happiness from you. Things blur and you begin to lose consciousness.{n")
-                    target.db.score -= 25
+                    target.db.score -= 15
+                    target.db.will -= 10
                     target.db.health -= damage
                 else:
                     target.respawn()
@@ -1536,6 +1537,7 @@ class Dementor(DefaultObject):
             if self.db.health <= 0:
                 self.db.dead_at = time.time()
                 attacker.msg("{gThe Dementors fear and move away.{n")
+                attacker.db.dementors = 1
                 self.location = None
 
     def reset(self):
@@ -1561,7 +1563,7 @@ class ParallaxAttackTimer(Script):
         "This sets up the script"
         self.key = "ParallaxAttackTimer"
         self.desc = "Drives Parallax's combat."
-        self.interval = random.randint(2, 6) # how fast the Enemy acts
+        self.interval = random.randint(4, 6) # how fast the Enemy acts
         self.start_delay = True # wait self.interval before first call
         self.persistent = True
  
@@ -1588,7 +1590,7 @@ class Parallax(DefaultObject):
         #this is used during creation to make sure the mob does not attack before
         self.db.inactive = True
         self.db.dead_at = time.time()
-        self.db.dead_timer = 60 # how long to stay dead
+        self.db.dead_timer = 5 # how long to stay dead
         self.scripts.add(ParallaxAttackTimer)
  
     def attack(self, damage):
@@ -1602,12 +1604,13 @@ class Parallax(DefaultObject):
             for target in players:
                 if target.db.will > 0:
                     target.msg("The {rParallax{n increases the fear in you.")
-                    target.db.score -= 8
+                    target.db.score -= 3
                     target.db.will -= 15
                     if target.db.will <= 0:
                         target.db.health -= damage
                         target.msg("You do not have enough courage left to face Parallax. {rYou loose consciousness{n.")
-                        target.db.score -= 21
+                        target.db.score -= 30
+                        target.db.will -= 20
                 elif target.db.health >= 0:
                     target.respawn()
  
@@ -1622,6 +1625,7 @@ class Parallax(DefaultObject):
             if self.db.health <= 0:
                 self.db.dead_at = time.time()
                 attacker.msg("{gParallax fades away but you have a feeling that it will definitely return.{n")
+                attacker.db.parallax = 1
                 self.location = None
  
     def reset(self):
@@ -1668,13 +1672,16 @@ class BoggartAttackTimer(Script):
         "This sets up the script"
         self.key = "BoggartAttackTimer"
         self.desc = "Drives an Enemy's combat."
-        self.interval = random.randint(6,8) # how fast the Enemy acts
+        self.interval = random.randint(4,8) # how fast the Enemy acts
         self.start_delay = True # wait self.interval before first call
         self.persistent = True
  
     def at_repeat(self):
         "Called every self.interval seconds."
         if self.obj.db.inactive:
+            return
+        elif self.obj.db.health > 0:
+            self.obj.attack(damage = 0)
             return
         elif self.obj.db.health <= 0:
             #dead mode. Wait for respawn.
@@ -1692,7 +1699,7 @@ class Boggart(DefaultObject):
         self.db.full_health = 20
         self.db.health = 20
         self.db.dead_at = time.time()
-        self.db.dead_timer = 15
+        self.db.dead_timer = 5
         self.scripts.add(BoggartAttackTimer)
 
     def at_hit(self, weapon, attacker,damage):
@@ -1702,7 +1709,24 @@ class Boggart(DefaultObject):
         self.db.dead_at = time.time()
         self.db.health -= damage
         attacker.msg("{yBoggart fades away but you have a feeling that it will definitely return.{n")
+        attacker.db.boggart = 1
         self.location = None
+
+    def attack(self, damage):
+        """
+        This is the main mode of combat. It will try to hit players in
+        the location. If players are defeated, it will whisp them off
+        to the defeat location.
+        """
+        players = [obj for obj in self.location.contents if utils.inherits_from(obj, BASE_CHARACTER_TYPECLASS) and not obj.is_superuser]
+        if players:
+            for target in players:
+                if target.db.health > 0:
+                    target.db.msg("It appears that the Dementor is approaching you. Its trying to suck your happiness.")
+                    target.db.will -= 17
+                    target.db.health -= damage
+                else:
+                    target.respawn()
 
     def reset(self):
         self.location = self.home
@@ -1868,3 +1892,61 @@ class WandRack(DefaultObject):
         name = "Wand"
         desc = "A wooden stick used to cast spells or curses."
         return name, aliases, desc, magic
+
+#----------------------------------------------------------------------------------------
+
+class Dragon(DefaultObject):
+    """
+    These are ghostly monsters which attacks(health)
+    """
+    def at_object_creation(self):
+        self.db.full_health = 50
+        self.db.health = 50
+        #this is used during creation to make sure the mob does not attack before
+        self.db.inactive = True
+        self.db.dead_at = time.time()
+        self.db.dead_timer = 5 # how long to stay dead
+        self.scripts.add(DementorAttackTimer)
+ 
+    def attack(self, damage):
+        """
+        This is the main mode of combat. It will try to hit players in
+        the location. If players are defeated, it will whisp them off
+        to the defeat location.
+        """
+        players = [obj for obj in self.location.contents if utils.inherits_from(obj, BASE_CHARACTER_TYPECLASS) and not obj.is_superuser]
+        if players:
+            for target in players:
+                if target.db.health > 0:
+                    target.msg("{rThe Dragon throws fire on you.{n")
+                    target.db.score -= 25
+                    target.db.health -= damage
+                else:
+                    target.respawn()
+
+    def at_hit(self, weapon, attacker, damage):
+        """
+        This is called when the player attacks the plant with Wingardium Leviosa
+        """
+        if self.db.health:
+            self.db.health -= damage
+            if self.db.health > 0:
+                attacker.msg("You try to hit the Dragon.")
+            if self.db.health <= 0:
+                self.db.dead_at = time.time()
+                attacker.msg("{gThe Dragon fears and move away.{n")
+                attacker.db.dragon = 1
+                self.location = None
+
+    def reset(self):
+        """
+        If the dementors was 'dead', respawn it to its home position and reset
+        all modes and damage."""
+        self.db.health = self.db.full_health
+        self.location = self.home
+        string = self.db.respawn_text
+        if not string:
+            string = "The %s reappears and has seen you! You try to run." % self.key
+            self.location.msg_contents(string)
+
+#-----------------------------------------------------------------------------------------------

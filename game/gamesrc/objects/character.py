@@ -48,6 +48,13 @@ class Character(DefaultCharacter):
         self.db.respawns = 0
         houses = ["Gryffindor","Hufflepuff","Slytherin","Ravenclaw"]
         self.db.house = houses[random.randint(0, len(houses) - 1)]
+        self.db.dementors = 0
+        self.db.spiders = 0
+        self.db.willow = 0
+        self.db.rodents = 0
+        self.db.boggart = 0
+        self.db.parallax = 0
+        self.db.dragon = 0
 
     def respawn(self):
         self.msg("You lost a life and respawn with all your default powers")
