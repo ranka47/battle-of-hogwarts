@@ -141,13 +141,13 @@ To the WEST they see a {yfireplace{n with fire lit in it and something written i
 
 #description room005
 
-@create/drop BroomStick:object.BroomStick
+@create/drop broomstick:object.BroomRack
 
 #created and dropped a broomstick
 
-@desc BroomStick = It reads {rFIREBOLT{n.
+@lock broomstick = get:false()
 
-#description Broomstick
+#locking broomstick
 
 @dig Floo Network;room006 = west,east
 
@@ -285,19 +285,18 @@ north
 @desc {rAAAAAAAAAAAAhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh!!!!!!!!!!!!!!{n
 
 It is {gRubeus Hagrid{n. So amazing to see him here. Harry is so happy to see him. You had got a bit scary seeing him suddenly but now it is Okay!
-Road is in front of you and across it is {wZonko’s Joke Shop{n. Hahah!!! Funny Time they had their with their friends.
+Road is in front of you and across it is Zonko’s Joke Shop Hahah!!! Funny Time they had their with their friends.
 Rubeus Hagrid: “{gHarry, so good to see you! (And hugs him). I am here to teach you the spell to fight against the Acromantulas and other spiders. Never use this on humans as it leaves large black scorch mark on them. Time is short. Just listen to this riddle and get the spell.{n"
 
 {wTwo Word Spell.
 First word has two parts.
 Last part of the first matches to the last half of my name not surname.
 What remains of the first has four parts with an alphabet in each. 
-First and third part is same as the first of the alphabets (Muggles’ Nursery English) and second-third-fourth would be known if you had typed ran <give it grey color while other statement remains white> to escape (which is wrong) being a coward like a chicken runs doing buc buc buc buc buc buc!!!!!! 
+First and third part is same as the first of the alphabets (Muggles’ Nursery English) and second-third-fourth would be known if you had typed ran to escape (which is wrong) being a coward like a chicken runs doing buc buc buc buc buc buc!!!!!! 
 Second of the spell comes with an ex and a u and also an o.{n
 
 Saying this he dispparated immediately leaving them wonder what the heck just happened. Why didn’t he tell the spell directly? But now they will have to crack down it and move on. 
-Draco: "{yInky {mPinky {gBonky {wFather {yhad {ba {YDonkey ………… {n"
-He acted weird but at last they decided to move EAST.
+Feeling Scared and totally worried, they were confused where to go. But at last they decided to move EAST.
 
 #description room014a
 
@@ -355,9 +354,13 @@ You see {yDeluminator{n.
 
 #description room020b
 
-@create/drop Deluminator
+@create/drop deluminator:object.DeluminatorRack
 
 #created deluminator
+
+@lock deluminator = get:false()
+
+#lock to deluminators
 
 up
 
@@ -386,7 +389,7 @@ What to do now? What did that riddle say?
 
 #created room022a
 
-@lock east = traverse:holds(Deluminator)
+@lock east = traverse:holds(deluminator)
 
 #set lock to the next room
 
@@ -463,17 +466,17 @@ east
 
 #inside room022b
 
-@desc Defeating the Spiders you come here. One can see some very old establishments for living. Near a fireplace they saw a {wparchment-like looking thing{n.
+@desc Defeating the Spiders you come here. One can see some very old establishments for living. Near a fireplace they saw a {wparchment-like looking thing{n. 
 
 #describe room022b
 
-@create/drop map
+@create/drop Map:object.MapRack
 
-#craeted map
+#created map
 
-@desc map = {gMarauder’s Map{n
+@lock map = get:false()
 
-#description map
+#
 
 @open west = room021b
 
@@ -491,7 +494,7 @@ west
 
 #inside room014b
 
-@desc To the left you see the entrance of the Railway Station and to the right you see the {wZonko’s Joke Shop{n. Straight you see some {wwhite light{n.
+@desc To the left you see the entrance of the Railway Station and to the right you see the Zonko’s Joke Shop. Straight you see some {wwhite light{n.
 
 #description room014b
 

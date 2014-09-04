@@ -82,6 +82,7 @@ class CharacterCmdSet(default_cmds.CharacterCmdSet):
         self.add(command.CmdStatus)
         self.add(command.CmdRemind)
         self.add(CmdTrade)
+        self.add(command.CmdDatabase)
 
 class UnloggedinCmdSet(default_cmds.UnloggedinCmdSet):
     """

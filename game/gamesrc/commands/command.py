@@ -13,6 +13,7 @@ from ev import default_cmds
 from ev import create_object
 from ev import utils
 from ev import Object as DefaultObject
+from ev import managers
 
 
 class Command(BaseCommand):
@@ -253,11 +254,13 @@ class CmdStatus(Command):
         if(self.caller.db.health or self.caller.db.will or self.caller.db.score):
             self.caller.msg("{gYour Status:\n")
             if self.caller.db.health:
-                self.caller.msg("{wHealth : {y%d{n" % (self.caller.db.health))
+                self.caller.msg("{wHealth  : {y%d{n" % (self.caller.db.health))
             if self.caller.db.will:
-                self.caller.msg("{wWill   : {y%d{n" % (self.caller.db.will))
+                self.caller.msg("{wWill    : {y%d{n" % (self.caller.db.will))
             if self.caller.db.score:
-                self.caller.msg("{wScore  : {y%d{n" % (self.caller.db.score))
+                self.caller.msg("{wScore   : {y%d{n" % (self.caller.db.score))
+            if self.caller.db.respawns:
+                self.caller.msg("{rRespawns: {y%d{n" % (self.caller.db.respawns))
         else:
             self.caller.msg("{rNo health, will or score attributes. Contact your administrator.{n")
 
@@ -285,13 +288,65 @@ class CmdRemind(Command):
             return
         if self.args == " 1":
             string = "{cPuzzle(1){n\n"
-            string+= "content"
+            string+= "{wTwo Word Spell.\n"
+            string+= "{wFirst word has two parts.\n"
+            string+= "{wLast part of the first matches to the last half of my name not surname.\n"
+            string+= "{wWhat remains of the first has four parts with an alphabet in each.\n"
+            string+= "{wFirst and third part is same as the first of the alphabets (Muggles' Nursery English) and second-third-fourth would be known if you had typed ran to escape (which is wrong) being a coward like a chicken runs doing buc buc buc buc buc buc!!!\n"
+            string+= "{wSecond of the spell comes with an ex and a u and also an o.{n\n"
+            string+= "{gDisarming Charm{n - Causes whatever the victim is holding to fly away, knocks down the opponent if used forcefully.\n"
+            string+= "YP IDR YJR D[R;; DSU\n"
+            string+= "{wRC[R;;P ST,S{n\n"
+            string+= "{gPatronus Charm{n - It is defensive spell which will take form a Patronus (it is an animal form which would depict your character precisely) from all your positive emotions' energy. Can be used against Lethifolds and Dementors.\n"
+            string+= "YP IDR YJR D[R;; DSU\n"
+            string+= "{wRC[RVYP [SYTPMID{n\n"
         elif self.args == " 2":
             string = "{cPuzzle(2){n\n"
-            string+= "contents"
+            string+= "{gBird-Conjuring Spell{n: Seems a normal spell but has the ability to take you out of big problems, mind that. It conjures (causes to appear) a flock (group) of birds from the tip of the caster's (one who is telling the spell) wand. CAN ALSO MAKE some DEADLY SPELL OR MONSTERS GET DISTRACTED FROM YOU AS THEY IT DEFLECTS TOWARDS THE BIRDS.\n"
+            string+= "{wIt is of four letter.\n"
+            string+= "{wFirst shows itself the first when you start learning English from Nursery..\n"
+            string+= "{wSecond appears through your fingers when you win.\n"
+            string+= "{wThird appears when you always address your ownself.\n"
+            string+= "{wFourth appears, will mostly appear if you say something in plural.{n\n"
+            string+= "{gLevitation Spell{n: To make objects fly or levitate. Maybe you can use to make them away from the touch of the ground.\n"
+            string+= "Three Words: {w18 iii 11 5    i 14 3 v v 15    9 ii 17 iii 15{n\n"
+            string+= "You need to know how many vowels and consonants are their in the English Language.{n\n"
         elif self.args == " 3":
             string = "{cPuzzle(3){n\n"
-            string+= "contents"
+            string+= "{gFreezing Charm{n - Immobilises living targets.\n"
+            string+= "{wI M hvin 2 MOBILIS.{n\n"
+            string+= "Get the Caps and ignore the rest.{n\n"
+        elif self.args == " 4":
+            string= "{gShield Charm{n - Creates a magical barrier to deflect physical entities and spell.{n\n"
+            string+= "{w1-5-2\n"
+            string+= "{wCON you do\n"
+            string+= "{wEGO you rise\n"
+            string+= "{wcare you yourself\n"
+            string+= "{wlet you relax\n"
+            string+= "{wso Tea you drink,\n"
+            string+= "{wfollow my numbers\n"
+            string+= "{wfollow the caps\n"
+            string+= "{wand you get it right.{n\n"
+            string+= "{gBoggart-Defense Charm{n - Remember Boggart takes the form of your worst fear and it may or may not be that powerful compared to what form it takes.\n"
+            string+= "Harry knew what he feared the most was - A {rDementor.{n\n"
+            string+= "{w|)\ | |) | ( |_| |_ |_| ^^{n\n"
+            string+= "Haha! World is never too big. Just compress a bit and you will find everything.{n"
         else:
             string = "Please enter a valid serial number of the puzzle you want to remind yourself."
         self.caller.msg("%s"%string)
+
+#------------------------------------------------------------------------------------------------------
+
+class CmdDatabase(Command):
+    key = "database"
+    locks = "cmd:all()"
+    auto_help = False
+
+    def func(self):
+        players = managers.players.all()
+        scores = [player.db.score for player in players]
+        respawns = [player.db.respawns for player in players]
+        will = [player.db.will for player in players]
+        for player in players:
+            if not player.is_superuser:
+                self.caller.msg("%s - %s %s %s\n" % (player,player.db.score,player.db.respawns,player.db.will))

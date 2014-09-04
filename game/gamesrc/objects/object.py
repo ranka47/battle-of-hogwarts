@@ -405,15 +405,27 @@ class CmdAvis(Command):
         "Actual function"
         hit = float(self.obj.db.hit) * 1.5      # increased the probability of hitting because this is an easy spell.
 
-        if random.random() <= hit:
+        if random.random() > hit:
             self.caller.msg("A flock of birds emerge from your wand. They fly away noisily into nowhere...")
-            self.caller.location.msg_contents("A heavy cluttering noise distracts you. You see a flock of birds "+
-                                        "emerging from {c%s{n's wand. They fly away into nowhere..." % 
-                                                            (self.caller), exclude=[self.caller])
-            self.caller.db.score += 50
+            if self.caller.search(r'Dragon'):
+                target = self.caller.search(r'Dragon')
+            else:
+                return
+            if hasattr(target, "at_hit"):
+                # should return True if target is defeated, False otherwise.
+                self.caller.db.score += 175
+                return target.at_hit(self.obj, self.caller, damage = 10)
+            elif target.db.health:
+                target.db.health -= 10
+                #self.caller.db.score += 175
+            else:
+                # sorry, impossible to fight this enemy ...
+                self.caller.msg("The enemy seems unaffacted.")
+                self.caller.db.score += 50
+                return False
         else:
             self.caller.msg("You said your spell but nothing happens! Don't worry, say it again with all your heart.")
-            self.caller.db.score += 7
+            self.caller.db.score += 17
 
 #---------------------------------------------------------------------------------
 # Arania Exumai - Kills or attacks Spiders
@@ -975,7 +987,7 @@ class Spider(Mob):
                 if not tstring:
                     tstring = "{rYou feel your conciousness slip away ... you fall to the ground as{n "
                     tstring += "{rthe spiders envelop you ...{n\n"
-                    target.db.score -= 10
+                    target.db.score -= 12
                 target.msg(tstring)
                 ostring = self.db.defeat_text_room 
                 if tloc:
@@ -1323,7 +1335,7 @@ class CannibulusRodent(Mob):
                 if not tstring:
                     tstring = "You feel your conciousness slip away ... you fall to the ground as "
                     tstring += "the Cannibulus Rodents eat your unused brains ...\n"
-                    target.db.score -= 20
+                    target.db.score -= 19
                 target.msg(tstring)
                 ostring = self.db.defeat_text_room
                 if tloc:
@@ -1344,7 +1356,7 @@ class CannibulusRodent(Mob):
             else:
                 target.db.health -= 2
                 target.msg("The rodents are after your jammed brains!")
-                target.db.score -= 20
+                target.db.score -= 21
         else:
             # no players found, this could mean they have fled.
             # Switch to persue mode.
@@ -1609,7 +1621,7 @@ class Parallax(DefaultObject):
                     if target.db.will <= 0:
                         target.db.health -= damage
                         target.msg("You do not have enough courage left to face Parallax. {rYou loose consciousness{n.")
-                        target.db.score -= 30
+                        target.db.score -= 28
                         target.db.will -= 20
                 elif target.db.health >= 0:
                     target.respawn()
@@ -1788,7 +1800,7 @@ class Medusa(DefaultObject):
             for target in players:
                 if target.db.health > 0:
                     target.msg("{rYou are struck by %s{n" % self.key)
-                    target.db.score -= 20
+                    target.db.score -= 16
                     target.db.health -= damage
                 else:
                     target.respawn()
@@ -1893,6 +1905,250 @@ class WandRack(DefaultObject):
         desc = "A wooden stick used to cast spells or curses."
         return name, aliases, desc, magic
 
+
+
+#----------------------------------------------------------------------------------------
+#       Broom Rack
+#----------------------------------------------------------------------------------------
+
+class CmdGetBroom(Command):
+    """
+    Usage:
+      get Broom
+ 
+    This will try to obtain a weapon from the container.
+    """
+    key = "get broom"
+    locks = "cmd:not holds(broom)"
+    auto_help = False
+ 
+    def func(self):
+        "Implement the command"
+        name, aliases, desc, magic = self.obj.randomize_type()
+        new_weapon = create_object(DefaultObject, key=name, aliases=aliases,location=self.caller, home=self.caller)
+        new_weapon.db.desc = desc
+        new_weapon.db.magic = magic
+        ostring = self.obj.db.get_text
+        if not ostring:
+            ostring = "You pick up %s."
+        if '%s' in ostring:
+            self.caller.msg(ostring % name)
+        else:
+            self.caller.msg(ostring)
+        # tag the caller so they cannot keep taking objects from the rack.
+ 
+class CmdDropBroom(Command):
+    """
+    Usage:
+        ovverrides drop command in same room as rack
+    """
+    key = "drop broom"
+    locks = "cmd:all()"
+    auto_help = False
+ 
+    def func(self):
+        "Implement the command"
+        self.caller.msg("You cannot drop the broom here.")
+ 
+class CmdSetBroomRack(CmdSet):
+    "group the rack cmd"
+    key = "broomrack_cmdset"
+    mergemode = "Replace"
+ 
+    def at_cmdset_creation(self):
+        "Called at first creation of cmdset"
+        self.add(CmdGetBroom())
+        self.add(CmdDropBroom())
+ 
+ 
+class BroomRack(DefaultObject):
+    """
+    This will spawn a new broom for the player unless the player already has
+    one from this rack.
+ 
+    attribute to set at creation:
+    magic - if weapons should be magical (have the magic flag set)
+    get_text - the echo text to return when getting the broom. Give '%s'
+               to include the name of the broom.
+    """
+    def at_object_creation(self):
+        "called at creation"
+        self.cmdset.add_default(CmdSetBroomRack, permanent=True)
+        self.locks.add("get:false()")
+        self.db.magic = False
+ 
+    def randomize_type(self):
+        """
+        this returns a random weapon
+        """
+        magic = bool(self.db.magic)
+        aliases = ["broom"]
+        name = "broom"
+        desc = "A wooden stick used to cast spells or curses."
+        return name, aliases, desc, magic
+
+#----------------------------------------------------------------------------------------
+#       Deluminator Rack
+#----------------------------------------------------------------------------------------
+
+class CmdGetDeluminator(Command):
+    """
+    Usage:
+      get Deluminator
+ 
+    This will try to obtain a weapon from the container.
+    """
+    key = "get deluminator"
+    locks = "cmd:not holds(deluminator)"
+    auto_help = False
+ 
+    def func(self):
+        "Implement the command"
+        name, aliases, desc, magic = self.obj.randomize_type()
+        new_weapon = create_object(DefaultObject, key=name, aliases=aliases,location=self.caller, home=self.caller)
+        new_weapon.db.desc = desc
+        new_weapon.db.magic = magic
+        ostring = self.obj.db.get_text
+        if not ostring:
+            ostring = "You pick up %s."
+        if '%s' in ostring:
+            self.caller.msg(ostring % name)
+        else:
+            self.caller.msg(ostring)
+        # tag the caller so they cannot keep taking objects from the rack.
+ 
+class CmdDropDeluminator(Command):
+    """
+    Usage:
+        ovverrides drop command in same room as rack
+    """
+    key = "drop deluminator"
+    locks = "cmd:all()"
+    auto_help = False
+ 
+    def func(self):
+        "Implement the command"
+        self.caller.msg("You cannot drop the deluminator here.")
+ 
+class CmdSetDeluminatorRack(CmdSet):
+    "group the rack cmd"
+    key = "deluminatorrack_cmdset"
+    mergemode = "Replace"
+ 
+    def at_cmdset_creation(self):
+        "Called at first creation of cmdset"
+        self.add(CmdGetDeluminator())
+        self.add(CmdDropDeluminator())
+ 
+ 
+class DeluminatorRack(DefaultObject):
+    """
+    This will spawn a new deluminator for the player unless the player already has
+    one from this rack.
+ 
+    attribute to set at creation:
+    magic - if weapons should be magical (have the magic flag set)
+    get_text - the echo text to return when getting the deluminator. Give '%s'
+               to include the name of the deluminator.
+    """
+    def at_object_creation(self):
+        "called at creation"
+        self.cmdset.add_default(CmdSetDeluminatorRack, permanent=True)
+        self.locks.add("get:false()")
+        self.db.magic = False
+ 
+    def randomize_type(self):
+        """
+        this returns a random weapons
+        """
+        magic = bool(self.db.magic)
+        aliases = ["deluminator"]
+        name = "deluminator"
+        desc = "Looks like a standard silver cigarette lighter. Dumbledore used to have this to remove and bestow light sources."
+        return name, aliases, desc, magic
+
+#----------------------------------------------------------------------------------------
+#       Marauder's Map Rack
+#----------------------------------------------------------------------------------------
+
+class CmdGetMap(Command):
+    """
+    Usage:
+      get map
+ 
+    This will try to obtain a weapon from the container.
+    """
+    key = "get map"
+    locks = "cmd:not holds(map)"
+    auto_help = False
+ 
+    def func(self):
+        "Implement the command"
+        name, aliases, desc, magic = self.obj.randomize_type()
+        new_weapon = create_object(DefaultObject, key=name, aliases=aliases,location=self.caller, home=self.caller)
+        new_weapon.db.desc = desc
+        new_weapon.db.magic = magic
+        ostring = self.obj.db.get_text
+        if not ostring:
+            ostring = "You pick up %s."
+        if '%s' in ostring:
+            self.caller.msg(ostring % name)
+        else:
+            self.caller.msg(ostring)
+        # tag the caller so they cannot keep taking objects from the rack.
+ 
+class CmdDropMap(Command):
+    """
+    Usage:
+        ovverrides drop command in same room as rack
+    """
+    key = "drop map"
+    locks = "cmd:all()"
+    auto_help = False
+ 
+    def func(self):
+        "Implement the command"
+        self.caller.msg("You cannot drop the Marauder's Map here.")
+ 
+class CmdSetMapRack(CmdSet):
+    "group the rack cmd"
+    key = "maprack_cmdset"
+    mergemode = "Replace"
+ 
+    def at_cmdset_creation(self):
+        "Called at first creation of cmdset"
+        self.add(CmdGetMap())
+        self.add(CmdDropMap())
+ 
+ 
+class MapRack(DefaultObject):
+    """
+    This will spawn a new marauder's map for the player unless the player already has
+    one from this rack.
+ 
+    attribute to set at creation:
+    magic - if weapons should be magical (have the magic flag set)
+    get_text - the echo text to return when getting the marauder's map. Give '%s'
+               to include the name of the marauder's map.
+    """
+    def at_object_creation(self):
+        "called at creation"
+        self.cmdset.add_default(CmdSetMapRack, permanent=True)
+        self.locks.add("get:false()")
+        self.db.magic = False
+ 
+    def randomize_type(self):
+        """
+        this returns a random weapons
+        """
+        magic = bool(self.db.magic)
+        aliases = ["map"]
+        name = "Marauder's Map"
+        desc = "{gMarauder's Map{n"
+        return name, aliases, desc, magic
+
+#----------------------------------------------------------------------------------------
+#    Dragon
 #----------------------------------------------------------------------------------------
 
 class Dragon(DefaultObject):
@@ -1915,11 +2171,12 @@ class Dragon(DefaultObject):
         to the defeat location.
         """
         players = [obj for obj in self.location.contents if utils.inherits_from(obj, BASE_CHARACTER_TYPECLASS) and not obj.is_superuser]
+        damage = 40
         if players:
             for target in players:
                 if target.db.health > 0:
                     target.msg("{rThe Dragon throws fire on you.{n")
-                    target.db.score -= 25
+                    target.db.score -= 23
                     target.db.health -= damage
                 else:
                     target.respawn()
