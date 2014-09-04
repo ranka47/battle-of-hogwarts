@@ -561,7 +561,7 @@ class CmdWingardium(Command):
         # Lower the hit rate
         hit = float(self.obj.db.hit)*1    # high difficulty
 
-        if random.random() <= hit:
+        if random.random() > hit:
             self.caller.msg("You say the magical words {mWing Arduus Levis{n.")
             self.caller.location.msg_contents("{c%s{n says the magical words {mWing Arduus Levis{n." %
                                                         (self.caller), exclude=[self.caller])
