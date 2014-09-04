@@ -562,8 +562,8 @@ class CmdWingardium(Command):
         hit = float(self.obj.db.hit)*1    # high difficulty
 
         if random.random() <= hit:
-            self.caller.msg("You say the magical words {mWingardium Leviosa{n.")
-            self.caller.location.msg_contents("{c%s{n says the magical words {mWingardium Leviosa{n." %
+            self.caller.msg("You say the magical words {mWing Arduus Levis{n.")
+            self.caller.location.msg_contents("{c%s{n says the magical words {mWing Arduus Levis{n." %
                                                         (self.caller), exclude=[self.caller])
             # call target
             if self.caller.search(r'Vine'):
@@ -617,8 +617,8 @@ class CmdImmobulus(Command):
         hit = float(self.obj.db.hit)*1.2    # high difficulty
 
         if random.random() <= hit:
-            self.caller.msg("You say the magical words {mImmobulus{n.")
-            self.caller.location.msg_contents("{c%s{n says the magical words {mImmobulus{n." %
+            self.caller.msg("You say the magical words {mImmobilis{n.")
+            self.caller.location.msg_contents("{c%s{n says the magical words {mImmobilis{n." %
                                                         (self.caller), exclude=[self.caller])
             # call target
             if self.caller.search(r'Cannibulus'):
@@ -671,8 +671,8 @@ class CmdExpecto(Command):
         hit = float(self.obj.db.hit)*1.4   # high difficulty
 
         if random.random() <= hit:
-            self.caller.msg("You scream the magical words {mExpecto Patronum{n.")
-            self.caller.location.msg_contents("{c%s{n screams the magical words {mExpecto Patronum{n." %
+            self.caller.msg("You scream the magical words {mExpecto Patronus{n.")
+            self.caller.location.msg_contents("{c%s{n screams the magical words {mExpecto Patronus{n." %
                                                         (self.caller), exclude=[self.caller])
             # call target
             if self.caller.search(r'Dementor'):

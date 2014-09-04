@@ -217,11 +217,11 @@ west
 
 #inside room010
 
-@desc Dready and haunted. Narrow and Shabby. Draco tried calling for someone but Harry stops him. They search for some signs of hint but in vain. Draco remembers that the wand themselves choose their masters. So they just tried looking into the shelf. Both arrive at a shelf which suddenly attracted them. They felt something unusual. But they looked up their and found two wands along with some {wFloo Powder{n. They felt some divine feeling cropping up from within.
+@desc Dready and haunted. Narrow and Shabby. Draco tried calling for someone but Harry stops him. They search for some signs of hint but in vain. Draco remembers that the wand themselves choose their masters. So they just tried looking into the shelf. Both arrive at a shelf which suddenly attracted them. They felt something unusual. But they looked up there and found two wands along with some {wFloo Powder{n. They felt some divine feeling cropping up from within.
 
 #description room010
 
-@create/drop table:object.WandRack
+@create/drop Wand:object.WandRack
 
 #created and dropped a wandrack
 
@@ -329,7 +329,7 @@ It read:
 Been you there when you were small 
 See from the Hogsmeade high up in all 
 If you still can’t see in there 
-See below to see up there
+{gSee below{n to see up there
 
 And then it again changed to the menu of The Three Broomsticks:
 Butterbeer   |	Red Currant Rum
@@ -339,7 +339,7 @@ Mulled Mead  |	Shacky Rum
 
 #description room020a
 
-@dig Secret Room;room020b = {w****{n;dig;below;down;look down;see down,up
+@dig Secret Room;room020b = {g****{n;dig;below;down;look down;see down,up
 
 #created room020b
 
@@ -360,7 +360,7 @@ You see {yDeluminator{n.
 
 @lock deluminator = get:false()
 
-#lock to deluminators
+#lock to deluminator
 
 up
 
@@ -461,6 +461,10 @@ west
 @lock east = traverse:not attr(is_mob)
 
 #mob lock
+
+@lock east = traverse:attr(spiders)
+
+#killed lock
 
 east
 
@@ -715,10 +719,6 @@ Starting from the East.
 @lock east = traverse:not attr(is_mob)
 
 #mob lock added
-
-@lock east = traverse:attr(rodents)
-
-#killed lock
 
 east
 
@@ -1211,21 +1211,25 @@ hide
 
 #created room045
 
+@lock Courage = traverse:not attr(is_mob)
+
+#lock to mobs
+
 Courage
 
 #inside room045
 
-@desc {RThe room is drowned in ethereal mist, and you are blinded, with naught but the screaming wind to accompany you. The fog clears a little, and you can make out a mystical lion-like creature, probably the {YSphinx.
-{RIt has the Elder Wand clutched in gleaming talons, and behind it, the wide-eyed corpses of your beloved sons are strewn about in maniacal wildness. A {ncrow {Rappears, with astonishing {wthree eyes, {Rwith the third sparkling {rBLOOD RED. {RIt flaps its wings and:
+@desc {rThe room is drowned in ethereal mist, and you are blinded, with naught but the screaming wind to accompany you. The fog clears a little, and you can make out a mystical lion-like creature, probably the {YSphinx.
+{rIt has the Elder Wand clutched in gleaming talons, and behind it, the wide-eyed corpses of your beloved sons are strewn about in maniacal wildness. A {ncrow {rappears, with astonishing {wthree eyes, {rwith the third sparkling {rBLOOD RED. {rIt flaps its wings and:
 
-{RSmell of the dead bodies of the wizards fill the surrounding. Piled dead bodies appear in front of you on which spiders, FireCrab and Vampires are feeding.
+{rSmell of the dead bodies of the wizards fill the surrounding. Piled dead bodies appear in front of you on which spiders, FireCrab and Vampires are feeding.
 Their mouths are filled with blood and hands with the torn veins, your body shivers in cold fright. 
 Giants can be seen tearing the bodies into pieces and playing with it. Hands and legs hurled over in the sky, faces squeezed under the legs and decapitated heads being squashed under giant feet.
 A wizard at the back is under the Imperius Curse and is sawing down his own body parts while another is feeding on the dead bodies of half-human, half-horse Centaurs. 
 Flesh Eating Slugs are approaching towards you but are stopped by the three-eyd crow.
 
 It is time for the final showdown. 
-And then suddenly the crow’s {rred eye{w glows {Rblindingly: …………………………………………………{n
+And then suddenly the crow’s {rred eye{w glows {rblindingly: …………………………………………………{n
 
 #description room045
 
