@@ -403,30 +403,23 @@ class CmdAvis(Command):
 
     def func(self):
         "Actual function"
-        hit = float(self.obj.db.hit) * 1.5      # increased the probability of hitting because this is an easy spell.
-
-        if random.random() > hit:
-            self.caller.msg("A flock of birds emerge from your wand. They fly away noisily into nowhere...")
-            if self.caller.search(r'Dragon'):
-                target = self.caller.search(r'Dragon')
-            else:
-                return
-            if hasattr(target, "at_hit"):
-                # should return True if target is defeated, False otherwise.
-                self.caller.db.score += 175
-                return target.at_hit(self.obj, self.caller, damage = 10)
-            elif target.db.health:
-                target.db.health -= 10
-                #self.caller.db.score += 175
-            else:
-                # sorry, impossible to fight this enemy ...
-                self.caller.msg("The enemy seems unaffacted.")
-                self.caller.db.score += 50
-                return False
+        self.caller.msg("A flock of birds emerge from your wand. They fly away noisily into randomly everywhere distracting the enemy...")
+        if self.caller.search(r'Dragon'):
+            target = self.caller.search(r'Dragon')
         else:
-            self.caller.msg("You said your spell but nothing happens! Don't worry, say it again with all your heart.")
-            self.caller.db.score += 17
-
+            return
+        if hasattr(target, "at_hit"):
+            # should return True if target is defeated, False otherwise.
+            self.caller.db.score += 175
+            return target.at_hit(self.obj, self.caller, damage = 10)
+        elif target.db.health:
+            target.db.health -= 10
+            self.caller.db.score += 175
+        else:
+            # sorry, impossible to fight this enemy ...
+            self.caller.msg("Nothing happened. :P")
+            self.caller.db.score += 50
+            return False
 #---------------------------------------------------------------------------------
 # Arania Exumai - Kills or attacks Spiders
 #---------------------------------------------------------------------------------
@@ -449,7 +442,7 @@ class CmdArania(Command):
     def func(self):
         "Actual function"
         name = self.args
-        hit = float(self.obj.db.hit)*1.2    # medium difficulty
+        hit = float(self.obj.db.hit)*1.75    # medium difficulty
 
         if random.random() <= hit:
             self.caller.msg("A {yblast of light{n apears from the tip of the wand.")
@@ -513,7 +506,7 @@ class CmdExpelliarmus(Command):
                     #exits = [ex for ex in target.location.exits]
                     #wand.location = exits[random.randint(0, len(exits) - 1)]
                     if random.random() >= hit:
-                        self.caller.msg("A {yflash of light{n comes out of your wand and %s's wand falls down" %(target))
+                        self.caller.msg("Opponent's Wand drops on the floor. " %(target))
                         wand.location = target.location
                         self.caller.db.score += 80
                         target.db.will -= 7
